@@ -1,0 +1,18 @@
+﻿import Np from "nprogress";
+import { Plugin } from "@vue/runtime-core/dist/runtime-core";
+import { App } from "vue";
+import "nprogress/nprogress.css";
+
+export const nprogress = Np.configure({
+  showSpinner: false,
+  easing: "ease",
+  speed: 200,
+  minimum: 0.08
+});
+
+export default {
+  install: <T>(app: App<T>): void => {
+    app.config.globalProperties.$nprogress = nprogress;
+    app.provide("$nprogress", nprogress);
+  }
+} as Plugin;

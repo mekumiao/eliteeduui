@@ -1,0 +1,66 @@
+﻿/* 全局样式 */
+html,
+body,
+#app {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  text-align: left;
+
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: $default-font-color;
+  font-size: $default-font-size;
+  font-weight: 200;
+}
+
+/* 自定义进度条颜色 */
+#nprogress .bar {
+  background: green !important;
+}
+
+.el-card {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15) !important;
+}
+
+.message_cust_success {
+  min-width: 240px;
+}
+
+.message_cust_error {
+  min-width: 380px;
+}
+
+.message_cust_info {
+  min-width: 380px;
+}
+
+/* 隐藏滚动条,同时能够滚动*/
+// .hidden_scroll::-webkit-scrollbar {
+//   display: none;
+// }
+
+::-webkit-scrollbar {
+  display: none;
+  width: 5px;
+  height: 0px;
+  border-radius: 50px;
+}
+/* // 滚动条的滑块 */
+::-webkit-scrollbar-thumb {
+  background-color: #a1a3a9;
+  border-radius: 5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 2px auto;
+  padding: 2px auto;
+}

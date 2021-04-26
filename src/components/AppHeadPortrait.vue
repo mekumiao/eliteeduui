@@ -1,0 +1,73 @@
+﻿<template>
+  <div class="head-portrait" :style="imgSize">
+    <el-image :src="imgUrl" fit="cover">
+      <template #placeholder>
+        <div class="image-slot">
+          <i class="el-icon-picture-outline"></i>
+        </div>
+      </template>
+      <template #error>
+        <img
+          src="@/assets/logo.png"
+          class="el-image"
+          style="object-fit: cover; display: flex"
+        />
+      </template>
+    </el-image>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, reactive } from "vue";
+
+interface DataImgSize {
+  height: string;
+  width: string;
+}
+
+export default defineComponent({
+  name: "AppHeadPortrait",
+  props: {
+    imgUrl: { type: String, default: "" },
+    size: { type: Number, default: 100 }
+  },
+  setup(props) {
+    const imgSize = reactive<DataImgSize>({
+      height: `${props.size}px`,
+      width: `${props.size}px`
+    });
+    return { imgSize };
+  }
+});
+</script>
+
+<style lang="scss" scoped>
+.head-portrait {
+  display: flex;
+  overflow: hidden;
+  border-radius: 50%;
+  background-color: #fff;
+
+  .el-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+
+  .image-slot {
+    width: 100%;
+    height: 100%;
+
+    .el-icon-picture-outline {
+      font-size: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      background-color: #f5f7fa;
+      color: #909399;
+    }
+  }
+}
+</style>
