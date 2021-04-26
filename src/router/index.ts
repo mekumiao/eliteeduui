@@ -35,9 +35,9 @@ const routes: Array<RouteRecordRaw> = [
     path: "/exception",
     component: Home,
     children: [
-      { path: "403", component: Exception403 },
-      { path: "404", component: Exception404 },
-      { path: "500", component: Exception500 }
+      { path: "403", component: Exception403, name: "page403" },
+      { path: "404", component: Exception404, name: "page404" },
+      { path: "500", component: Exception500, name: "page500" }
     ]
   },
   {
@@ -48,7 +48,7 @@ const routes: Array<RouteRecordRaw> = [
       { path: "test2", component: Test2 }
     ]
   },
-  { path: "/:notFind(.*)", redirect: "/exception/404" }
+  { path: "/:notFind(.*)", redirect: { name: "page404" } }
 ];
 
 const router = createRouter({

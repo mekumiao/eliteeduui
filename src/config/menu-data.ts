@@ -17,123 +17,159 @@ const menuList: MenuItem[] = [
     index: "systemManager",
     children: [
       {
-        title: "系统配置",
+        title: "系统参数",
         icon: "el-icon-document",
         index: "/systemManager/systemconfig"
+      },
+      {
+        title: "校区管理",
+        icon: "el-icon-document",
+        index: "/systemManager/school"
+      },
+      {
+        title: "角色管理",
+        icon: "el-icon-document",
+        index: "/systemManager/role"
+      },
+      {
+        title: "教师管理",
+        icon: "el-icon-document",
+        index: "/systemManager/teacher"
+      },
+      {
+        title: "机构人员",
+        icon: "el-icon-document",
+        index: "/systemManager/employee"
       }
     ]
   },
   {
-    title: "校区管理",
+    title: "资源管理",
     icon: "el-icon-document",
-    index: "imageManage",
+    index: "sourceManager",
     children: [
       {
-        title: "新增校区",
+        title: "教学资源",
         icon: "el-icon-document",
-        index: "/imageManage/imageinfo"
-      }
-    ]
-  },
-  {
-    title: "角色管理",
-    icon: "el-icon-document",
-    index: "imageManage",
-    children: [
-      {
-        title: "新增校区",
-        icon: "el-icon-document",
-        index: "/imageManage/imageinfo"
-      }
-    ]
-  },
-  {
-    title: "作业管理",
-    icon: "el-icon-document",
-    index: "imageManage",
-    children: [
+        index: "/sourceManager/teaching"
+      },
       {
         title: "题库系统",
         icon: "el-icon-document",
-        index: "/imageManage/imageinfo"
+        index: "/sourceManager/question"
       },
       {
-        title: "作业批改",
+        title: "试卷维护",
         icon: "el-icon-document",
-        index: "/imageManage/imageinfo"
+        index: "/sourceManager/paper"
       },
       {
-        title: "作业发布",
+        title: "备课资源",
         icon: "el-icon-document",
-        index: "/imageManage/imageinfo"
+        index: "/sourceManager/prepareLessons"
+      },
+      {
+        title: "课件管理",
+        icon: "el-icon-document",
+        index: "/sourceManager/courseware"
       }
     ]
   },
   {
-    title: "作业管理",
+    title: "教学管理",
     icon: "el-icon-document",
-    index: "imageManage",
+    index: "teachingManager",
     children: [
       {
-        title: "题库系统",
+        title: "排课系统",
         icon: "el-icon-document",
-        index: "/imageManage/imageinfo"
+        index: "/teachingManager/arranging",
+        children: [
+          {
+            title: "参数设定",
+            icon: "el-icon-document",
+            index: "/teachingManager/arranging/argumentSetting"
+          }
+        ]
       },
       {
-        title: "作业批改",
+        title: "作业管理",
         icon: "el-icon-document",
-        index: "/imageManage/imageinfo"
+        index: "homeworkManager",
+        children: [
+          {
+            title: "课时设定",
+            icon: "el-icon-document",
+            index: "/homeworkManager/setting"
+          },
+          {
+            title: "作业批改",
+            icon: "el-icon-document",
+            index: "/homeworkManager/correcting"
+          },
+          {
+            title: "作业发布",
+            icon: "el-icon-document",
+            index: "/homeworkManager/publish"
+          }
+        ]
       },
       {
-        title: "作业发布",
+        title: "班级管理",
         icon: "el-icon-document",
-        index: "/imageManage/imageinfo"
+        index: "/teachingManager/classinfo"
+      },
+      {
+        title: "学生管理",
+        icon: "el-icon-document",
+        index: "/teachingManager/studentinfo"
+      },
+      {
+        title: "成绩管理",
+        icon: "el-icon-document",
+        index: "/teachingManager/gradeinfo"
+      },
+      {
+        title: "学生考勤",
+        icon: "el-icon-document",
+        index: "/teachingManager/attendance"
+      },
+      {
+        title: "考试系统",
+        icon: "el-icon-document",
+        index: "teachingManager/examine"
+      },
+      {
+        title: "在线课程",
+        icon: "el-icon-document",
+        index: "teachingManager/onlineCourses"
+      },
+      {
+        title: "直播平台",
+        icon: "el-icon-document",
+        index: "teachingManager/live"
       }
     ]
   },
   {
-    title: "作业管理",
+    title: "招生运营",
     icon: "el-icon-document",
-    index: "imageManage",
-    children: [
-      {
-        title: "题库系统",
-        icon: "el-icon-document",
-        index: "/imageManage/imageinfo"
-      },
-      {
-        title: "作业批改",
-        icon: "el-icon-document",
-        index: "/imageManage/imageinfo"
-      },
-      {
-        title: "作业发布",
-        icon: "el-icon-document",
-        index: "/imageManage/imageinfo"
-      }
-    ]
+    index: "admissions"
   },
   {
-    title: "作业管理",
+    title: "爱利特商城",
     icon: "el-icon-document",
-    index: "imageManage",
-    children: [
-      {
-        title: "题库系统",
-        icon: "el-icon-document",
-        index: "/imageManage/imageinfo"
-      },
-      {
-        title: "作业批改",
-        icon: "el-icon-document",
-        index: "/imageManage/imageinfo"
-      },
-      {
-        title: "作业发布",
-        icon: "el-icon-document",
-        index: "/imageManage/imageinfo"
-      }
-    ]
+    index: "eliteShopping"
+  },
+  {
+    title: "教师报名",
+    icon: "el-icon-document",
+    index: "applyTeacher"
+  },
+  {
+    title: "教师考评",
+    icon: "el-icon-document",
+    index: "reviewTeacher"
   }
 ];
 
