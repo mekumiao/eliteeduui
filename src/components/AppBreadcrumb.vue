@@ -1,5 +1,5 @@
 ﻿<template>
-  <div class="breadcrumb" v-if="linkArray && linkArray.length > 0">
+  <div class="app-breadcrumb" v-if="linkArray && linkArray.length > 0">
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item v-for="(item, index) in linkArray" :key="index">
         {{ item.title }}

@@ -94,6 +94,13 @@ export default defineComponent({
 
     async selectHeader(msg: string): Promise<void> {
       console.log(msg);
+      switch (msg) {
+        case "logout":
+          this.logout();
+          break;
+        default:
+          break;
+      }
       return Promise.resolve();
     }
   }

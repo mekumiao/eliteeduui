@@ -11,9 +11,11 @@ export let rootURL = "https://localhost:8080";
 let timeout: number | undefined = undefined;
 
 if (process.env.NODE_ENV === "production") {
-  rootURL = "http://192.168.0.101:5200";
+  rootURL = "http://an.linshengweb.com:8188";
   timeout = 20000;
 }
+
+rootURL = "http://an.linshengweb.com:8188";
 
 export interface MsgOutput {
   readonly code: number;

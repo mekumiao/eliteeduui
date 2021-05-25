@@ -1,5 +1,8 @@
 ﻿import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
+import { apiAuth } from "@/apis/authApi";
+import { nprogress } from "@/plugins/my-nprogress";
 import Home from "@/pages/home/Home.vue";
+import Login from "@/pages/login/Login.vue";
 
 /**首页相关 */
 const Welcome = () =>
@@ -23,6 +26,7 @@ const Exception500 = () =>
 
 const routes: Array<RouteRecordRaw> = [
   { path: "/", redirect: "/home/welcome" },
+  { path: "/login", component: Login },
   {
     path: "/home",
     component: Home,
@@ -54,6 +58,54 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes
+});
+
+/**开始进度条 */
+router.beforeEach((_to, _from, next) => {
+  nprogress.start();
+  next();
+});
+/**处理未登录 */
+router.beforeEach((to, _from, next) => {
+  if (to.path === "/login") {
+    return next();
+  }
+  const token = window.localStorage.getItem("token");
+  if (!token) {
+    return next("/login");
+  }
+  next();
+});
+/**处理Token失效后依然能访问首页的问题 */
+router.beforeEach((to, _from, next) => {
+  if (to.path === "/login") {
+    return next();
+  }
+  const session = window.sessionStorage.getItem("state");
+  if (!session) {
+    apiAuth
+      .CheckState()
+      .then((flag) => {
+        debugger;
+        if (flag) {
+          document.cookie;
+          window.sessionStorage.setItem("state", "5200");
+          next();
+        } else {
+          next("/login");
+        }
+      })
+      .catch(() => {
+        debugger;
+        next("/login");
+      });
+  } else {
+    next();
+  }
+});
+/**完成进度条 */
+router.afterEach(() => {
+  nprogress.done();
 });
 
 export default router;

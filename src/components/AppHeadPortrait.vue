@@ -1,5 +1,5 @@
 ﻿<template>
-  <div class="head-portrait" :style="imgSize">
+  <div class="app-head-portrait" :style="imgSize">
     <el-image :src="imgUrl" fit="cover">
       <template #placeholder>
         <div class="image-slot">
@@ -8,9 +8,11 @@
       </template>
       <template #error>
         <img
+          :height="imgSize.height.replace('px', '')"
+          :width="imgSize.width.replace('px', '')"
           src="@/assets/logo.png"
           class="el-image"
-          style="object-fit: cover; display: flex"
+          style="object-fit: fill"
         />
       </template>
     </el-image>
