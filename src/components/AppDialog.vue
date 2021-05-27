@@ -31,9 +31,11 @@ export default defineComponent({
     modelValue: { type: Boolean as PropType<boolean>, default: false },
     formData: { type: Object as PropType<unknown>, default: () => new Object() }
   },
-  save(): void {
-    this.$emit("save");
-    this.$emit("update:modelValue", false);
+  methods: {
+    save(): void {
+      this.$emit("save");
+      this.$emit("update:modelValue", false);
+    }
   }
 });
 </script>

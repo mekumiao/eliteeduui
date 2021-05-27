@@ -3,11 +3,13 @@
   PageOutput,
   ObjFilterInput,
   PidKeyItem,
-  MsgOutput
+  MsgOutput,
+  OptionFilterInput,
+  OptionOutput
 } from "@/apis/apiBase";
 
 /**爱利特儿歌输出模型 */
-export interface EliteSongOutput {
+export interface EliteSongOutput extends Record<string, unknown> {
   Pid: string;
   Name: string;
   Remark: string;
@@ -24,7 +26,7 @@ export interface EliteSongOutput {
   Timestamp: string;
 }
 /**爱利特儿歌输入模型 */
-export interface EliteSongInput {
+export interface EliteSongInput extends Record<string, unknown> {
   Name: string;
   Remark: string;
   VideoPath: string;
@@ -32,7 +34,7 @@ export interface EliteSongInput {
   EliteSongClassify: number;
 }
 /**爱利特儿歌修改模型 */
-export interface EliteSongUpdInput {
+export interface EliteSongUpdInput extends Record<string, unknown> {
   Name?: string;
   Remark?: string;
   VideoPath?: string;
@@ -58,12 +60,19 @@ class appResourceManager extends ApiBase {
   }
   /**修改爱利特儿歌 */
   public UpdateEliteSong(
-    input: EliteSongUpdInput,
     id: string,
-    timestamp: string
+    timestamp: string,
+    input: EliteSongUpdInput
   ): Promise<MsgOutput> {
     const url = this.mergeUrlParame("UpdateEliteSong", id, timestamp);
     return this.tryCatchCall(() => ajax.put(url, input));
+  }
+  /**查询下拉值选项 */
+  public QueryOption(
+    input: OptionFilterInput
+  ): Promise<PageOutput<OptionOutput>> {
+    const url = this.mergeUrl("QueryOption");
+    return this.tryCatchCall(() => ajax.post(url, input));
   }
 }
 /**app资源管理api */

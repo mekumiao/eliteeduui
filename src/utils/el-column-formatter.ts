@@ -1,25 +1,38 @@
 ﻿interface ElCol {
   property: string;
 }
-
 /**日期格式化 */
 export const dateFormatter = (
-  row: Record<string, unknown>,
-  col: ElCol,
-  formate = "yyyy-MM-dd",
-  defaultValue = "--"
+  _row: Record<string, unknown>,
+  _col: ElCol,
+  cellValue: unknown
 ): string => {
-  const msg = row[col.property];
-  if (msg) {
-    if (typeof msg === "string") {
-      const date = new Date(msg);
-      return date.format(formate);
-    } else if (msg instanceof Date) {
-      const date = msg as Date;
-      return date.format(formate);
+  if (cellValue) {
+    if (typeof cellValue === "string") {
+      const date = new Date(cellValue);
+      return date.format("yyyy-MM-dd");
+    } else if (cellValue instanceof Date) {
+      const date = cellValue as Date;
+      return date.format("yyyy-MM-dd");
     }
   }
-  return defaultValue;
+  return "--";
+};
+export const dateTimeFormatter = (
+  _row: Record<string, unknown>,
+  _col: ElCol,
+  cellValue: unknown
+): string => {
+  if (cellValue) {
+    if (typeof cellValue === "string") {
+      const date = new Date(cellValue);
+      return date.format("yyyy-MM-dd hh:mm:ss");
+    } else if (cellValue instanceof Date) {
+      const date = cellValue as Date;
+      return date.format("yyyy-MM-dd hh:mm:ss");
+    }
+  }
+  return "--";
 };
 /**空值处理 */
 export const emptyFormatter = (
@@ -33,5 +46,6 @@ export const emptyFormatter = (
 
 export default {
   dateFormatter,
+  dateTimeFormatter,
   emptyFormatter
 };

@@ -2,8 +2,8 @@
   <el-table
     :data="pageData.DataList"
     :height="height"
+    :max-height="maxHeight"
     v-loading="loading"
-    :max-height="maxHeight || 520"
     @sort-change="sortChange"
     @selection-change="$emit('selectionChange', $event)"
   >
@@ -39,13 +39,13 @@
     <el-pagination
       @size-change="sizeChange"
       @current-change="currentChange"
-      :current-page="page.index"
-      :page-sizes="[10, 30, 50]"
-      :page-size="page.size"
+      :current-page="page.Index"
+      :page-sizes="[10, 20, 50]"
+      :page-size="page.Size"
       :pager-count="5"
-      background
       :layout="'total, sizes, prev, pager, next, jumper'"
       :total="pageData.Total"
+      background
     />
   </div>
 </template>
@@ -62,11 +62,11 @@ import AppButtonPopover from "./AppButtonPopover.vue";
 export default defineComponent({
   components: { MyPageTableColumnSearch, AppButtonPopover },
   name: "MyPageTable",
-  emits: ["update:modelValue"],
+  emits: ["update:modelValue", "edit", "remove"],
   props: {
-    searchWidth: { type: [String, Number], default: "" },
-    height: { type: [String, Number], default: "" },
-    maxHeight: { type: [String, Number], default: "" },
+    searchWidth: { type: [String, Number], default: 190 },
+    height: { type: [String, Number], default: 520 },
+    maxHeight: { type: [String, Number], default: 520 },
     modelValue: { type: Boolean, default: true },
     showSearch: { type: Boolean, default: true },
     showCheckBox: { type: Boolean, default: false },
@@ -82,11 +82,11 @@ export default defineComponent({
     }
   },
   setup(props, context) {
-    debugger;
     const loading = ref(false);
     const search = ref("");
     const page = reactive(new PageInput<unknown>());
-    let pageData = reactive(new PageOutput<unknown>());
+    page.Size = 10;
+    let pageData = ref(new PageOutput<unknown>());
     watch(
       () => props.modelValue,
       async (newValue: boolean) => {
@@ -95,7 +95,7 @@ export default defineComponent({
             loading.value = true;
             await sleep();
             if (props.getData) {
-              pageData = await props.getData(search.value, page);
+              pageData.value = await props.getData(search.value, page);
             }
           } finally {
             loading.value = false;
@@ -112,13 +112,14 @@ export default defineComponent({
   methods: {
     /**加载数据 */
     async loadData(): Promise<void> {
-      debugger;
       this.$emit("update:modelValue", false);
       this.loading = true;
       await sleep();
       try {
         if (this.getData) {
           this.pageData = await this.getData(this.search, this.page);
+          this.page.Index = this.pageData.Index;
+          this.page.Size = this.pageData.Size;
         }
       } finally {
         this.loading = false;
@@ -126,19 +127,16 @@ export default defineComponent({
     },
     /**分页大小变化 */
     async sizeChange(size: number): Promise<void> {
-      debugger;
       this.page.Size = size;
       this.loadData();
     },
     /**当前页码变化 */
     async currentChange(index: number): Promise<void> {
-      debugger;
       this.page.Index = index;
       this.loadData();
     },
     /**排序变化 */
     async sortChange(sort: SortTableColumn): Promise<void> {
-      debugger;
       const desc = sort.order === "descending" ? true : false;
       if (sort.order) {
         const obj = { Orderby: sort.prop, Desc: desc } as SortInput<unknown>;

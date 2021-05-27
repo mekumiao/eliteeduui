@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === "production") {
 /**
  * 返回消息模型
  */
-export interface MsgOutput {
+export interface MsgOutput extends Record<string, unknown> {
   readonly Code: number;
   readonly Title: string;
   readonly MsgDetail: string[];
@@ -28,7 +28,7 @@ export interface MsgOutput {
 /**
  * 参数格式错误输出模型
  */
-export interface InputError {
+export interface InputError extends Record<string, unknown> {
   type: string;
   title: string;
   status: number;
@@ -38,7 +38,7 @@ export interface InputError {
 /**
  * 选项输出模型
  */
-export interface OptionOutput {
+export interface OptionOutput extends Record<string, unknown> {
   Label: string;
   Value: unknown;
   Disabled?: boolean;
@@ -47,17 +47,17 @@ export interface OptionOutput {
  * 分页输出模型
  */
 export class PageOutput<T = unknown> {
-  public readonly Total: number = 0;
-  public readonly Index: number = 0;
-  public readonly Size: number = 0;
-  public readonly Datalist: T[] = [];
+  public Total = 0;
+  public Index = 0;
+  public Size = 0;
+  public DataList: T[] = [];
 }
 /**
  * 分页输入模型
  */
 export class PageInput<T extends unknown> {
   public Index = 1;
-  public Size = 10;
+  public Size = 20;
   public Sorts?: SortInput<T>[];
 }
 /**
@@ -65,13 +65,13 @@ export class PageInput<T extends unknown> {
  */
 export class OptionFilterInput {
   public Tag: string;
-  public Match: string;
-  public Cascade: string;
-  public Page: PageInput<OptionOutput>;
+  public Match?: string;
+  public Cascade?: string;
+  public Page?: PageInput<OptionOutput>;
 
-  public constructor(match?: string) {
-    this.Tag = "";
-    this.Match = match || "";
+  public constructor(tag: string) {
+    this.Tag = tag;
+    this.Match = "";
     this.Cascade = "";
     this.Page = { Index: 1, Size: 20 };
   }
@@ -79,14 +79,14 @@ export class OptionFilterInput {
 /**
  * 排序模型
  */
-export interface SortInput<T extends unknown> {
+export interface SortInput<T extends unknown> extends Record<string, unknown> {
   Orderby: keyof T;
   Desc?: boolean;
 }
 /**
  * 查询条件分组模型
  */
-export interface GroupInput<T extends unknown> {
+export interface GroupInput<T extends unknown> extends Record<string, unknown> {
   Logic: "and" | "or";
   Items?: ItemInput<T>[];
   Groups?: GroupInput<T>[];
@@ -94,7 +94,7 @@ export interface GroupInput<T extends unknown> {
 /**
  * 查询条件项模型
  */
-export interface ItemInput<T extends unknown> {
+export interface ItemInput<T extends unknown> extends Record<string, unknown> {
   Field: keyof T;
   Value: string;
   Compare:
@@ -112,7 +112,7 @@ export interface ItemInput<T extends unknown> {
 /**
  * 键模型
  */
-export interface KeyItem<T extends unknown> {
+export interface KeyItem<T extends unknown> extends Record<string, unknown> {
   KeyValue: T;
 }
 /**
@@ -135,7 +135,7 @@ export class ObjFilterInput<T extends unknown> {
 /**
  * 公用视图模型
  */
-export interface PublicView {
+export interface PublicView extends Record<string, unknown> {
   /**创建人ID */
   createuserid?: string;
   /**修改人ID */
@@ -217,13 +217,13 @@ ajax.interceptors.response.use(
       if (isInputError(res.response?.data)) {
         const data = res.response?.data as InputError;
         const keys = Object.keys(data.errors);
-        const msgs = keys.map((x) => JSON.stringify(data.errors[x]));
-
-        return Promise.reject({
-          title: "输入错误",
-          code: data.status,
-          msgdetail: msgs
-        });
+        const arrayMsg = keys.map((x) => JSON.stringify(data.errors[x]));
+        const msgOutput: MsgOutput = {
+          Title: "输入错误",
+          Code: data.status,
+          MsgDetail: arrayMsg
+        };
+        return Promise.reject(msgOutput);
       }
 
       /**api接口返回错误 */
@@ -234,10 +234,12 @@ ajax.interceptors.response.use(
     }
     /**其他未受控制的错误 */
     const message = getMessage(error);
-    return Promise.reject<MsgOutput>({
-      code: message.code,
-      title: message.msg
-    });
+    const errorMsgOutput: MsgOutput = {
+      Title: message.msg,
+      Code: message.code,
+      MsgDetail: []
+    };
+    return Promise.reject<MsgOutput>(errorMsgOutput);
   }
 );
 

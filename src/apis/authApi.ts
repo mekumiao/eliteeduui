@@ -1,10 +1,10 @@
 ﻿import ajax, { ApiBase, MsgOutput } from "./apiBase";
 
-export interface LoginInput {
+export interface LoginInput extends Record<string, unknown> {
   Account: string;
   PassWord: string;
 }
-export interface TokenOutput {
+export interface TokenOutput extends Record<string, unknown> {
   Token: string;
 }
 

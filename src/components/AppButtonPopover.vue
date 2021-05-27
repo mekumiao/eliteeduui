@@ -1,6 +1,6 @@
 ﻿<template>
   <el-popover placement="top" :width="160" v-model:visible="show">
-    <p>{{ msg }}</p>
+    <p>{{ msgTxt }}</p>
     <div style="text-align: right; margin: 0">
       <el-button type="text" size="mini" @click="show = false">
         取消
@@ -11,24 +11,22 @@
     </div>
     <template #reference>
       <el-button type="warning" plain size="mini" @click="show = true">
-        确定
+        {{ btnTxt }}
       </el-button>
     </template>
   </el-popover>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent } from "vue";
 
 /**带确认框的按钮组件 */
 export default defineComponent({
   name: "AppButtonPopover",
   emits: ["confirm"],
   props: {
-    msg: {
-      type: Object as PropType<string | number>,
-      default: () => "确定要删除吗?"
-    }
+    btnTxt: { type: String, default: "删除" },
+    msgTxt: { type: String, default: "确定要删除吗?" }
   },
   data() {
     return { show: false };

@@ -1,5 +1,5 @@
 ﻿<template>
-  <el-table-column align="center" :width="width">
+  <el-table-column fixed="right" align="center" :width="width">
     <template #header>
       <el-input
         :model-value="modelValue"
