@@ -73,8 +73,10 @@
 <script lang="ts">
 import { inject, reactive, ref } from "vue";
 import { defineComponent } from "vue";
+import AppHeadPortrait from "./AppHeadPortrait.vue";
 
 export default defineComponent({
+  components: { AppHeadPortrait },
   name: "HomeTopMenu",
   setup() {
     const isCollapse = inject("isCollapse", ref(false));

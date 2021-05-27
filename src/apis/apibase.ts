@@ -7,7 +7,7 @@
 import { message } from "@/plugins/el-message";
 import { getMessage } from "@/apis/statuscode";
 
-export let rootURL = "https://localhost:8080";
+export let rootURL = "http://localhost:8080";
 let timeout: number | undefined = undefined;
 
 if (process.env.NODE_ENV === "production") {
@@ -15,14 +15,19 @@ if (process.env.NODE_ENV === "production") {
   timeout = 20000;
 }
 
-rootURL = "http://an.linshengweb.com:8188";
+//rootURL = "http://an.linshengweb.com:8188";
 
+/**
+ * 返回消息模型
+ */
 export interface MsgOutput {
-  readonly code: number;
-  readonly title: string;
-  readonly msgdetail?: string[];
+  readonly Code: number;
+  readonly Title: string;
+  readonly MsgDetail: string[];
 }
-
+/**
+ * 参数格式错误输出模型
+ */
 export interface InputError {
   type: string;
   title: string;
@@ -30,53 +35,69 @@ export interface InputError {
   traceId: string;
   errors: Record<string, unknown>;
 }
-
+/**
+ * 选项输出模型
+ */
 export interface OptionOutput {
-  label: string;
-  value: unknown;
-  disabled?: boolean;
+  Label: string;
+  Value: unknown;
+  Disabled?: boolean;
 }
-
+/**
+ * 分页输出模型
+ */
 export class PageOutput<T = unknown> {
-  public readonly total: number = 0;
-  public readonly index: number = 0;
-  public readonly size: number = 0;
-  public readonly datalist: T[] = [];
+  public readonly Total: number = 0;
+  public readonly Index: number = 0;
+  public readonly Size: number = 0;
+  public readonly Datalist: T[] = [];
 }
-
+/**
+ * 分页输入模型
+ */
 export class PageInput<T extends unknown> {
-  public index = 1;
-  public size = 10;
-  public sort?: SortInput<T>[];
+  public Index = 1;
+  public Size = 10;
+  public Sorts?: SortInput<T>[];
 }
-
+/**
+ * 选项查询模型
+ */
 export class OptionFilterInput {
-  public tag: string;
-  public match: string;
-  public page: PageInput<OptionOutput>;
+  public Tag: string;
+  public Match: string;
+  public Cascade: string;
+  public Page: PageInput<OptionOutput>;
 
   public constructor(match?: string) {
-    this.tag = "";
-    this.match = match || "";
-    this.page = { index: 1, size: 100 };
+    this.Tag = "";
+    this.Match = match || "";
+    this.Cascade = "";
+    this.Page = { Index: 1, Size: 20 };
   }
 }
-
+/**
+ * 排序模型
+ */
 export interface SortInput<T extends unknown> {
-  orderby: keyof T;
-  desc?: boolean;
+  Orderby: keyof T;
+  Desc?: boolean;
 }
-
+/**
+ * 查询条件分组模型
+ */
 export interface GroupInput<T extends unknown> {
-  logic: "and" | "or";
-  items?: ItemInput<T>[];
-  groups?: GroupInput<T>[];
+  Logic: "and" | "or";
+  Items?: ItemInput<T>[];
+  Groups?: GroupInput<T>[];
 }
-
+/**
+ * 查询条件项模型
+ */
 export interface ItemInput<T extends unknown> {
-  field: keyof T;
-  value: string;
-  compare:
+  Field: keyof T;
+  Value: string;
+  Compare:
     | "equal"
     | "notequal"
     | "less"
@@ -88,29 +109,49 @@ export interface ItemInput<T extends unknown> {
     | "contains"
     | "notcontains";
 }
-
-export interface KeyOutput {
-  keyvalue: number;
+/**
+ * 键模型
+ */
+export interface KeyItem<T extends unknown> {
+  KeyValue: T;
 }
-
+/**
+ * Pid键模型
+ */
+export interface PidKeyItem extends KeyItem<string> {
+  KeyValue: string;
+}
+/**
+ * 对象形式的查询条件模型
+ */
 export class ObjFilterInput<T extends unknown> {
-  public condition?: GroupInput<T>;
-  public page: PageInput<T>;
+  public Condition?: GroupInput<T>;
+  public Page: PageInput<T>;
 
   public constructor(page: PageInput<T>) {
-    this.page = page;
+    this.Page = page;
   }
 }
-
-export interface ViewEntity {
-  pid: string;
-  createuserid: number;
-  updateuserid: number;
+/**
+ * 公用视图模型
+ */
+export interface PublicView {
+  /**创建人ID */
+  createuserid?: string;
+  /**修改人ID */
+  updateuserid?: string;
   createusername?: string;
   updateusername?: string;
   createtime?: Date;
   updatetime?: Date;
   timestamp: string;
+}
+/**
+ * 有键视图模型
+ */
+export interface ViewEntity extends PublicView {
+  /**唯一标识 */
+  pid: string;
 }
 
 /**检查是否是InputError类型 */
@@ -312,7 +353,7 @@ export abstract class BillApiBase<
    * 新增项
    * @param input 输入模型
    */
-  public Create(input: TInput): Promise<KeyOutput> {
+  public Create(input: TInput): Promise<PidKeyItem> {
     const url = this.mergeUrl("Create");
     return this.tryCatchCall(() => ajax.post(url, input));
   }

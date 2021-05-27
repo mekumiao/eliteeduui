@@ -1,11 +1,11 @@
-﻿import ajax, { ApiBase, MsgOutput } from "./apibase";
+﻿import ajax, { ApiBase, MsgOutput } from "./apiBase";
 
 export interface LoginInput {
-  username: string;
-  password: string;
+  Account: string;
+  PassWord: string;
 }
 export interface TokenOutput {
-  token: string;
+  Token: string;
 }
 
 class Auth extends ApiBase {
@@ -22,7 +22,7 @@ class Auth extends ApiBase {
   public async CheckState(): Promise<boolean> {
     try {
       const url = this.mergeUrl("CheckState");
-      await ajax.get<MsgOutput, MsgOutput>(url);
+      await ajax.get<MsgOutput>(url);
       return true;
     } catch {
       return false;

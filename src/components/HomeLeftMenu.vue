@@ -21,8 +21,10 @@ import { inject, reactive, ref } from "@vue/runtime-core";
 import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from "vue-router";
 import { onBeforeMount } from "vue";
 import { defineComponent } from "vue";
+import AppMenuItem from "./AppMenuItem.vue";
 
 export default defineComponent({
+  components: { AppMenuItem },
   name: "HomeLeftMenu",
   setup() {
     const menuData = reactive(menulist);

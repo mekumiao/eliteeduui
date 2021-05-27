@@ -1,6 +1,5 @@
 ﻿<template>
   <el-table
-    style="width: 100%"
     :data="pageData.datalist"
     :height="height"
     v-loading="loading"
@@ -11,7 +10,7 @@
     <el-table-column v-if="showCheckBox" type="selection" />
     <el-table-column v-if="showIndex" label="序号" type="index" />
     <slot></slot>
-    <column-search
+    <my-page-table-column-search
       v-if="showSearch"
       v-model="search"
       @search="loadData"
@@ -28,13 +27,13 @@
             >
               编辑
             </el-button>
-            <button-popover
+            <app-button-popover
               @confirm="$emit('remove', scope.$index, scope.row)"
-            />
+            ></app-button-popover>
           </el-button-group>
         </slot>
       </template>
-    </column-search>
+    </my-page-table-column-search>
   </el-table>
   <div style="margin-top: 20px">
     <el-pagination
@@ -52,13 +51,16 @@
 </template>
 
 <script lang="ts">
-import { PageInput, PageOutput, SortInput } from "@/apis/apibase";
+import { PageInput, PageOutput, SortInput } from "@/apis/apiBase";
 import { sleep } from "@/utils/my-thread";
 import { PropType, reactive, ref, watch } from "vue";
 import { SortTableColumn } from "@/types/el-rules";
 import { defineComponent } from "vue";
+import MyPageTableColumnSearch from "./MyPageTableColumnSearch.vue";
+import AppButtonPopover from "./AppButtonPopover.vue";
 
 export default defineComponent({
+  components: { MyPageTableColumnSearch, AppButtonPopover },
   name: "MyPageTable",
   emits: ["update:modelValue"],
   props: {
@@ -122,22 +124,22 @@ export default defineComponent({
     },
     /**分页大小变化 */
     async sizeChange(size: number): Promise<void> {
-      this.page.size = size;
+      this.page.Size = size;
       this.loadData();
     },
     /**当前页码变化 */
     async currentChange(index: number): Promise<void> {
-      this.page.index = index;
+      this.page.Index = index;
       this.loadData();
     },
     /**排序变化 */
     async sortChange(sort: SortTableColumn): Promise<void> {
       const desc = sort.order === "descending" ? true : false;
       if (sort.order) {
-        const obj = { orderby: sort.prop, desc } as SortInput<unknown>;
-        this.page.sort = [obj];
+        const obj = { Orderby: sort.prop, Desc: desc } as SortInput<unknown>;
+        this.page.Sorts = [obj];
       } else {
-        this.page.sort = undefined;
+        this.page.Sorts = undefined;
       }
       this.loadData();
     }

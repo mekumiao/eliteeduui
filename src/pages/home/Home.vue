@@ -31,8 +31,12 @@
 import { sleep } from "@/utils/my-thread";
 import { defineComponent, provide, ref, watch } from "vue";
 import appsetting from "@/config/app-setting";
+import AppBreadcrumb from "@/components/AppBreadcrumb.vue";
+import HomeTopMenu from "@/components/HomeTopMenu.vue";
+import HomeLeftMenu from "@/components/HomeLeftMenu.vue";
 
 export default defineComponent({
+  components: { AppBreadcrumb, HomeTopMenu, HomeLeftMenu },
   setup() {
     const isCollapse = ref(false);
     const isRouterActive = ref(true);

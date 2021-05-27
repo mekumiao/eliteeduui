@@ -49,6 +49,18 @@ const menuList: MenuItem[] = [
     index: "sourceManager",
     children: [
       {
+        title: "App课件",
+        icon: "el-icon-document",
+        index: "/sourceManager/appManager",
+        children: [
+          {
+            title: "爱丽特儿歌",
+            icon: "el-icon-document",
+            index: "/sourceManager/appManager/eliteSongManager"
+          }
+        ]
+      },
+      {
         title: "教学资源",
         icon: "el-icon-document",
         index: "/sourceManager/teaching"

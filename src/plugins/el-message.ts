@@ -5,7 +5,7 @@
 import { App, h } from "vue";
 import { Plugin, VNode } from "@vue/runtime-core/dist/runtime-core";
 import { ElMessage } from "element-plus";
-import { MsgOutput } from "@/apis/apibase";
+import { MsgOutput } from "@/apis/apiBase";
 
 type MsgInfo = MsgOutput | string | string[] | number;
 
@@ -19,15 +19,15 @@ export interface ShowMessage {
 
 const handMsgInfo = (msg: MsgInfo): VNode | string => {
   const info: MsgOutput = msg as MsgOutput;
-  if (info.title !== undefined && info.code !== undefined) {
-    if (info.msgdetail) {
-      const array = info.msgdetail?.map((item) => h("p", null, item));
-      if (info.title) {
-        array.unshift(h("h4", null, info.title));
+  if (info.Title !== undefined && info.Code !== undefined) {
+    if (info.MsgDetail) {
+      const array = info.MsgDetail.map((item) => h("p", null, item));
+      if (info.Title) {
+        array.unshift(h("h4", null, info.Title));
       }
       return h("p", { class: "el-message__content" }, array);
     } else {
-      return info.title;
+      return info.Title;
     }
   } else if (typeof msg === "object") {
     const strs: string[] = msg as string[];
@@ -72,7 +72,7 @@ class ElMessageProvider implements ShowMessage {
   }
 
   public showMsgOutput(msg: MsgOutput): IMessageHandle {
-    if (msg.code >= 200 && msg.code < 300) {
+    if (msg.Code >= 200 && msg.Code < 300) {
       return this.showSuccess(msg);
     } else {
       return this.showError(msg);

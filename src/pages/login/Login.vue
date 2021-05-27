@@ -2,7 +2,7 @@
   <div class="login">
     <div class="login_box">
       <div class="avatar_box">
-        <app-head-portrait :img-url="refImgUrl" :size="180" />
+        <app-head-portrait :img-url="refImgUrl" :size="180"></app-head-portrait>
       </div>
       <el-form
         class="login_form"
@@ -11,21 +11,21 @@
         :rules="refRules"
         ref="loginFormRef"
       >
-        <el-form-item prop="userName">
+        <el-form-item prop="Account">
           <el-input
             size="medium"
             prefix-icon="iconfont yonghu"
             type="text"
-            v-model="refLoginInput.userName"
+            v-model="refLoginInput.Account"
           ></el-input>
         </el-form-item>
-        <el-form-item prop="passWord">
+        <el-form-item prop="PassWord">
           <el-input
             size="medium"
             prefix-icon="iconfont suo1"
             type="password"
             autocomplete="off"
-            v-model="refLoginInput.passWord"
+            v-model="refLoginInput.PassWord"
           ></el-input>
         </el-form-item>
         <el-form-item class="btns">
@@ -44,34 +44,31 @@
 
 <script lang="ts">
 import { defineComponent, Ref, ref } from "vue";
-import { apiAuth } from "@/apis/authApi";
+import { apiAuth, LoginInput } from "@/apis/authApi";
 import { FormRule } from "@/types/el-rules";
+import AppHeadPortrait from "@/components/AppHeadPortrait.vue";
 
 declare interface DataRules {
-  userName: FormRule[];
-  passWord: FormRule[];
-}
-
-declare interface DataLoginInput {
-  userName: string;
-  passWord: string;
+  Account: FormRule[];
+  PassWord: FormRule[];
 }
 
 export default defineComponent({
+  components: { AppHeadPortrait },
   name: "Login",
   setup() {
     const refImgUrl = ref("");
     const refLoginInput = ref({
-      userName: "admin",
-      passWord: "123123"
-    }) as Ref<DataLoginInput>;
+      Account: "admin",
+      PassWord: "123123"
+    }) as Ref<LoginInput>;
 
     const rules = {
-      userName: [
+      Account: [
         { required: true, message: "请输入用户名", trigger: "blur" },
         { min: 3, max: 10, message: "长度在 3 - 10 之间", trigger: "blur" }
       ],
-      passWord: [
+      PassWord: [
         { required: true, message: "请输入密码", trigger: "blur" },
         { min: 6, max: 10, message: "长度在 6 - 16 之间", trigger: "blur" }
       ]
@@ -90,10 +87,10 @@ export default defineComponent({
         if (valid) {
           try {
             const token = await apiAuth.Token({
-              username: this.refLoginInput.userName,
-              password: this.refLoginInput.passWord
+              Account: this.refLoginInput.Account,
+              PassWord: this.refLoginInput.PassWord
             });
-            window.localStorage.setItem("token", token.token);
+            window.localStorage.setItem("token", token.Token);
             window.sessionStorage.setItem("state", "5200");
             this.$router.push("/");
             this.$message.closeAll();

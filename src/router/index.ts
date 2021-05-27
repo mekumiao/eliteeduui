@@ -24,6 +24,12 @@ const Exception404 = () =>
 const Exception500 = () =>
   import(/* webpackChunkName: "pages" */ "@/pages/exception/500.vue");
 
+/**爱丽特儿歌管理 */
+const EliteSongManager = () =>
+  import(
+    /* webpackChunkName: "pages" */ "@/pages/appManager/EliteSongManager.vue"
+  );
+
 const routes: Array<RouteRecordRaw> = [
   { path: "/", redirect: "/home/welcome" },
   { path: "/login", component: Login },
@@ -51,6 +57,11 @@ const routes: Array<RouteRecordRaw> = [
       { path: "test1", component: Test1 },
       { path: "test2", component: Test2 }
     ]
+  },
+  {
+    path: "/sourceManager/appManager",
+    component: Home,
+    children: [{ path: "eliteSongManager", component: EliteSongManager }]
   },
   { path: "/:notFind(.*)", redirect: { name: "page404" } }
 ];

@@ -11,7 +11,7 @@
 <script lang="ts">
 import menuList, { MenuItem } from "@/config/menu-data";
 import { onBeforeRouteUpdate, onBeforeRouteLeave, useRoute } from "vue-router";
-import { defineComponent, onBeforeMount, reactive } from "vue";
+import { defineComponent, onBeforeMount, ref } from "vue";
 
 interface AppBreadcrumbInfo {
   title: string;
@@ -57,19 +57,19 @@ const getMenu = (path: string): AppBreadcrumbInfo[] | undefined => {
 export default defineComponent({
   name: "AppBreadcrumb",
   setup() {
-    let linkArray = reactive<AppBreadcrumbInfo[]>([]);
+    let linkArray = ref<AppBreadcrumbInfo[]>([]);
 
     onBeforeMount(() => {
       const path = useRoute().path;
-      linkArray = getMenu(path) || [];
+      linkArray.value = getMenu(path) || [];
     });
 
     onBeforeRouteUpdate((to) => {
-      linkArray = getMenu(to.path) || [];
+      linkArray.value = getMenu(to.path) || [];
     });
 
     onBeforeRouteLeave((to) => {
-      linkArray = getMenu(to.path) || [];
+      linkArray.value = getMenu(to.path) || [];
     });
 
     return { linkArray };

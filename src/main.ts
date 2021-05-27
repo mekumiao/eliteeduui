@@ -3,7 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store, { key } from "./store";
 import ElementPlus from "element-plus";
-import MyComponent from "@/plugins/my-component";
+// import MyComponent from "@/plugins/my-component";
 import MyNprogress from "@/plugins/my-nprogress";
 import VueErrorHander from "@/plugins/vue-errorhandler";
 import MyLoading from "@/plugins/my-loading";
@@ -18,7 +18,7 @@ createApp(App)
   .use(store, key)
   .use(router)
   .use(ElementPlus, { size: "small", zIndex: 3000 })
-  .use(MyComponent)
+  // .use(MyComponent)
   .use(MyNprogress)
   .use(VueErrorHander)
   .use(MyLoading)
