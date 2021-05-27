@@ -1,6 +1,6 @@
 ﻿<template>
   <el-table
-    :data="pageData.datalist"
+    :data="pageData.DataList"
     :height="height"
     v-loading="loading"
     :max-height="maxHeight || 520"
@@ -45,7 +45,7 @@
       :pager-count="5"
       background
       :layout="'total, sizes, prev, pager, next, jumper'"
-      :total="pageData.total"
+      :total="pageData.Total"
     />
   </div>
 </template>
@@ -82,6 +82,7 @@ export default defineComponent({
     }
   },
   setup(props, context) {
+    debugger;
     const loading = ref(false);
     const search = ref("");
     const page = reactive(new PageInput<unknown>());
@@ -111,6 +112,7 @@ export default defineComponent({
   methods: {
     /**加载数据 */
     async loadData(): Promise<void> {
+      debugger;
       this.$emit("update:modelValue", false);
       this.loading = true;
       await sleep();
@@ -124,16 +126,19 @@ export default defineComponent({
     },
     /**分页大小变化 */
     async sizeChange(size: number): Promise<void> {
+      debugger;
       this.page.Size = size;
       this.loadData();
     },
     /**当前页码变化 */
     async currentChange(index: number): Promise<void> {
+      debugger;
       this.page.Index = index;
       this.loadData();
     },
     /**排序变化 */
     async sortChange(sort: SortTableColumn): Promise<void> {
+      debugger;
       const desc = sort.order === "descending" ? true : false;
       if (sort.order) {
         const obj = { Orderby: sort.prop, Desc: desc } as SortInput<unknown>;

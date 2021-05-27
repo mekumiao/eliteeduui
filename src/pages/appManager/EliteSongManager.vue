@@ -18,7 +18,7 @@ export default defineComponent({
   components: { MyPageTable },
   name: "EliteSongManager",
   setup() {
-    const isLoad = ref(false);
+    const isLoad = ref(true);
     return { isLoad };
   },
   methods: {
