@@ -57,7 +57,7 @@ export class PageOutput<T = unknown> {
  */
 export class PageInput<T extends unknown> {
   public Index = 1;
-  public Size = 20;
+  public Size = 10;
   public Sorts?: SortInput<T>[];
 }
 /**

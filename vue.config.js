@@ -11,7 +11,8 @@ module.exports = {
   productionSourceMap: false, // 生产环境是否生成 sourceMap 文件
   assetsDir: "", //静态资源生成目录
   devServer: {
-    port: 3389
+    //port: 3389
+    port: 3343
   },
 
   configureWebpack: (config) => {

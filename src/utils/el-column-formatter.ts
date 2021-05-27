@@ -36,12 +36,15 @@ export const dateTimeFormatter = (
 };
 /**空值处理 */
 export const emptyFormatter = (
-  row: Record<string, unknown>,
-  col: ElCol,
-  defaultValue = "--"
+  _row: Record<string, unknown>,
+  _col: ElCol,
+  cellValue: unknown
 ): string => {
-  const msg = row[col.property];
-  return `${msg}` || defaultValue;
+  if (cellValue) {
+    return `${cellValue}`;
+  } else {
+    return "--";
+  }
 };
 
 export default {

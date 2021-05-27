@@ -50,6 +50,7 @@ class appResourceManager extends ApiBase {
   public QueryPageEliteSong(
     input: ObjFilterInput<EliteSongOutput>
   ): Promise<PageOutput<EliteSongOutput>> {
+    console.log("QueryPageEliteSong", input);
     const url = this.mergeUrl("QueryPageEliteSong");
     return this.tryCatchCall(() => ajax.post(url, input));
   }
@@ -73,6 +74,11 @@ class appResourceManager extends ApiBase {
   ): Promise<PageOutput<OptionOutput>> {
     const url = this.mergeUrl("QueryOption");
     return this.tryCatchCall(() => ajax.post(url, input));
+  }
+  /**删除爱利特儿歌 */
+  public DeleteEliteSong(id: string, timestamp: string): Promise<MsgOutput> {
+    const url = this.mergeUrlParame("DeleteEliteSong", id, timestamp);
+    return this.tryCatchCall(() => ajax.delete(url));
   }
 }
 /**app资源管理api */

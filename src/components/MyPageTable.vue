@@ -28,7 +28,7 @@
               编辑
             </el-button>
             <app-button-popover
-              @confirm="$emit('remove', scope.$index, scope.row)"
+              @confirm="$emit('deleteSave', scope.$index, scope.row)"
             ></app-button-popover>
           </el-button-group>
         </slot>
@@ -62,7 +62,7 @@ import AppButtonPopover from "./AppButtonPopover.vue";
 export default defineComponent({
   components: { MyPageTableColumnSearch, AppButtonPopover },
   name: "MyPageTable",
-  emits: ["update:modelValue", "edit", "remove"],
+  emits: ["update:modelValue", "edit", "deleteSave"],
   props: {
     searchWidth: { type: [String, Number], default: 190 },
     height: { type: [String, Number], default: 520 },
@@ -85,7 +85,6 @@ export default defineComponent({
     const loading = ref(false);
     const search = ref("");
     const page = reactive(new PageInput<unknown>());
-    page.Size = 10;
     let pageData = ref(new PageOutput<unknown>());
     watch(
       () => props.modelValue,
@@ -93,7 +92,6 @@ export default defineComponent({
         if (newValue) {
           try {
             loading.value = true;
-            await sleep();
             if (props.getData) {
               pageData.value = await props.getData(search.value, page);
             }

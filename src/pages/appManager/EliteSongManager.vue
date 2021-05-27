@@ -5,11 +5,29 @@
         <el-button type="success" size="mini" @click="create">新增</el-button>
       </el-button-group>
     </el-card>
-    <my-page-table :get-data="getData" v-model="isLoad" @edit="edit">
+    <my-page-table
+      :get-data="getData"
+      v-model="isLoad"
+      @edit="edit"
+      @deleteSave="deleteSave"
+    >
       <el-table-column label="名称" prop="Name"></el-table-column>
       <el-table-column label="描述" prop="Remark"></el-table-column>
       <el-table-column label="资源路径" prop="VideoPath"></el-table-column>
-      <el-table-column label="预览图" prop="PrviewPhoto"></el-table-column>
+      <el-table-column
+        label="预览图"
+        prop="PrviewPhoto"
+        min-width="150"
+        align="center"
+      >
+        <template #default="scope">
+          <el-image
+            style="width: 100px"
+            fit="contain"
+            :src="'http://file.linshengweb.com/files/' + scope.row.PrviewPhoto"
+          ></el-image>
+        </template>
+      </el-table-column>
       <el-table-column
         label="儿歌分类"
         prop="EliteSongClassifyName"
@@ -189,6 +207,11 @@ export default defineComponent({
       await apiAppResourceManagerApi.CreateEliteSong(
         this.dialogCreate.formData
       );
+      this.isLoad = true;
+    },
+    /**删除并保存 */
+    async deleteSave(_index: number, row: EliteSongOutput): Promise<void> {
+      await apiAppResourceManagerApi.DeleteEliteSong(row.Pid, row.Timestamp);
       this.isLoad = true;
     }
   }
