@@ -22,10 +22,12 @@
       >
         <template #default="scope">
           <el-image
+            v-if="scope.row.PrviewPhoto"
             style="width: 100px"
             fit="contain"
             :src="'http://file.linshengweb.com/files/' + scope.row.PrviewPhoto"
           ></el-image>
+          <div v-else>暂无图片</div>
         </template>
       </el-table-column>
       <el-table-column
@@ -157,14 +159,19 @@ export default defineComponent({
       match: string,
       page: PageInput<unknown>
     ): Promise<PageOutput<unknown>> {
-      const filter: ObjFilterInput<EliteSongOutput> = {
-        Page: page,
-        Condition: {
-          Logic: "or",
-          Items: [{ Compare: "contains", Field: "Name", Value: match }]
-        }
-      };
-      return apiAppResourceManagerApi.QueryPageEliteSong(filter);
+      try {
+        this.$loading();
+        const filter: ObjFilterInput<EliteSongOutput> = {
+          Page: page,
+          Condition: {
+            Logic: "or",
+            Items: [{ Compare: "contains", Field: "Name", Value: match }]
+          }
+        };
+        return apiAppResourceManagerApi.QueryPageEliteSong(filter);
+      } finally {
+        this.$closeLoading();
+      }
     },
     /**加载爱利特儿歌分类 */
     async loadEliteSongClassify(flag?: boolean): Promise<void> {
