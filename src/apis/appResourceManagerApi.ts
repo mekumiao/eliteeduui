@@ -50,7 +50,6 @@ class appResourceManager extends ApiBase {
   public QueryPageEliteSong(
     input: ObjFilterInput<EliteSongOutput>
   ): Promise<PageOutput<EliteSongOutput>> {
-    console.log("QueryPageEliteSong", input);
     const url = this.mergeUrl("QueryPageEliteSong");
     return this.tryCatchCall(() => ajax.post(url, input));
   }

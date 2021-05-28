@@ -67,6 +67,9 @@
       </el-form-item>
       <el-form-item label="资源路径">
         <el-input v-model="dialogCreate.formData.VideoPath" />
+        <my-file-upload
+          v-model="dialogCreate.formData.VideoPath"
+        ></my-file-upload>
       </el-form-item>
       <el-form-item label="预览图">
         <my-image-upload
@@ -104,9 +107,14 @@
       </el-form-item>
       <el-form-item label="资源路径">
         <el-input v-model="dialogUpdate.formData.VideoPath" />
+        <my-file-upload
+          v-model="dialogUpdate.formData.VideoPath"
+        ></my-file-upload>
       </el-form-item>
       <el-form-item label="预览图">
-        <el-input v-model="dialogUpdate.formData.PrviewPhoto" />
+        <my-image-upload
+          v-model="dialogUpdate.formData.PrviewPhoto"
+        ></my-image-upload>
       </el-form-item>
     </el-form>
   </app-dialog>
@@ -132,9 +140,16 @@ import MyPageTableColumnBase from "@/components/MyPageTableColumnBase.vue";
 import AppDialog from "@/components/AppDialog.vue";
 import { DialogData, DialogEditData } from "@/types/el-dialog";
 import MyImageUpload from "@/components/MyImageUpload.vue";
+import MyFileUpload from "@/components/MyFileUpload.vue";
 
 export default defineComponent({
-  components: { MyPageTable, MyPageTableColumnBase, AppDialog, MyImageUpload },
+  components: {
+    MyPageTable,
+    MyPageTableColumnBase,
+    AppDialog,
+    MyImageUpload,
+    MyFileUpload
+  },
   name: "EliteSongManager",
   setup() {
     const isLoad = ref(true);

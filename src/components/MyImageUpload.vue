@@ -3,7 +3,7 @@
     action="http://file.linshengweb.com/upload/"
     list-type="picture-card"
     accept="image/*"
-    :auto-upload="true"
+    :auto-upload="false"
     :multiple="false"
     :show-file-list="false"
     :on-change="handleChange"
@@ -14,9 +14,6 @@
       <img v-else :src="dialogImageUrl" />
     </template>
   </el-upload>
-  <el-dialog v-model="dialogVisible">
-    <img width="100%" :src="dialogImageUrl" alt="" />
-  </el-dialog>
 </template>
 
 <script lang="ts">
@@ -29,19 +26,16 @@ export default defineComponent({
   props: {
     modelValue: { type: String, default: "" }
   },
-  setup() {
+  setup(props) {
     const dialogImageUrl = ref<string | undefined>("");
-    const dialogVisible = ref(false);
-    const disabled = ref(false);
-    return { dialogImageUrl, dialogVisible, disabled };
+    if (props.modelValue) {
+      dialogImageUrl.value = `http://file.linshengweb.com/files/${props.modelValue}`;
+    }
+    return { dialogImageUrl };
   },
   methods: {
     handleRemove(file: UploadFile) {
       console.log(file);
-    },
-    handlePictureCardPreview(file: UploadFile) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
     },
     handleChange(file: UploadFile, fileList: UploadFile[]) {
       if (fileList.length > 0) {

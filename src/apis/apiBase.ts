@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === "production") {
   timeout = 20000;
 }
 
-//rootURL = "http://an.linshengweb.com:8188";
+rootURL = "http://an.linshengweb.com:8188";
 
 /**
  * 返回消息模型
@@ -73,7 +73,7 @@ export class OptionFilterInput {
     this.Tag = tag;
     this.Match = "";
     this.Cascade = "";
-    this.Page = { Index: 1, Size: 20 };
+    this.Page = { Index: 1, Size: 50 };
   }
 }
 /**
