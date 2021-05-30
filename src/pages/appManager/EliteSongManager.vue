@@ -16,16 +16,16 @@
       <el-table-column label="资源路径" prop="VideoPath"></el-table-column>
       <el-table-column
         label="预览图"
-        prop="PrviewPhoto"
+        prop="PreviewPhoto"
         min-width="150"
         align="center"
       >
         <template #default="scope">
           <el-image
-            v-if="scope.row.PrviewPhoto"
+            v-if="scope.row.PreviewPhoto"
             style="width: 100px"
             fit="contain"
-            :src="'http://file.linshengweb.com/files/' + scope.row.PrviewPhoto"
+            :src="'http://file.linshengweb.com/files/' + scope.row.PreviewPhoto"
           ></el-image>
           <div v-else>暂无图片</div>
         </template>
@@ -44,7 +44,12 @@
     v-model="dialogCreate.show"
     @save="createSave"
   >
-    <el-form :model="dialogCreate.formData" label-width="80px">
+    <el-form
+      ref="formCreate"
+      label-width="80px"
+      :model="dialogCreate.formData"
+      :role="eliteSongRoles"
+    >
       <el-form-item label="名称">
         <el-input v-model="dialogCreate.formData.Name" />
       </el-form-item>
@@ -66,14 +71,13 @@
         </el-select>
       </el-form-item>
       <el-form-item label="资源路径">
-        <el-input v-model="dialogCreate.formData.VideoPath" />
         <my-file-upload
           v-model="dialogCreate.formData.VideoPath"
         ></my-file-upload>
       </el-form-item>
       <el-form-item label="预览图">
         <my-image-upload
-          v-model="dialogCreate.formData.PrviewPhoto"
+          v-model="dialogCreate.formData.PreviewPhoto"
         ></my-image-upload>
       </el-form-item>
     </el-form>
@@ -85,7 +89,12 @@
     v-model="dialogUpdate.show"
     @save="editSave"
   >
-    <el-form :model="dialogUpdate.formData" label-width="80px">
+    <el-form
+      ref="formUpdate"
+      label-width="80px"
+      :model="dialogUpdate.formData"
+      :role="eliteSongRoles"
+    >
       <el-form-item label="名称">
         <el-input v-model="dialogUpdate.formData.Name" />
       </el-form-item>
@@ -106,14 +115,13 @@
         </el-select>
       </el-form-item>
       <el-form-item label="资源路径">
-        <el-input v-model="dialogUpdate.formData.VideoPath" />
         <my-file-upload
           v-model="dialogUpdate.formData.VideoPath"
         ></my-file-upload>
       </el-form-item>
       <el-form-item label="预览图">
         <my-image-upload
-          v-model="dialogUpdate.formData.PrviewPhoto"
+          v-model="dialogUpdate.formData.PreviewPhoto"
         ></my-image-upload>
       </el-form-item>
     </el-form>
@@ -141,6 +149,23 @@ import AppDialog from "@/components/AppDialog.vue";
 import { DialogData, DialogEditData } from "@/types/el-dialog";
 import MyImageUpload from "@/components/MyImageUpload.vue";
 import MyFileUpload from "@/components/MyFileUpload.vue";
+import { RequiredRole } from "@/types/el-rules";
+
+interface EliteSongRoles {
+  Name: RequiredRole[];
+  Remark: RequiredRole[];
+  EliteSongClassify: RequiredRole[];
+  VideoPath: RequiredRole[];
+  PreviewPhoto: RequiredRole[];
+}
+
+const _eliteSongRoles: EliteSongRoles = {
+  Name: [{ required: true, message: "必填", trigger: "blur" }],
+  Remark: [{ required: true, message: "必填", trigger: "blur" }],
+  EliteSongClassify: [{ required: true, message: "必填", trigger: "blur" }],
+  VideoPath: [{ required: true, message: "必填", trigger: "blur" }],
+  PreviewPhoto: [{ required: true, message: "必填", trigger: "blur" }]
+};
 
 export default defineComponent({
   components: {
@@ -154,6 +179,9 @@ export default defineComponent({
   setup() {
     const isLoad = ref(true);
     const eliteSongClassify = reactive(new PageOutput<OptionOutput>());
+    const eliteSongRoles = ref(_eliteSongRoles);
+    const fromCreate = ref(null);
+    const formUpdate = ref(null);
 
     const dialogCreate = reactive<DialogData<EliteSongInput>>({
       show: false,
@@ -167,7 +195,15 @@ export default defineComponent({
       oldData: {} as EliteSongOutput
     });
 
-    return { isLoad, eliteSongClassify, dialogCreate, dialogUpdate };
+    return {
+      fromCreate,
+      formUpdate,
+      isLoad,
+      eliteSongClassify,
+      dialogCreate,
+      dialogUpdate,
+      eliteSongRoles
+    };
   },
   methods: {
     async getData(
@@ -211,12 +247,17 @@ export default defineComponent({
     },
     /**保存编辑 */
     async editSave(): Promise<void> {
-      await apiAppResourceManagerApi.UpdateEliteSong(
-        this.dialogUpdate.oldData.Pid,
-        this.dialogUpdate.oldData.Timestamp,
-        this.dialogUpdate.formData
-      );
-      this.isLoad = true;
+      try {
+        this.$loading();
+        await apiAppResourceManagerApi.UpdateEliteSong(
+          this.dialogUpdate.oldData.Pid,
+          this.dialogUpdate.oldData.Timestamp,
+          this.dialogUpdate.formData
+        );
+        this.isLoad = true;
+      } finally {
+        this.$closeLoading();
+      }
     },
     /**打开新增 */
     async create(): Promise<void> {
@@ -225,11 +266,25 @@ export default defineComponent({
       this.dialogCreate.formData = {} as EliteSongInput;
     },
     /**保存新增 */
-    async createSave(): Promise<void> {
-      await apiAppResourceManagerApi.CreateEliteSong(
-        this.dialogCreate.formData
+    async createSave(close: () => void): Promise<void> {
+      this.$useRules("formUpdate").validate(
+        async (valid: boolean): Promise<boolean> => {
+          if (valid) {
+            try {
+              this.$loading();
+              await apiAppResourceManagerApi.CreateEliteSong(
+                this.dialogCreate.formData
+              );
+              this.isLoad = true;
+            } finally {
+              this.$closeLoading();
+              close();
+            }
+            return true;
+          }
+          return false;
+        }
       );
-      this.isLoad = true;
     },
     /**删除并保存 */
     async deleteSave(_index: number, row: EliteSongOutput): Promise<void> {

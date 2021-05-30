@@ -12,6 +12,12 @@ export declare interface SortTableColumn {
   order: "ascending" | "descending";
 }
 
+export declare interface RequiredRole {
+  required: boolean;
+  message: string;
+  trigger: "blur" | "change";
+}
+
 export declare interface EmptyRule {
   required: boolean;
   message: string;
@@ -40,7 +46,11 @@ export declare interface ErrorRuleMsg {
   message: string;
 }
 
-export declare type FormRule = EmptyRule | LengthRule | FuncFormRule;
+export declare type FormRule =
+  | RequiredRole
+  | EmptyRule
+  | LengthRule
+  | FuncFormRule;
 
 /**表单验证 */
 export declare interface Rules {

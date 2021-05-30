@@ -14,7 +14,7 @@ export interface EliteSongOutput extends Record<string, unknown> {
   Name: string;
   Remark: string;
   VideoPath: string;
-  PrviewPhoto: string;
+  PreviewPhoto: string;
   EliteSongClassify: number;
   EliteSongClassifyName: string;
   CreateTime: Date;
@@ -30,7 +30,7 @@ export interface EliteSongInput extends Record<string, unknown> {
   Name: string;
   Remark: string;
   VideoPath: string;
-  PrviewPhoto: string;
+  PreviewPhoto: string;
   EliteSongClassify: number;
 }
 /**爱利特儿歌修改模型 */
@@ -38,7 +38,7 @@ export interface EliteSongUpdInput extends Record<string, unknown> {
   Name?: string;
   Remark?: string;
   VideoPath?: string;
-  PrviewPhoto?: string;
+  PreviewPhoto?: string;
   EliteSongClassify?: number;
 }
 

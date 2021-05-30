@@ -1,12 +1,14 @@
 ﻿<template>
   <el-upload
+    ref="upload"
     action="http://file.linshengweb.com/upload/"
     list-type="picture-card"
     accept="image/*"
-    :auto-upload="false"
+    :auto-upload="true"
     :multiple="false"
     :show-file-list="false"
     :on-change="handleChange"
+    :before-upload="handleBeforeUpload"
     :on-success="handleSuccess"
   >
     <template #default>
@@ -34,9 +36,6 @@ export default defineComponent({
     return { dialogImageUrl };
   },
   methods: {
-    handleRemove(file: UploadFile) {
-      console.log(file);
-    },
     handleChange(file: UploadFile, fileList: UploadFile[]) {
       if (fileList.length > 0) {
         fileList.length = 0;
@@ -46,8 +45,12 @@ export default defineComponent({
       }
       fileList.push(file);
     },
+    handleBeforeUpload(): void {
+      this.$loading();
+    },
     handleSuccess(response: Record<string, unknown>) {
       this.$emit("update:modelValue", response.filename);
+      this.$closeLoading();
     }
   }
 });
