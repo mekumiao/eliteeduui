@@ -48,15 +48,15 @@
       ref="formCreate"
       label-width="80px"
       :model="dialogCreate.formData"
-      :role="eliteSongRoles"
+      :roles="roles"
     >
-      <el-form-item label="名称">
+      <el-form-item label="名称" prop="Name">
         <el-input v-model="dialogCreate.formData.Name" />
       </el-form-item>
-      <el-form-item label="描述">
+      <el-form-item label="描述" prop="Remark">
         <el-input v-model="dialogCreate.formData.Remark" />
       </el-form-item>
-      <el-form-item label="儿歌分类">
+      <el-form-item label="儿歌分类" prop="EliteSongClassify">
         <el-select
           v-model="dialogCreate.formData.EliteSongClassify"
           placeholder="请选择儿歌分类"
@@ -70,12 +70,12 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="资源路径">
+      <el-form-item label="资源路径" prop="VideoPath">
         <my-file-upload
           v-model="dialogCreate.formData.VideoPath"
         ></my-file-upload>
       </el-form-item>
-      <el-form-item label="预览图">
+      <el-form-item label="预览图" prop="PreviewPhoto">
         <my-image-upload
           v-model="dialogCreate.formData.PreviewPhoto"
         ></my-image-upload>
@@ -93,14 +93,14 @@
       ref="formUpdate"
       label-width="80px"
       :model="dialogUpdate.formData"
-      :role="eliteSongRoles"
+      :roles="roles"
     >
-      <el-form-item label="名称">
+      <el-form-item label="名称" prop="Name">
         <el-input v-model="dialogUpdate.formData.Name" />
       </el-form-item>
-      <el-form-item label="描述">
+      <el-form-item label="描述" prop="Remark">
         <el-input v-model="dialogUpdate.formData.Remark" /> </el-form-item
-      ><el-form-item label="儿歌分类">
+      ><el-form-item label="儿歌分类" prop="EliteSongClassify">
         <el-select
           v-model="dialogUpdate.formData.EliteSongClassify"
           placeholder="请选择儿歌分类"
@@ -114,12 +114,12 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="资源路径">
+      <el-form-item label="资源路径" prop="VideoPath">
         <my-file-upload
           v-model="dialogUpdate.formData.VideoPath"
         ></my-file-upload>
       </el-form-item>
-      <el-form-item label="预览图">
+      <el-form-item label="预览图" prop="PreviewPhoto">
         <my-image-upload
           v-model="dialogUpdate.formData.PreviewPhoto"
         ></my-image-upload>
@@ -149,23 +149,26 @@ import AppDialog from "@/components/AppDialog.vue";
 import { DialogData, DialogEditData } from "@/types/el-dialog";
 import MyImageUpload from "@/components/MyImageUpload.vue";
 import MyFileUpload from "@/components/MyFileUpload.vue";
-import { RequiredRole } from "@/types/el-rules";
+import { FormRule } from "@/types/el-rules";
 
 interface EliteSongRoles {
-  Name: RequiredRole[];
-  Remark: RequiredRole[];
-  EliteSongClassify: RequiredRole[];
-  VideoPath: RequiredRole[];
-  PreviewPhoto: RequiredRole[];
+  Name: FormRule[];
+  Remark: FormRule[];
+  EliteSongClassify: FormRule[];
+  VideoPath: FormRule[];
+  PreviewPhoto: FormRule[];
 }
 
-const _eliteSongRoles: EliteSongRoles = {
-  Name: [{ required: true, message: "必填", trigger: "blur" }],
+const roles = reactive<EliteSongRoles>({
+  Name: [
+    { required: true, message: "必填", trigger: "blur" },
+    { min: 1, max: 20, message: "必填", trigger: "blur" }
+  ],
   Remark: [{ required: true, message: "必填", trigger: "blur" }],
   EliteSongClassify: [{ required: true, message: "必填", trigger: "blur" }],
   VideoPath: [{ required: true, message: "必填", trigger: "blur" }],
   PreviewPhoto: [{ required: true, message: "必填", trigger: "blur" }]
-};
+});
 
 export default defineComponent({
   components: {
@@ -177,9 +180,9 @@ export default defineComponent({
   },
   name: "EliteSongManager",
   setup() {
+    debugger;
     const isLoad = ref(true);
     const eliteSongClassify = reactive(new PageOutput<OptionOutput>());
-    const eliteSongRoles = ref(_eliteSongRoles);
     const fromCreate = ref(null);
     const formUpdate = ref(null);
 
@@ -202,7 +205,7 @@ export default defineComponent({
       eliteSongClassify,
       dialogCreate,
       dialogUpdate,
-      eliteSongRoles
+      roles
     };
   },
   methods: {
@@ -267,8 +270,9 @@ export default defineComponent({
     },
     /**保存新增 */
     async createSave(close: () => void): Promise<void> {
-      this.$useRules("formUpdate").validate(
+      this.$useRules("formCreate").validate(
         async (valid: boolean): Promise<boolean> => {
+          debugger;
           if (valid) {
             try {
               this.$loading();

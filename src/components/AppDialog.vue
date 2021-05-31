@@ -33,7 +33,7 @@ export default defineComponent({
   },
   methods: {
     save(): void {
-      this.$emit("save", this.close());
+      this.$emit("save", this.close);
     },
     close(): void {
       this.$emit("update:modelValue", false);
