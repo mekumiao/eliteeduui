@@ -153,7 +153,28 @@ export interface ViewEntity extends PublicView {
   /**唯一标识 */
   pid: string;
 }
-
+/**
+ * 公开实体模型
+ */
+export interface PublicOutput extends Record<string, unknown> {
+  CreateUserId?: string;
+  UpdateUserId?: string;
+  CreateUserName?: string;
+  UpdateUserName?: string;
+  CreateTime?: Date;
+  UpdateTime?: Date;
+  Timestamp: string;
+}
+/**
+ * 有键的公开实体模型
+ */
+export interface PublicWithKeyOutput extends PublicOutput {
+  Pid: string;
+}
+/**有键实体模型 */
+export interface WithKeyOutput extends Record<string, unknown> {
+  Pid: string;
+}
 /**检查是否是InputError类型 */
 export const isInputError = (error: unknown): error is InputError => {
   if (!error) return false;

@@ -30,6 +30,10 @@ const EliteSongManager = () =>
     /* webpackChunkName: "pages" */ "@/pages/appManager/EliteSongManager.vue"
   );
 
+/**访客管理 */
+const VisitorUserInfo = () =>
+  import(/* webpackChunkName: "pages" */ "@/pages/visitor/VisitorUserInfo.vue");
+
 const routes: Array<RouteRecordRaw> = [
   { path: "/", redirect: "/home/welcome" },
   { path: "/login", component: Login },
@@ -62,6 +66,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/sourceManager/appManager",
     component: Home,
     children: [{ path: "eliteSongManager", component: EliteSongManager }]
+  },
+  {
+    path: "/systemManager",
+    component: Home,
+    children: [{ path: "visitorUserInfo", component: VisitorUserInfo }]
   },
   { path: "/:notFind(.*)", redirect: { name: "page404" } }
 ];

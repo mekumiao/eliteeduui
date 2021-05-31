@@ -40,6 +40,11 @@ const menuList: MenuItem[] = [
         title: "机构人员",
         icon: "el-icon-document",
         index: "/systemManager/employee"
+      },
+      {
+        title: "访客用户",
+        icon: "el-icon-document",
+        index: "/systemManager/visitorUserInfo"
       }
     ]
   },
