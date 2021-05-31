@@ -8,14 +8,14 @@ import { message } from "@/plugins/el-message";
 import { getMessage } from "@/apis/statuscode";
 
 export let rootURL = "http://localhost:8080";
-let timeout: number | undefined = undefined;
+export let timeout: number | undefined = undefined;
 
 if (process.env.NODE_ENV === "production") {
   rootURL = "http://an.linshengweb.com:8188";
   timeout = 20000;
 }
 
-rootURL = "http://an.linshengweb.com:8188";
+// rootURL = "http://an.linshengweb.com:8188";
 
 /**
  * 返回消息模型
@@ -254,7 +254,7 @@ ajax.interceptors.response.use(
       }
     }
     /**其他未受控制的错误 */
-    const message = getMessage(error);
+    const message = getMessage((error as Record<"response", unknown>).response);
     const errorMsgOutput: MsgOutput = {
       Title: message.msg,
       Code: message.code,

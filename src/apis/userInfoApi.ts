@@ -2,7 +2,8 @@
   ApiBase,
   ObjFilterInput,
   PublicWithKeyOutput,
-  PageOutput
+  PageOutput,
+  MsgOutput
 } from "./apiBase";
 
 /**访客用户输出实体 */
@@ -13,13 +14,32 @@ export interface VisitorUserInfoOutput extends PublicWithKeyOutput {
 }
 /**用户信息接口 */
 class userInfo extends ApiBase {
-  public baseUrl: string = "/api/admin/UserInfo/";
-  /**查询访客用户信息 */
+  public baseUrl = "/api/admin/UserInfo/";
+  /**
+   * 查询访客用户信息
+   * @param input 条件模型
+   */
   public QueryPageVisitoryUserInfo(
     input: ObjFilterInput<VisitorUserInfoOutput>
   ): Promise<PageOutput<VisitorUserInfoOutput>> {
     const url = this.mergeUrl("QueryPageVisitoryUserInfo");
     return this.tryCatchCall(() => ajax.post(url, input));
+  }
+  /**
+   * 审核访客用户
+   * @param id 访客用户ID
+   */
+  public AuthVisitoryUserInfoById(id: string): Promise<MsgOutput> {
+    const url = this.mergeUrlParame("AuthVisitoryUserInfoById", id);
+    return this.tryCatchCall(() => ajax.get(url));
+  }
+  /**
+   * 删除访客用户
+   * @param id 访客用户ID
+   */
+  public DeleteVisitoryUserInfoById(id: string): Promise<MsgOutput> {
+    const url = this.mergeUrlParame("DeleteVisitoryUserInfoById", id);
+    return this.tryCatchCall(() => ajax.delete(url));
   }
 }
 

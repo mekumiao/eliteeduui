@@ -18,7 +18,6 @@ export interface ShowMessage {
 }
 
 const handMsgInfo = (msg: MsgInfo): VNode | string => {
-  debugger;
   const info: MsgOutput = msg as MsgOutput;
   if (info.Title !== undefined && info.Code !== undefined) {
     if (info.MsgDetail) {
@@ -61,7 +60,6 @@ class ElMessageProvider implements ShowMessage {
   }
 
   public showError(msg: MsgInfo): IMessageHandle {
-    debugger;
     return this.instance.error({
       type: "error",
       message: handMsgInfo(msg),

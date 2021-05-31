@@ -1,4 +1,5 @@
-﻿import ajax, {
+﻿import { PublicWithKeyOutput } from "./apiBase";
+import ajax, {
   ApiBase,
   PageOutput,
   ObjFilterInput,
@@ -9,21 +10,13 @@
 } from "@/apis/apiBase";
 
 /**爱利特儿歌输出模型 */
-export interface EliteSongOutput extends Record<string, unknown> {
-  Pid: string;
+export interface EliteSongOutput extends PublicWithKeyOutput {
   Name: string;
   Remark: string;
   VideoPath: string;
   PreviewPhoto: string;
   EliteSongClassify: number;
   EliteSongClassifyName: string;
-  CreateTime: Date;
-  UpdateTime: Date;
-  CreateUserId: string;
-  UpdateUserId: string;
-  CreateUserName: string;
-  UpdateUserName: string;
-  Timestamp: string;
 }
 /**爱利特儿歌输入模型 */
 export interface EliteSongInput extends Record<string, unknown> {

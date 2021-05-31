@@ -5,34 +5,27 @@ import Home from "@/pages/home/Home.vue";
 import Login from "@/pages/login/Login.vue";
 
 /**首页相关 */
-const Welcome = () =>
-  import(/* webpackChunkName: "pages" */ "@/pages/home/Welcome.vue");
-const About = () =>
-  import(/* webpackChunkName: "pages" */ "@/pages/home/About.vue");
+import Welcome from "@/pages/home/Welcome.vue";
+import About from "@/pages/home/About.vue";
 
 /**测试页面 */
-const Test1 = () =>
-  import(/* webpackChunkName: "pages" */ "@/pages/testpage/Test1.vue");
-const Test2 = () =>
-  import(/* webpackChunkName: "pages" */ "@/pages/testpage/Test2.vue");
+import Test1 from "@/pages/testpage/Test1.vue";
+import Test2 from "@/pages/testpage/Test2.vue";
 
 /**异常页面 */
-const Exception403 = () =>
-  import(/* webpackChunkName: "pages" */ "@/pages/exception/403.vue");
-const Exception404 = () =>
-  import(/* webpackChunkName: "pages" */ "@/pages/exception/404.vue");
-const Exception500 = () =>
-  import(/* webpackChunkName: "pages" */ "@/pages/exception/500.vue");
+import Exception403 from "@/pages/exception/403.vue";
+import Exception404 from "@/pages/exception/404.vue";
+import Exception500 from "@/pages/exception/500.vue";
 
-/**爱丽特儿歌管理 */
-const EliteSongManager = () =>
-  import(
-    /* webpackChunkName: "pages" */ "@/pages/appManager/EliteSongManager.vue"
-  );
+/**系统管理 */
+import SystemVisitorUserInfo from "@/pages/system/MyVisitorUserInfo.vue";
 
-/**访客管理 */
-const VisitorUserInfo = () =>
-  import(/* webpackChunkName: "pages" */ "@/pages/visitor/VisitorUserInfo.vue");
+/**资源管理 */
+import EliteSongManager from "@/pages/appManager/EliteSongManager.vue";
+
+/**访客页面 */
+import VisitorUserInfo from "@/pages/visitor/VisitorUserInfo.vue";
+import VisitorLogin from "@/pages/visitor/VisitorLogin.vue";
 
 const routes: Array<RouteRecordRaw> = [
   { path: "/", redirect: "/home/welcome" },
@@ -70,7 +63,15 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/systemManager",
     component: Home,
-    children: [{ path: "visitorUserInfo", component: VisitorUserInfo }]
+    children: [{ path: "visitorUserInfo", component: SystemVisitorUserInfo }]
+  },
+  {
+    path: "/visitorUserInfo",
+    component: VisitorUserInfo
+  },
+  {
+    path: "/visitorLogin",
+    component: VisitorLogin
   },
   { path: "/:notFind(.*)", redirect: { name: "page404" } }
 ];
@@ -106,7 +107,6 @@ router.beforeEach((to, _from, next) => {
     apiAuth
       .CheckState()
       .then((flag) => {
-        debugger;
         if (flag) {
           document.cookie;
           window.sessionStorage.setItem("state", "5200");
@@ -116,7 +116,6 @@ router.beforeEach((to, _from, next) => {
         }
       })
       .catch(() => {
-        debugger;
         next("/login");
       });
   } else {

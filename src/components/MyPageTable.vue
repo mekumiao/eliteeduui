@@ -116,8 +116,6 @@ export default defineComponent({
       try {
         if (this.getData) {
           this.pageData = await this.getData(this.search, this.page);
-          this.page.Index = this.pageData.Index;
-          this.page.Size = this.pageData.Size;
         }
       } finally {
         this.loading = false;
