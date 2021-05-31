@@ -3,6 +3,7 @@
     action="http://file.linshengweb.com/upload/"
     accept=".mp4"
     :auto-upload="true"
+    :file-list="fileList"
     :multiple="false"
     :show-file-list="true"
     :before-upload="handleBeforeUpload"
@@ -26,14 +27,19 @@ export default defineComponent({
   props: {
     modelValue: { type: String, default: "" }
   },
-  setup() {
+  setup(props) {
     const upload = ref<ElUpload>();
-    return { upload };
+    const fileList = ref<Array<Record<string, string>>>([]);
+    if (props.modelValue) {
+      fileList.value.push({ name: props.modelValue });
+    }
+    return { upload, fileList };
   },
   methods: {
     handleChange(file: UploadFile, fileList: UploadFile[]) {
       this.upload?.clearFiles();
       fileList.length = 0;
+      this.fileList.length = 0;
       fileList.push(file);
     },
     handleRemove(file: UploadFile): void {

@@ -249,7 +249,7 @@ export default defineComponent({
       this.dialogUpdate.show = true;
     },
     /**保存编辑 */
-    async editSave(): Promise<void> {
+    async editSave(close: () => void): Promise<void> {
       try {
         this.$loading();
         await apiAppResourceManagerApi.UpdateEliteSong(
@@ -260,6 +260,7 @@ export default defineComponent({
         this.isLoad = true;
       } finally {
         this.$closeLoading();
+        close();
       }
     },
     /**打开新增 */
