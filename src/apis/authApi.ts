@@ -1,17 +1,21 @@
 ﻿import ajax, { ApiBase, MsgOutput } from "./apiBase";
 /**账号密码模型 */
-export interface LoginInput extends Record<string, unknown> {
+export interface LoginInput {
   Account: string;
   PassWord: string;
 }
 /**Token输出模型 */
-export interface TokenItem extends Record<string, unknown> {
+export interface TokenItem {
   Token: string;
 }
 /**手机号验证码输入模型 */
-export interface PhoneCodeInput extends Record<string, unknown> {
+export interface PhoneCodeInput {
   Phone: string;
   Code: string;
+}
+/**名称手机号验证码输入模型 */
+export interface NamePhoneCodeInput extends PhoneCodeInput {
+  Name: string;
 }
 /**授权API */
 class Auth extends ApiBase {
@@ -39,7 +43,7 @@ class Auth extends ApiBase {
    * @param input 手机号验证码模型
    */
   public LoginOrRegisterAtVisitorByPhoneCode(
-    input: PhoneCodeInput
+    input: NamePhoneCodeInput
   ): Promise<TokenItem> {
     const url = this.mergeUrl("LoginOrRegisterAtVisitorByPhoneCode");
     return this.tryCatchCall(() => ajax.post(url, input));

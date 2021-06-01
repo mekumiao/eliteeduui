@@ -1,7 +1,10 @@
 ﻿<template>
-  <el-card>访客登录或注册</el-card>
+  <el-card>登录或注册</el-card>
   <el-card class="login-card">
     <el-form>
+      <el-form-item label="名称">
+        <el-input v-model="phoneInput.Name"></el-input>
+      </el-form-item>
       <el-form-item label="手机号">
         <el-input v-model="phoneInput.Phone"></el-input>
       </el-form-item>
@@ -21,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { PhoneCodeInput } from "@/apis/authApi";
+import { NamePhoneCodeInput } from "@/apis/authApi";
 import { defineComponent, ref } from "vue";
 import useTimer from "@/hooks/useTimer";
 import { apiAuth } from "@/apis/authApi";
@@ -30,7 +33,7 @@ export default defineComponent({
   name: "VisitorLogin",
   setup() {
     const timmerTotal = useTimer.Total;
-    const phoneInput = ref<PhoneCodeInput>({} as PhoneCodeInput);
+    const phoneInput = ref<NamePhoneCodeInput>({} as NamePhoneCodeInput);
     const isLoging = ref(false);
     return { phoneInput, timmerTotal, isLoging };
   },
@@ -49,8 +52,8 @@ export default defineComponent({
       }
     },
     async SendCode(): Promise<void> {
-      await apiAuth.SendVerificationCodeAtVisitor(this.phoneInput.Phone);
       useTimer.Start(60);
+      await apiAuth.SendVerificationCodeAtVisitor(this.phoneInput.Phone);
     }
   }
 });

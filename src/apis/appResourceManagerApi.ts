@@ -19,7 +19,7 @@ export interface EliteSongOutput extends PublicWithKeyOutput {
   EliteSongClassifyName: string;
 }
 /**爱利特儿歌输入模型 */
-export interface EliteSongInput extends Record<string, unknown> {
+export interface EliteSongInput {
   Name: string;
   Remark: string;
   VideoPath: string;
@@ -27,7 +27,7 @@ export interface EliteSongInput extends Record<string, unknown> {
   EliteSongClassify: number;
 }
 /**爱利特儿歌修改模型 */
-export interface EliteSongUpdInput extends Record<string, unknown> {
+export interface EliteSongUpdInput {
   Name?: string;
   Remark?: string;
   VideoPath?: string;

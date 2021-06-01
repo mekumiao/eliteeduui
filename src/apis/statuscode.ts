@@ -13,7 +13,7 @@
   505: "http版本不支持该请求"
 };
 
-export interface MessageResult extends Record<string, unknown> {
+export interface MessageResult {
   code: number;
   msg: string;
 }
