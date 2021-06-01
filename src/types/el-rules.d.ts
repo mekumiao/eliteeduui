@@ -55,15 +55,15 @@ export declare type FormRule =
 /**表单验证 */
 export declare interface Rules {
   validate: (
-    callback: (
+    callback?: (
       valid: boolean,
       fields?: unknown | null
     ) => boolean | Promise<boolean>
-  ) => void;
+  ) => void | Promise<void>;
   validateField: (
     props: Array<string> | string,
     callback: (error: string) => void
-  ) => boolean | Promise<boolean>;
+  ) => void;
   resetFields: () => void;
   clearValidate: (props: Array<string> | string) => void;
 }

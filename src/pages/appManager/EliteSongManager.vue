@@ -48,7 +48,7 @@
       ref="formCreate"
       label-width="80px"
       :model="dialogCreate.formData"
-      :roles="roles"
+      :rules="rules"
     >
       <el-form-item label="名称" prop="Name">
         <el-input v-model="dialogCreate.formData.Name" />
@@ -93,7 +93,7 @@
       ref="formUpdate"
       label-width="80px"
       :model="dialogUpdate.formData"
-      :roles="roles"
+      :rules="rules"
     >
       <el-form-item label="名称" prop="Name">
         <el-input v-model="dialogUpdate.formData.Name" />
@@ -151,23 +151,18 @@ import MyImageUpload from "@/components/MyImageUpload.vue";
 import MyFileUpload from "@/components/MyFileUpload.vue";
 import { FormRule } from "@/types/el-rules";
 
-interface EliteSongRoles {
-  Name: FormRule[];
-  Remark: FormRule[];
-  EliteSongClassify: FormRule[];
-  VideoPath: FormRule[];
-  PreviewPhoto: FormRule[];
-}
-
-const roles = reactive<EliteSongRoles>({
-  Name: [
-    { required: true, message: "必填", trigger: "blur" },
-    { min: 1, max: 20, message: "必填", trigger: "blur" }
-  ],
-  Remark: [{ required: true, message: "必填", trigger: "blur" }],
-  EliteSongClassify: [{ required: true, message: "必填", trigger: "blur" }],
-  VideoPath: [{ required: true, message: "必填", trigger: "blur" }],
-  PreviewPhoto: [{ required: true, message: "必填", trigger: "blur" }]
+const rules = reactive({
+  Name: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
+  Remark: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
+  EliteSongClassify: [
+    { required: true, message: "必填", trigger: "change" }
+  ] as FormRule[],
+  VideoPath: [
+    { required: true, message: "必填", trigger: "change" }
+  ] as FormRule[],
+  PreviewPhoto: [
+    { required: true, message: "必填", trigger: "change" }
+  ] as FormRule[]
 });
 
 export default defineComponent({
@@ -204,7 +199,7 @@ export default defineComponent({
       eliteSongClassify,
       dialogCreate,
       dialogUpdate,
-      roles
+      rules
     };
   },
   methods: {
@@ -251,10 +246,10 @@ export default defineComponent({
           this.dialogUpdate.oldData.Timestamp,
           this.dialogUpdate.formData
         );
+        close();
         this.isLoad = true;
       } finally {
         this.$closeLoading();
-        close();
       }
     },
     /**打开新增 */
@@ -273,12 +268,12 @@ export default defineComponent({
               await apiAppResourceManagerApi.CreateEliteSong(
                 this.dialogCreate.formData
               );
+              close();
               this.isLoad = true;
+              return true;
             } finally {
               this.$closeLoading();
-              close();
             }
-            return true;
           }
           return false;
         }

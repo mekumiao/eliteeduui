@@ -80,9 +80,13 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes
 });
-
-const ignorePath: string[] = ["/visitorEliteSong", "/visitorLogin"];
-
+/**忽略的路由 */
+const ignorePath = (path: string): boolean => {
+  const paths = ["/visitorEliteSong", "/visitorLogin"];
+  return (
+    paths.filter((item) => item.toLowerCase() === path.toLowerCase()).length > 0
+  );
+};
 /**开始进度条 */
 router.beforeEach((_to, _from, next) => {
   nprogress.start();
@@ -90,7 +94,7 @@ router.beforeEach((_to, _from, next) => {
 });
 /**处理未登录 */
 router.beforeEach((to, _from, next) => {
-  if (to.path === "/login" || ignorePath.indexOf(to.path) > -1) {
+  if (to.path.toLowerCase() === "/login" || ignorePath(to.path)) {
     return next();
   }
   const token = window.localStorage.getItem("token");
@@ -101,7 +105,7 @@ router.beforeEach((to, _from, next) => {
 });
 /**处理Token失效后依然能访问首页的问题 */
 router.beforeEach((to, _from, next) => {
-  if (to.path === "/login" || ignorePath.indexOf(to.path) > -1) {
+  if (to.path === "/login" || ignorePath(to.path)) {
     return next();
   }
   const session = window.sessionStorage.getItem("state");

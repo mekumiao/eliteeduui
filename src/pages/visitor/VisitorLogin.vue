@@ -1,20 +1,27 @@
 ﻿<template>
   <app-top-menu title="登录或注册"></app-top-menu>
   <el-card class="login-card">
-    <el-form>
-      <el-form-item label="名称">
+    <el-form
+      :rules="rules"
+      :model="phoneInput"
+      ref="formLogin"
+      label-position="top"
+    >
+      <el-form-item label="名称" prop="Name">
         <el-input v-model="phoneInput.Name"></el-input>
       </el-form-item>
-      <el-form-item label="手机号">
+      <el-form-item label="手机号" prop="Phone">
         <el-input v-model="phoneInput.Phone"></el-input>
       </el-form-item>
-      <el-form-item label="验证码">
-        <el-input v-model="phoneInput.Code"></el-input>
+      <el-form-item label="验证码" prop="Code">
+        <el-space>
+          <el-input v-model="phoneInput.Code"></el-input>
+          <el-button :disabled="timmerTotal > 0" @click="SendCode">
+            发送验证码{{ timmerTotal > 0 ? timmerTotal.toString() : "" }}
+          </el-button>
+        </el-space>
       </el-form-item>
-      <el-form-item class="button">
-        <el-button :disabled="timmerTotal > 0" @click="SendCode">
-          发送验证码{{ timmerTotal > 0 ? timmerTotal.toString() : "" }}
-        </el-button>
+      <el-form-item>
         <el-button type="primary" @click="Login" :loading="isLoging">
           立即登录
         </el-button>
@@ -25,10 +32,17 @@
 
 <script lang="ts">
 import { NamePhoneCodeInput } from "@/apis/authApi";
-import { defineComponent, ref } from "vue";
+import { defineComponent, reactive, ref } from "vue";
 import useTimer from "@/hooks/useTimer";
 import { apiAuth } from "@/apis/authApi";
 import AppTopMenu from "@/components/AppTopMenu.vue";
+import { FormRule } from "@/types/el-rules";
+
+const rules = reactive({
+  Name: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
+  Phone: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
+  Code: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[]
+});
 
 export default defineComponent({
   components: { AppTopMenu },
@@ -37,12 +51,13 @@ export default defineComponent({
     const timmerTotal = useTimer.Total;
     const phoneInput = ref<NamePhoneCodeInput>({} as NamePhoneCodeInput);
     const isLoging = ref(false);
-    return { phoneInput, timmerTotal, isLoging };
+    return { phoneInput, timmerTotal, isLoging, rules };
   },
   methods: {
     /**访客登录 */
     async Login(): Promise<void> {
       try {
+        await this.$useRules("formLogin").validate();
         this.isLoging = true;
         const token = await apiAuth.LoginOrRegisterAtVisitorByPhoneCode(
           this.phoneInput
@@ -54,8 +69,12 @@ export default defineComponent({
       }
     },
     async SendCode(): Promise<void> {
-      useTimer.Start(60);
-      await apiAuth.SendVerificationCodeAtVisitor(this.phoneInput.Phone);
+      this.$useRules("formLogin").validateField("Phone", async (error) => {
+        if (!error) {
+          useTimer.Start(60);
+          await apiAuth.SendVerificationCodeAtVisitor(this.phoneInput.Phone);
+        }
+      });
     }
   }
 });
@@ -65,8 +84,5 @@ export default defineComponent({
 .login-card {
   width: 400px;
   margin: 20px auto;
-}
-.button {
-  text-align: right;
 }
 </style>
