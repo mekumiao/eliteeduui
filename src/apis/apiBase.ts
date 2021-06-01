@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === "production") {
 /**
  * 返回消息模型
  */
-export interface MsgOutput extends Record<string, unknown> {
+export interface MsgOutput {
   readonly Code: number;
   readonly Title: string;
   readonly MsgDetail: string[];
@@ -28,7 +28,7 @@ export interface MsgOutput extends Record<string, unknown> {
 /**
  * 参数格式错误输出模型
  */
-export interface InputError extends Record<string, unknown> {
+export interface InputError {
   type: string;
   title: string;
   status: number;
@@ -38,7 +38,7 @@ export interface InputError extends Record<string, unknown> {
 /**
  * 选项输出模型
  */
-export interface OptionOutput extends Record<string, unknown> {
+export interface OptionOutput {
   Label: string;
   Value: unknown;
   Disabled?: boolean;
@@ -46,7 +46,7 @@ export interface OptionOutput extends Record<string, unknown> {
 /**
  * 分页输出模型
  */
-export class PageOutput<T = unknown> {
+export class PageOutput<T> {
   public Total = 0;
   public Index = 0;
   public Size = 0;
@@ -55,7 +55,7 @@ export class PageOutput<T = unknown> {
 /**
  * 分页输入模型
  */
-export class PageInput<T extends unknown> {
+export class PageInput<T> {
   public Index = 1;
   public Size = 10;
   public Sorts?: SortInput<T>[];
@@ -79,22 +79,23 @@ export class OptionFilterInput {
 /**
  * 排序模型
  */
-export interface SortInput<T extends unknown> extends Record<string, unknown> {
+export interface SortInput<T> {
   Orderby: keyof T;
   Desc?: boolean;
 }
 /**
  * 查询条件分组模型
  */
-export interface GroupInput<T extends unknown> extends Record<string, unknown> {
+export interface GroupInput<T> {
   Logic: "and" | "or";
   Items?: ItemInput<T>[];
   Groups?: GroupInput<T>[];
 }
+
 /**
  * 查询条件项模型
  */
-export interface ItemInput<T extends unknown> extends Record<string, unknown> {
+export interface ItemInput<T> {
   Field: keyof T;
   Value: string;
   Compare:
@@ -110,9 +111,23 @@ export interface ItemInput<T extends unknown> extends Record<string, unknown> {
     | "notcontains";
 }
 /**
+ * 对象形式的查询条件模型
+ */
+export class ObjFilterInput<T> {
+  public Condition?: GroupInput<T>;
+  public Page: PageInput<T>;
+
+  public constructor(page: PageInput<T>) {
+    this.Page = page;
+  }
+}
+
+///通用实体模型
+
+/**
  * 键模型
  */
-export interface KeyItem<T extends unknown> extends Record<string, unknown> {
+export interface KeyItem<T> {
   KeyValue: T;
 }
 /**
@@ -122,20 +137,9 @@ export interface PidKeyItem extends KeyItem<string> {
   KeyValue: string;
 }
 /**
- * 对象形式的查询条件模型
- */
-export class ObjFilterInput<T extends unknown> {
-  public Condition?: GroupInput<T>;
-  public Page: PageInput<T>;
-
-  public constructor(page: PageInput<T>) {
-    this.Page = page;
-  }
-}
-/**
  * 公用视图模型
  */
-export interface PublicView extends Record<string, unknown> {
+export interface PublicView {
   /**创建人ID */
   createuserid?: string;
   /**修改人ID */
@@ -156,7 +160,7 @@ export interface ViewEntity extends PublicView {
 /**
  * 公开实体模型
  */
-export interface PublicOutput extends Record<string, unknown> {
+export interface PublicOutput {
   CreateUserId?: string;
   UpdateUserId?: string;
   CreateUserName?: string;
@@ -172,7 +176,7 @@ export interface PublicWithKeyOutput extends PublicOutput {
   Pid: string;
 }
 /**有键实体模型 */
-export interface WithKeyOutput extends Record<string, unknown> {
+export interface WithKeyOutput {
   Pid: string;
 }
 /**检查是否是InputError类型 */

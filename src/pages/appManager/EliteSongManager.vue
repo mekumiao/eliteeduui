@@ -210,8 +210,8 @@ export default defineComponent({
   methods: {
     async getData(
       match: string,
-      page: PageInput<unknown>
-    ): Promise<PageOutput<unknown>> {
+      page: PageInput<EliteSongOutput>
+    ): Promise<PageOutput<EliteSongOutput>> {
       const filter: ObjFilterInput<EliteSongOutput> = {
         Page: page,
         Condition: {

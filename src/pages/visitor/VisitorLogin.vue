@@ -27,6 +27,7 @@ import useTimer from "@/hooks/useTimer";
 import { apiAuth } from "@/apis/authApi";
 
 export default defineComponent({
+  name: "VisitorLogin",
   setup() {
     const timmerTotal = useTimer.Total;
     const phoneInput = ref<PhoneCodeInput>({} as PhoneCodeInput);
@@ -42,7 +43,7 @@ export default defineComponent({
           this.phoneInput
         );
         window.localStorage.setItem("visitorToken", token.Token);
-        this.$router.push("visitorUserInfo");
+        this.$router.push("/visitorEliteSong");
       } finally {
         this.isLoging = false;
       }

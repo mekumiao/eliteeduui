@@ -34,6 +34,14 @@ class userInfo extends ApiBase {
     return this.tryCatchCall(() => ajax.get(url));
   }
   /**
+   * 取消审核访客用户
+   * @param id 访客用户ID
+   */
+  public UnAuthVisitoryUserInfoById(id: string): Promise<MsgOutput> {
+    const url = this.mergeUrlParame("UnAuthVisitoryUserInfoById", id);
+    return this.tryCatchCall(() => ajax.get(url));
+  }
+  /**
    * 删除访客用户
    * @param id 访客用户ID
    */

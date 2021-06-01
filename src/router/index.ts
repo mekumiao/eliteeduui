@@ -24,7 +24,7 @@ import SystemVisitorUserInfo from "@/pages/system/MyVisitorUserInfo.vue";
 import EliteSongManager from "@/pages/appManager/EliteSongManager.vue";
 
 /**访客页面 */
-import VisitorUserInfo from "@/pages/visitor/VisitorUserInfo.vue";
+import VisitorEliteSong from "@/pages/visitor/VisitorEliteSong.vue";
 import VisitorLogin from "@/pages/visitor/VisitorLogin.vue";
 
 const routes: Array<RouteRecordRaw> = [
@@ -66,8 +66,8 @@ const routes: Array<RouteRecordRaw> = [
     children: [{ path: "visitorUserInfo", component: SystemVisitorUserInfo }]
   },
   {
-    path: "/visitorUserInfo",
-    component: VisitorUserInfo
+    path: "/visitorEliteSong",
+    component: VisitorEliteSong
   },
   {
     path: "/visitorLogin",
@@ -81,6 +81,8 @@ const router = createRouter({
   routes
 });
 
+const ignorePath: string[] = ["/visitorEliteSong", "/visitorLogin"];
+
 /**开始进度条 */
 router.beforeEach((_to, _from, next) => {
   nprogress.start();
@@ -88,7 +90,7 @@ router.beforeEach((_to, _from, next) => {
 });
 /**处理未登录 */
 router.beforeEach((to, _from, next) => {
-  if (to.path === "/login") {
+  if (to.path === "/login" || ignorePath.indexOf(to.path) > -1) {
     return next();
   }
   const token = window.localStorage.getItem("token");
@@ -99,7 +101,7 @@ router.beforeEach((to, _from, next) => {
 });
 /**处理Token失效后依然能访问首页的问题 */
 router.beforeEach((to, _from, next) => {
-  if (to.path === "/login") {
+  if (to.path === "/login" || ignorePath.indexOf(to.path) > -1) {
     return next();
   }
   const session = window.sessionStorage.getItem("state");
@@ -108,7 +110,6 @@ router.beforeEach((to, _from, next) => {
       .CheckState()
       .then((flag) => {
         if (flag) {
-          document.cookie;
           window.sessionStorage.setItem("state", "5200");
           next();
         } else {

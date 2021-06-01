@@ -22,8 +22,18 @@
             size="mini"
             type="primary"
             @click="Auth(scope.$index, scope.row)"
+            v-if="!scope.row.Auth"
           >
             审核通过
+          </el-button>
+          <el-button
+            plain
+            size="mini"
+            type="primary"
+            @click="UnAuth(scope.$index, scope.row)"
+            v-else
+          >
+            取消审核
           </el-button>
           <app-button-popover
             @confirm="deleteSave(scope.$index, scope.row)"
@@ -74,6 +84,17 @@ export default defineComponent({
         this.isLoad = true;
       }
     },
+    /**取消审核 */
+    async UnAuth(_index: number, row: VisitorUserInfoOutput) {
+      try {
+        this.$loading();
+        await apiUserInfo.UnAuthVisitoryUserInfoById(row.Pid);
+      } finally {
+        this.$closeLoading();
+        this.isLoad = true;
+      }
+    },
+    /**删除用户 */
     async deleteSave(_index: number, row: VisitorUserInfoOutput) {
       try {
         this.$loading();
