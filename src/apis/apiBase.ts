@@ -197,8 +197,9 @@ export const isMsgOutput = (output: unknown): output is MsgOutput => {
   if (!output) return false;
   if (typeof output === "object") {
     const res = output as Record<string, unknown>;
-    if (res.code === undefined) return false;
-    if (res.title === undefined) return false;
+    if (res.Code === undefined) return false;
+    if (res.Title === undefined) return false;
+    if (res.MsgDetail === undefined) return false;
     return true;
   }
   return false;

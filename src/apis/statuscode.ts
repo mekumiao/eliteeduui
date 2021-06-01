@@ -19,7 +19,6 @@ export interface MessageResult {
 }
 
 export const getMessage = (response: unknown): MessageResult => {
-  debugger;
   if (typeof response === "object") {
     const res = response as Record<"status", number | undefined>;
     if (res && res.status) {
@@ -30,7 +29,6 @@ export const getMessage = (response: unknown): MessageResult => {
 };
 
 export const mapStatus = (status: number | undefined): MessageResult => {
-  debugger;
   if (status === undefined) return { code: 500, msg: "连接到服务器失败" };
   const res = codemap[status];
   return res
