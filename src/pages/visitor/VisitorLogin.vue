@@ -1,5 +1,5 @@
 ﻿<template>
-  <el-card>登录或注册</el-card>
+  <app-top-menu title="登录或注册"></app-top-menu>
   <el-card class="login-card">
     <el-form>
       <el-form-item label="名称">
@@ -28,8 +28,10 @@ import { NamePhoneCodeInput } from "@/apis/authApi";
 import { defineComponent, ref } from "vue";
 import useTimer from "@/hooks/useTimer";
 import { apiAuth } from "@/apis/authApi";
+import AppTopMenu from "@/components/AppTopMenu.vue";
 
 export default defineComponent({
+  components: { AppTopMenu },
   name: "VisitorLogin",
   setup() {
     const timmerTotal = useTimer.Total;

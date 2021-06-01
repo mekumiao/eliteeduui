@@ -305,7 +305,7 @@ export abstract class ApiBase {
     url: string,
     ...params: (string | number | boolean)[]
   ): string {
-    const msgs = params.map((x) => x.toString());
+    const msgs = params.map((x) => (x || "").toString());
     const array = msgs.map((x) => encodeURIComponent(x));
     const str = array.join("/");
     return `${this.trimEnd(this.mergeUrl(url))}/${this.trimStart(str)}`;
