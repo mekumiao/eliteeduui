@@ -70,17 +70,24 @@ export default defineComponent({
       match: string,
       page: PageInput<EliteSongOutput>
     ): Promise<PageOutput<EliteSongOutput>> {
-      const filter: ObjFilterInput<EliteSongOutput> = {
-        Condition: {
-          Logic: "or",
-          Items: [
-            { Field: "Name", Value: match, Compare: "contains" },
-            { Field: "Remark", Value: match, Compare: "contains" }
-          ]
-        },
-        Page: page
-      };
-      return await apiVisitorCoursewareResource.QueryPageEliteSong(filter);
+      if (window.localStorage.getItem("visitorToken")) {
+        const filter: ObjFilterInput<EliteSongOutput> = {
+          Condition: {
+            Logic: "or",
+            Items: [
+              { Field: "Name", Value: match, Compare: "contains" },
+              { Field: "Remark", Value: match, Compare: "contains" }
+            ]
+          },
+          Page: page
+        };
+        return await apiVisitorCoursewareResource.QueryPageEliteSong(filter);
+      } else {
+        this.$router.push("/visitorLogin");
+        return Promise.resolve<PageOutput<EliteSongOutput>>(
+          new PageOutput<EliteSongOutput>()
+        );
+      }
     },
     select(tag: string) {
       switch (tag) {
