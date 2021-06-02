@@ -13,7 +13,10 @@
       <el-table-column label="课程资源" prop="VideoPath">
         <template #default="scope">
           <a
-            :href="'http://file.linshengweb.com/files/' + scope.row.VideoPath"
+            :href="
+              'http://file.linshengweb.com/files/' +
+              encodeURI(scope.row.VideoPath)
+            "
             target="blank"
           >
             {{ scope.row.VideoPath }}
@@ -31,7 +34,10 @@
             v-if="scope.row.PreviewPhoto"
             style="width: 100px"
             fit="contain"
-            :src="'http://file.linshengweb.com/files/' + scope.row.PreviewPhoto"
+            :src="
+              'http://file.linshengweb.com/files/' +
+              encodeURI(scope.row.PreviewPhoto)
+            "
           ></el-image>
           <div v-else>暂无图片</div>
         </template>
@@ -90,6 +96,7 @@ export default defineComponent({
       }
     },
     select(tag: string) {
+      encodeURI("");
       switch (tag) {
         case "logout":
           window.localStorage.removeItem("visitorToken");

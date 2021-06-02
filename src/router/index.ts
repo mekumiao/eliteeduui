@@ -21,7 +21,8 @@ import Exception500 from "@/pages/exception/500.vue";
 import SystemVisitorUserInfo from "@/pages/system/MyVisitorUserInfo.vue";
 
 /**资源管理 */
-import EliteSongManager from "@/pages/appManager/EliteSongManager.vue";
+import AppEliteSong from "@/pages/sourceManager/AppEliteSong.vue";
+import Courseware from "@/pages/sourceManager/Courseware.vue";
 
 /**访客页面 */
 import VisitorEliteSong from "@/pages/visitor/VisitorEliteSong.vue";
@@ -58,7 +59,12 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/sourceManager/appManager",
     component: Home,
-    children: [{ path: "eliteSongManager", component: EliteSongManager }]
+    children: [{ path: "appEliteSong", component: AppEliteSong }]
+  },
+  {
+    path: "/sourceManager",
+    component: Home,
+    children: [{ path: "courseware", component: Courseware }]
   },
   {
     path: "/systemManager",

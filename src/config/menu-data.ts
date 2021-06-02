@@ -61,7 +61,7 @@ const menuList: MenuItem[] = [
           {
             title: "爱丽特儿歌",
             icon: "el-icon-document",
-            index: "/sourceManager/appManager/eliteSongManager"
+            index: "/sourceManager/appManager/appEliteSong"
           }
         ]
       },
