@@ -1,7 +1,7 @@
 ﻿<template>
   <el-upload
     action="http://file.linshengweb.com/upload/"
-    accept=".mp4"
+    :accept="accept"
     :auto-upload="true"
     :file-list="fileList"
     :multiple="false"
@@ -23,9 +23,19 @@ import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "MyFileUpload",
-  emits: ["update:modelValue"],
+  // emits: ["update:modelValue", "success"],
+  emits: {
+    "update:modelValue"(value: string) {
+      return value !== undefined;
+    },
+    success(file: UploadFile) {
+      const res = file !== undefined;
+      return res;
+    }
+  },
   props: {
-    modelValue: { type: String, default: "" }
+    modelValue: { type: String, default: "" },
+    accept: { type: String, default: "" }
   },
   setup(props) {
     const upload = ref<ElUpload>();
@@ -51,9 +61,10 @@ export default defineComponent({
       this.$loading();
     },
     handleSuccess(response: Record<string, unknown>, file: UploadFile): void {
-      file.name = response.filename as string;
-      this.$emit("update:modelValue", response.filename);
       this.$closeLoading();
+      file.name = response.filename as string;
+      this.$emit("update:modelValue", file.name);
+      this.$emit("success", file);
     }
   }
 });

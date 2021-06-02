@@ -27,7 +27,7 @@ const ajax: AxiosInstance = axios.create({
  */
 ajax.interceptors.request.use(
   (config: AxiosRequestConfig): AxiosRequestConfig => {
-    const token = window.localStorage.getItem("visitorToken");
+    const token = window.localStorage.getItem("vipToken");
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
     }

@@ -16,7 +16,6 @@
               <template #dropdown>
                 <el-dropdown-menu class="dropdown-menu">
                   <slot name="dropdown"></slot>
-                  <el-dropdown-item>关于我们</el-dropdown-item>
                 </el-dropdown-menu>
               </template>
             </el-dropdown>

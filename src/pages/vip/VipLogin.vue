@@ -39,7 +39,6 @@ import AppTopMenu from "@/components/AppTopMenu.vue";
 import { FormRule } from "@/types/el-rules";
 
 const rules = reactive({
-  Name: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
   Phone: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
   Code: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[]
 });
@@ -54,12 +53,12 @@ export default defineComponent({
     return { phoneInput, timmerTotal, isLoging, rules };
   },
   methods: {
-    /**访客登录 */
+    /**VIP登录 */
     async Login(): Promise<void> {
       try {
         await this.$useRules("formLogin").validate();
         this.isLoging = true;
-        const token = await apiAuth.LoginOrRegisterAtVisitorByPhoneCode(
+        const token = await apiAuth.VipLoginOrRegisterByPhoneCode(
           this.phoneInput
         );
         window.localStorage.setItem("vipToken", token.Token);
@@ -72,7 +71,7 @@ export default defineComponent({
       this.$useRules("formLogin").validateField("Phone", async (error) => {
         if (!error) {
           useTimer.Start(60);
-          await apiAuth.SendVerificationCodeAtVisitor(this.phoneInput.Phone);
+          await apiAuth.VipSendVerificationCode(this.phoneInput.Phone);
         }
       });
     }

@@ -1,5 +1,5 @@
 ﻿<template>
-  <app-top-menu title="浏览课程" @select="select">
+  <app-top-menu title="浏览课件" @select="select">
     <template #dropdown>
       <el-dropdown-item command="logout" icon="el-icon-switch-button">
         退出登录
@@ -10,17 +10,16 @@
     <my-page-table :get-data="getData" v-model="isLoad">
       <el-table-column label="名称" prop="Name"></el-table-column>
       <el-table-column label="描述" prop="Remark"></el-table-column>
-      <el-table-column label="课程资源" prop="VideoPath">
+      <el-table-column
+        label="课件类型"
+        prop="ResourceTypeName"
+      ></el-table-column>
+      <el-table-column label="课件预览" prop="SourcePath">
         <template #default="scope">
-          <a
-            :href="
-              'http://file.linshengweb.com/files/' +
-              encodeURI(scope.row.VideoPath)
-            "
-            target="blank"
-          >
-            {{ scope.row.VideoPath }}
-          </a>
+          <my-resource-preview
+            :resource-type="scope.row.ResourceType"
+            :source-path="scope.row.SourcePath"
+          ></my-resource-preview>
         </template>
       </el-table-column>
       <el-table-column
@@ -42,10 +41,6 @@
           <div v-else>暂无图片</div>
         </template>
       </el-table-column>
-      <el-table-column
-        label="儿歌分类"
-        prop="EliteSongClassifyName"
-      ></el-table-column>
       <template #button>
         <span></span>
       </template>
@@ -58,39 +53,38 @@ import { ObjFilterInput, PageInput, PageOutput } from "@/apis/apiBase";
 import { apiVipCourseware, CoursewareOutput } from "@/apis/vipCoursewareApi";
 import AppTopMenu from "@/components/AppTopMenu.vue";
 import MyPageTable from "@/components/MyPageTable.vue";
+import MyResourcePreview from "@/components/MyResourcePreview.vue";
 import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "VipCourseware",
-  components: { MyPageTable, AppTopMenu },
+  components: { MyPageTable, AppTopMenu, MyResourcePreview },
   setup() {
     const eliteSongs = ref<CoursewareOutput[]>();
     const isLoad = ref(true);
     return { eliteSongs, isLoad };
+  },
+  beforeMount() {
+    if (!window.localStorage.getItem("vipToken")) {
+      this.$router.push("/vipLogin");
+    }
   },
   methods: {
     async getData(
       match: string,
       page: PageInput<CoursewareOutput>
     ): Promise<PageOutput<CoursewareOutput>> {
-      if (window.localStorage.getItem("vipToken")) {
-        const filter: ObjFilterInput<CoursewareOutput> = {
-          Condition: {
-            Logic: "or",
-            Items: [
-              { Field: "Name", Value: match, Compare: "contains" },
-              { Field: "Remark", Value: match, Compare: "contains" }
-            ]
-          },
-          Page: page
-        };
-        return await apiVipCourseware.QueryPageCourseware(filter);
-      } else {
-        this.$router.push("/vipLogin");
-        return Promise.resolve<PageOutput<CoursewareOutput>>(
-          new PageOutput<CoursewareOutput>()
-        );
-      }
+      const filter: ObjFilterInput<CoursewareOutput> = {
+        Condition: {
+          Logic: "or",
+          Items: [
+            { Field: "Name", Value: match, Compare: "contains" },
+            { Field: "Remark", Value: match, Compare: "contains" }
+          ]
+        },
+        Page: page
+      };
+      return await apiVipCourseware.QueryPageCourseware(filter);
     },
     select(tag: string) {
       switch (tag) {

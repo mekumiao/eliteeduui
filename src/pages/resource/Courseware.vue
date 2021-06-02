@@ -3,10 +3,22 @@
     <el-card>
       <el-button type="success" size="mini" @click="create">新增</el-button>
     </el-card>
-    <my-page-table :get-data="getData" v-model="isLoad">
+    <my-page-table
+      :get-data="getData"
+      v-model="isLoad"
+      @edit="update"
+      @deleteSave="deleteSave"
+    >
       <el-table-column label="名称" prop="Name"></el-table-column>
       <el-table-column label="描述" prop="Remark"></el-table-column>
-      <el-table-column label="资源路径" prop="VideoPath"></el-table-column>
+      <el-table-column label="课件预览" prop="SourcePath" min-width="150">
+        <template #default="scope">
+          <my-resource-preview
+            :resource-type="scope.row.ResourceType"
+            :source-path="scope.row.SourcePath"
+          ></my-resource-preview>
+        </template>
+      </el-table-column>
       <el-table-column
         label="预览图"
         prop="PreviewPhoto"
@@ -24,8 +36,8 @@
         </template>
       </el-table-column>
       <el-table-column
-        label="儿歌分类"
-        prop="EliteSongClassifyName"
+        label="课件类型"
+        prop="ResourceTypeName"
       ></el-table-column>
       <my-page-table-column-base></my-page-table-column-base>
     </my-page-table>
@@ -37,7 +49,12 @@
     v-model="dialogCreate.show"
     @save="createSave"
   >
-    <el-form ref="formCreate" label-width="80px" :model="dialogCreate.formData">
+    <el-form
+      ref="formCreate"
+      label-width="80px"
+      :model="dialogCreate.formData"
+      :rules="rules"
+    >
       <el-form-item label="名称" prop="Name">
         <el-input v-model="dialogCreate.formData.Name"></el-input>
       </el-form-item>
@@ -61,6 +78,7 @@
       <el-form-item label="资源路径" prop="SourcePath">
         <my-file-upload
           v-model="dialogCreate.formData.SourcePath"
+          @success="uploadSuccess"
         ></my-file-upload>
       </el-form-item>
       <el-form-item label="预览图" prop="PreviewPhoto">
@@ -77,6 +95,44 @@
     v-model="dialogUpdate.show"
     @save="updateSave"
   >
+    <el-form
+      ref="formUpdate"
+      label-width="80px"
+      :model="dialogUpdate.formData"
+      :rules="rules"
+    >
+      <el-form-item label="名称" prop="Name">
+        <el-input v-model="dialogUpdate.formData.Name"></el-input>
+      </el-form-item>
+      <el-form-item label="描述" prop="Remark">
+        <el-input v-model="dialogUpdate.formData.Remark"></el-input>
+      </el-form-item>
+      <el-form-item label="资源类型" prop="ResourceType">
+        <el-select
+          v-model="dialogUpdate.formData.ResourceType"
+          placeholder="请选择资源类型"
+        >
+          <el-option
+            v-for="(item, index) in resourceType.DataList"
+            :key="index"
+            :label="item.Label"
+            :value="item.Value"
+          >
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="资源路径" prop="SourcePath">
+        <my-file-upload
+          v-model="dialogUpdate.formData.SourcePath"
+          @success="uploadSuccess"
+        ></my-file-upload>
+      </el-form-item>
+      <el-form-item label="预览图" prop="PreviewPhoto">
+        <my-image-upload
+          v-model="dialogUpdate.formData.PreviewPhoto"
+        ></my-image-upload>
+      </el-form-item>
+    </el-form>
   </app-dialog>
 </template>
 
@@ -99,8 +155,25 @@ import MyPageTable from "@/components/MyPageTable.vue";
 import MyPageTableColumnBase from "@/components/MyPageTableColumnBase.vue";
 import MyFileUpload from "@/components/MyFileUpload.vue";
 import MyImageUpload from "@/components/MyImageUpload.vue";
+import MyResourcePreview from "@/components/MyResourcePreview.vue";
 import { DialogData, DialogEditData } from "@/types/el-dialog";
 import { defineComponent, reactive, ref } from "vue";
+import { UploadFile } from "node_modules/element-plus/lib/el-upload/src/upload.type";
+import { FormRule } from "@/types/el-rules";
+
+const rules = reactive({
+  Name: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
+  Remark: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
+  ResourceType: [
+    { required: true, message: "必填", trigger: "change" }
+  ] as FormRule[],
+  SourcePath: [
+    { required: true, message: "必填", trigger: "change" }
+  ] as FormRule[],
+  PreviewPhoto: [
+    { required: true, message: "必填", trigger: "change" }
+  ] as FormRule[]
+});
 
 /**课件管理 */
 export default defineComponent({
@@ -110,7 +183,8 @@ export default defineComponent({
     MyPageTableColumnBase,
     AppDialog,
     MyFileUpload,
-    MyImageUpload
+    MyImageUpload,
+    MyResourcePreview
   },
   setup() {
     const isLoad = ref(true);
@@ -126,7 +200,7 @@ export default defineComponent({
       formData: {} as CoursewareUpdInput,
       oldData: {} as CoursewareOutput
     });
-    return { isLoad, resourceType, dialogCreate, dialogUpdate };
+    return { isLoad, resourceType, dialogCreate, dialogUpdate, rules };
   },
   methods: {
     async getData(
@@ -196,6 +270,39 @@ export default defineComponent({
         this.isLoad = true;
       } finally {
         this.$closeLoading();
+      }
+    },
+    /**保存删除 */
+    async deleteSave(_index: number, row: CoursewareOutput): Promise<void> {
+      await apiEduCourseware.DeleteCourseware(row.Pid, row.Timestamp);
+      this.isLoad = true;
+    },
+    /**文件上传成功后设置文档的类型 */
+    uploadSuccess(file: UploadFile) {
+      const start = file.name.lastIndexOf(".");
+      if (start >= 0) {
+        const myDocument = ".ppt,.pptx,.xls,.xlsx,.doc,.docx";
+        const myImage = ".png,.jpg,.jpeg,.gif";
+        const myVideo = ".mp4";
+        const myAudio = ".mp3";
+        const name = file.name.substring(start).toLowerCase();
+        console.log(name);
+        if (myDocument.indexOf(name) >= 0) {
+          this.dialogCreate.formData.ResourceType = 1;
+          this.dialogUpdate.formData.ResourceType = 1;
+        } else if (myVideo.indexOf(name) >= 0) {
+          this.dialogCreate.formData.ResourceType = 2;
+          this.dialogUpdate.formData.ResourceType = 2;
+        } else if (myAudio.indexOf(name) >= 0) {
+          this.dialogCreate.formData.ResourceType = 3;
+          this.dialogUpdate.formData.ResourceType = 3;
+        } else if (myImage.indexOf(name) >= 0) {
+          this.dialogCreate.formData.ResourceType = 4;
+          this.dialogUpdate.formData.ResourceType = 4;
+        } else {
+          this.dialogCreate.formData.ResourceType = 0;
+          this.dialogUpdate.formData.ResourceType = 0;
+        }
       }
     }
   }

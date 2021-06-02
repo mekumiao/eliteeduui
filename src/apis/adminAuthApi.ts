@@ -39,21 +39,21 @@ class AdminAuthApi extends ApiBase {
     }
   }
   /**
-   * 访客登录或注册
+   * VIP登录或注册
    * @param input 手机号验证码模型
    */
-  public LoginOrRegisterAtVisitorByPhoneCode(
+  public VipLoginOrRegisterByPhoneCode(
     input: NamePhoneCodeInput
   ): Promise<TokenItem> {
-    const url = this.mergeUrl("LoginOrRegisterAtVisitorByPhoneCode");
+    const url = this.mergeUrl("VipLoginOrRegisterByPhoneCode");
     return this.tryCatchCall(() => ajax.post(url, input));
   }
   /**
-   * 发送访客注册或登录时用的验证码
+   * 发送VIP注册或登录时用的验证码
    * @param phone 手机号
    */
-  public SendVerificationCodeAtVisitor(phone: string): Promise<MsgOutput> {
-    const url = this.mergeUrlParame("SendVerificationCodeAtVisitor", phone);
+  public VipSendVerificationCode(phone: string): Promise<MsgOutput> {
+    const url = this.mergeUrlParame("VipSendVerificationCode", phone);
     return this.tryCatchCall(() => ajax.get(url));
   }
 }

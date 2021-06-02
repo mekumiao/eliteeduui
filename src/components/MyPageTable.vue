@@ -40,7 +40,7 @@
       @size-change="sizeChange"
       @current-change="currentChange"
       :current-page="page.Index"
-      :page-sizes="[10, 20, 50]"
+      :page-sizes="[5, 10, 20, 50]"
       :page-size="page.Size"
       :pager-count="5"
       :layout="'total, sizes, prev, pager, next, jumper'"

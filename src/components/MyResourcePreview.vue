@@ -1,0 +1,47 @@
+﻿<template>
+  <a
+    v-if="resourceType === 1"
+    target="_blank"
+    :href="
+      'https://view.officeapps.live.com/op/view.aspx?src=http://file.linshengweb.com/files/' +
+      encodeURI(sourcePath)
+    "
+  >
+    点击预览 </a
+  ><audio
+    v-else-if="resourceType === 3"
+    style="width: 80%"
+    controls
+    :src="'http://file.linshengweb.com/files/' + encodeURI(sourcePath)"
+  ></audio>
+  <el-image
+    v-else-if="resourceType === 4"
+    hide-on-click-modal
+    style="width: 100px; height: 100px"
+    :src="'http://file.linshengweb.com/files/' + encodeURI(sourcePath)"
+    :preview-src-list="[
+      'http://file.linshengweb.com/files/' + encodeURI(sourcePath)
+    ]"
+  >
+  </el-image>
+  <a
+    v-else
+    :href="'http://file.linshengweb.com/files/' + encodeURI(sourcePath)"
+    :download="sourcePath"
+  >
+    点击下载
+  </a>
+</template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+
+/**资源预览组件 */
+export default defineComponent({
+  name: "MyResourcePreview",
+  props: {
+    resourceType: { type: Number, default: 0 },
+    sourcePath: { type: String, default: undefined }
+  }
+});
+</script>

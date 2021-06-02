@@ -51,44 +51,44 @@ const menuList: MenuItem[] = [
   {
     title: "资源管理",
     icon: "el-icon-document",
-    index: "sourceManager",
+    index: "resource",
     children: [
       {
-        title: "App课件",
+        title: "App资源",
         icon: "el-icon-document",
-        index: "/sourceManager/appManager",
+        index: "/resource/appResource",
         children: [
           {
             title: "爱丽特儿歌",
             icon: "el-icon-document",
-            index: "/sourceManager/appManager/appEliteSong"
+            index: "/resource/appResource/appEliteSong"
           }
         ]
       },
       {
         title: "教学资源",
         icon: "el-icon-document",
-        index: "/sourceManager/teaching"
+        index: "/resource/teaching"
       },
       {
         title: "题库系统",
         icon: "el-icon-document",
-        index: "/sourceManager/question"
+        index: "/resource/question"
       },
       {
         title: "试卷维护",
         icon: "el-icon-document",
-        index: "/sourceManager/paper"
+        index: "/resource/paper"
       },
       {
         title: "备课资源",
         icon: "el-icon-document",
-        index: "/sourceManager/prepareLessons"
+        index: "/resource/prepareLessons"
       },
       {
         title: "课件管理",
         icon: "el-icon-document",
-        index: "/sourceManager/courseware"
+        index: "/resource/courseware"
       }
     ]
   },
