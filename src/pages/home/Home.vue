@@ -36,6 +36,7 @@ import HomeTopMenu from "@/components/HomeTopMenu.vue";
 import HomeLeftMenu from "@/components/HomeLeftMenu.vue";
 
 export default defineComponent({
+  name: "Home",
   components: { AppBreadcrumb, HomeTopMenu, HomeLeftMenu },
   setup() {
     const isCollapse = ref(false);

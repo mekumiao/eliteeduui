@@ -9,6 +9,7 @@
 import { PropType, defineComponent } from "vue";
 
 export default defineComponent({
+  name: "About",
   props: {
     msg: { type: String as PropType<string>, default: "" }
   },

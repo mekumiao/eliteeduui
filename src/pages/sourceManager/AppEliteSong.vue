@@ -139,11 +139,11 @@ import {
 import MyPageTable from "@/components/MyPageTable.vue";
 import { defineComponent, reactive, ref } from "vue";
 import {
-  apiAppResourceManagerApi,
+  apiAppResource,
   EliteSongInput,
   EliteSongOutput,
   EliteSongUpdInput
-} from "@/apis/appResourceManagerApi";
+} from "@/apis/eduAppResourceApi";
 import MyPageTableColumnBase from "@/components/MyPageTableColumnBase.vue";
 import AppDialog from "@/components/AppDialog.vue";
 import { DialogData, DialogEditData } from "@/types/el-dialog";
@@ -166,6 +166,7 @@ const rules = reactive({
 });
 
 export default defineComponent({
+  name: "AppEliteSong",
   components: {
     MyPageTable,
     MyPageTableColumnBase,
@@ -173,12 +174,9 @@ export default defineComponent({
     MyImageUpload,
     MyFileUpload
   },
-  name: "EliteSongManager",
   setup() {
     const isLoad = ref(true);
     const eliteSongClassify = reactive(new PageOutput<OptionOutput>());
-    const fromCreate = ref(null);
-    const formUpdate = ref(null);
 
     const dialogCreate = reactive<DialogData<EliteSongInput>>({
       show: false,
@@ -193,8 +191,6 @@ export default defineComponent({
     });
 
     return {
-      fromCreate,
-      formUpdate,
       isLoad,
       eliteSongClassify,
       dialogCreate,
@@ -214,7 +210,7 @@ export default defineComponent({
           Items: [{ Compare: "contains", Field: "Name", Value: match }]
         }
       };
-      return apiAppResourceManagerApi.QueryPageEliteSong(filter);
+      return apiAppResource.QueryPageEliteSong(filter);
     },
     /**加载爱利特儿歌分类 */
     async loadEliteSongClassify(flag?: boolean): Promise<void> {
@@ -222,9 +218,7 @@ export default defineComponent({
         this.$loading();
         if (flag || this.eliteSongClassify.DataList.length === 0) {
           const input = new OptionFilterInput("eliteSongClassify");
-          this.eliteSongClassify = await apiAppResourceManagerApi.QueryOption(
-            input
-          );
+          this.eliteSongClassify = await apiAppResource.QueryOption(input);
         }
       } finally {
         this.$closeLoading();
@@ -241,7 +235,7 @@ export default defineComponent({
     async editSave(close: () => void): Promise<void> {
       try {
         this.$loading();
-        await apiAppResourceManagerApi.UpdateEliteSong(
+        await apiAppResource.UpdateEliteSong(
           this.dialogUpdate.oldData.Pid,
           this.dialogUpdate.oldData.Timestamp,
           this.dialogUpdate.formData
@@ -260,28 +254,19 @@ export default defineComponent({
     },
     /**保存新增 */
     async createSave(close: () => void): Promise<void> {
-      this.$useRules("formCreate").validate(
-        async (valid: boolean): Promise<boolean> => {
-          if (valid) {
-            try {
-              this.$loading();
-              await apiAppResourceManagerApi.CreateEliteSong(
-                this.dialogCreate.formData
-              );
-              close();
-              this.isLoad = true;
-              return true;
-            } finally {
-              this.$closeLoading();
-            }
-          }
-          return false;
-        }
-      );
+      try {
+        await this.$useRules("formCreate").validate();
+        this.$loading();
+        await apiAppResource.CreateEliteSong(this.dialogCreate.formData);
+        close();
+        this.isLoad = true;
+      } finally {
+        this.$closeLoading();
+      }
     },
     /**删除并保存 */
     async deleteSave(_index: number, row: EliteSongOutput): Promise<void> {
-      await apiAppResourceManagerApi.DeleteEliteSong(row.Pid, row.Timestamp);
+      await apiAppResource.DeleteEliteSong(row.Pid, row.Timestamp);
       this.isLoad = true;
     }
   }

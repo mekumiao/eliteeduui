@@ -1,8 +1,8 @@
-﻿const codemap: Record<number, string> = {
+﻿const codeMap: Record<number, string> = {
   400: "错误请求",
-  401: "未授权，请重新登录！",
-  403: "拒绝访问",
-  404: "请求错误,未找到该资源！",
+  401: "未认证，请重新登录！",
+  403: "拒绝访问，无访问权限！",
+  404: "请求错误，未找到该资源！",
   405: "请求方法未允许",
   408: "请求超时",
   500: "服务器端出错",
@@ -30,7 +30,7 @@ export const getMessage = (response: unknown): MessageResult => {
 
 export const mapStatus = (status: number | undefined): MessageResult => {
   if (status === undefined) return { code: 500, msg: "连接到服务器失败" };
-  const res = codemap[status];
+  const res = codeMap[status];
   return res
     ? { code: status, msg: res }
     : { code: status, msg: `连接错误${status}` };

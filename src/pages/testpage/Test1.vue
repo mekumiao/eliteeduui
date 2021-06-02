@@ -11,6 +11,7 @@
 import { defineComponent, ref } from "vue";
 
 export default defineComponent({
+  name: "Test1",
   setup() {
     const noActivated = ref(false);
     return { noActivated };

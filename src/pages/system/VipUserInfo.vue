@@ -1,7 +1,7 @@
 ﻿<template>
   <el-card>
     <el-card>
-      <div>访客用户管理</div>
+      <div>VIP用户管理</div>
     </el-card>
     <my-page-table v-model="isLoad" :get-data="getData">
       <el-table-column label="名称" prop="Name"></el-table-column>
@@ -48,12 +48,12 @@
 import { ObjFilterInput, PageInput, PageOutput } from "@/apis/apiBase";
 import MyPageTable from "@/components/MyPageTable.vue";
 import { defineComponent, ref } from "vue";
-import { apiUserInfo, VisitorUserInfoOutput } from "@/apis/userInfoApi";
+import { apiUserInfo, VisitorUserInfoOutput } from "@/apis/adminUserInfoApi";
 import MyPageTableColumnBase from "@/components/MyPageTableColumnBase.vue";
 import AppButtonPopover from "@/components/AppButtonPopover.vue";
 
 export default defineComponent({
-  name: "MyVisitorUserInfo",
+  name: "VipUserInfo",
   components: { MyPageTable, MyPageTableColumnBase, AppButtonPopover },
   setup() {
     const isLoad = ref(true);

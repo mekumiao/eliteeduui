@@ -16,6 +16,7 @@ import { defineComponent, PropType } from "vue";
 import appsetting from "@/config/app-setting";
 
 export default defineComponent({
+  name: "Welcome",
   props: {
     msg: {
       type: String as PropType<string>,

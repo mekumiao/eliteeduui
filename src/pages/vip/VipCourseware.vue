@@ -55,29 +55,26 @@
 
 <script lang="ts">
 import { ObjFilterInput, PageInput, PageOutput } from "@/apis/apiBase";
-import {
-  apiVisitorCoursewareResource,
-  EliteSongOutput
-} from "@/apis/visitorCoursewareResourceApi";
+import { apiVipCourseware, CoursewareOutput } from "@/apis/vipCoursewareApi";
 import AppTopMenu from "@/components/AppTopMenu.vue";
 import MyPageTable from "@/components/MyPageTable.vue";
 import { defineComponent, ref } from "vue";
 
 export default defineComponent({
+  name: "VipCourseware",
   components: { MyPageTable, AppTopMenu },
   setup() {
-    const eliteSongs = ref<EliteSongOutput[]>();
+    const eliteSongs = ref<CoursewareOutput[]>();
     const isLoad = ref(true);
     return { eliteSongs, isLoad };
   },
   methods: {
-    /**查询爱利特儿歌 */
     async getData(
       match: string,
-      page: PageInput<EliteSongOutput>
-    ): Promise<PageOutput<EliteSongOutput>> {
-      if (window.localStorage.getItem("visitorToken")) {
-        const filter: ObjFilterInput<EliteSongOutput> = {
+      page: PageInput<CoursewareOutput>
+    ): Promise<PageOutput<CoursewareOutput>> {
+      if (window.localStorage.getItem("vipToken")) {
+        const filter: ObjFilterInput<CoursewareOutput> = {
           Condition: {
             Logic: "or",
             Items: [
@@ -87,20 +84,19 @@ export default defineComponent({
           },
           Page: page
         };
-        return await apiVisitorCoursewareResource.QueryPageEliteSong(filter);
+        return await apiVipCourseware.QueryPageCourseware(filter);
       } else {
-        this.$router.push("/visitorLogin");
-        return Promise.resolve<PageOutput<EliteSongOutput>>(
-          new PageOutput<EliteSongOutput>()
+        this.$router.push("/vipLogin");
+        return Promise.resolve<PageOutput<CoursewareOutput>>(
+          new PageOutput<CoursewareOutput>()
         );
       }
     },
     select(tag: string) {
-      encodeURI("");
       switch (tag) {
         case "logout":
-          window.localStorage.removeItem("visitorToken");
-          this.$router.push("/visitorLogin");
+          window.localStorage.removeItem("vipToken");
+          this.$router.push("/vipLogin");
           break;
         default:
           break;

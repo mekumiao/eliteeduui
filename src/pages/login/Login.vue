@@ -44,7 +44,7 @@
 
 <script lang="ts">
 import { defineComponent, Ref, ref } from "vue";
-import { apiAuth, LoginInput } from "@/apis/authApi";
+import { apiAuth, LoginInput } from "@/apis/adminAuthApi";
 import { FormRule } from "@/types/el-rules";
 import AppHeadPortrait from "@/components/AppHeadPortrait.vue";
 

@@ -16,7 +16,7 @@ import {
   rootURL,
   timeout
 } from "./apiBase";
-import { getMessage } from "./statuscode";
+import { getMessage } from "../utils/my-statusCode";
 
 const ajax: AxiosInstance = axios.create({
   baseURL: rootURL,
@@ -79,25 +79,30 @@ ajax.interceptors.response.use(
     return Promise.reject<MsgOutput>(errorMsgOutput);
   }
 );
-/**爱利特儿歌输出模型 */
-export interface EliteSongOutput extends PublicWithKeyOutput {
+/**课程输出模型 */
+export interface CoursewareOutput extends PublicWithKeyOutput {
   Name: string;
   Remark: string;
-  VideoPath: string;
+  SourcePath: string;
+  ResourceType: number;
+  ResourceTypeName: string;
   PreviewPhoto: string;
-  EliteSongClassify: number;
-  EliteSongClassifyName: string;
 }
-/**访客课程访问Api */
-class visitorCoursewareResource extends ApiBase {
-  public baseUrl = "/api/visitor/CoursewareResource";
-  /**查询爱利特儿歌 */
-  public QueryPageEliteSong(
-    input: ObjFilterInput<EliteSongOutput>
-  ): Promise<PageOutput<EliteSongOutput>> {
-    const url = this.mergeUrl("QueryPageEliteSong");
+/**VIP课程访问Api */
+class VipCoursewareApi extends ApiBase {
+  /**基本路径 */
+  public baseUrl = "/api/vip/Courseware";
+  /**
+   * 查询课程列表
+   * @param input 查询模型
+   * @returns 分页输出模型
+   */
+  public QueryPageCourseware(
+    input: ObjFilterInput<CoursewareOutput>
+  ): Promise<PageOutput<CoursewareOutput>> {
+    const url = this.mergeUrl("QueryPageCourseware");
     return this.tryCatchCall(() => ajax.post(url, input));
   }
 }
 
-export const apiVisitorCoursewareResource = new visitorCoursewareResource();
+export const apiVipCourseware = new VipCoursewareApi();

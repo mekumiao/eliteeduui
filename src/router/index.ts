@@ -1,5 +1,5 @@
 ﻿import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
-import { apiAuth } from "@/apis/authApi";
+import { apiAuth } from "@/apis/adminAuthApi";
 import { nprogress } from "@/plugins/my-nprogress";
 import Home from "@/pages/home/Home.vue";
 import Login from "@/pages/login/Login.vue";
@@ -18,15 +18,15 @@ import Exception404 from "@/pages/exception/404.vue";
 import Exception500 from "@/pages/exception/500.vue";
 
 /**系统管理 */
-import SystemVisitorUserInfo from "@/pages/system/MyVisitorUserInfo.vue";
+import SystemVisitorUserInfo from "@/pages/system/VipUserInfo.vue";
 
 /**资源管理 */
 import AppEliteSong from "@/pages/sourceManager/AppEliteSong.vue";
 import Courseware from "@/pages/sourceManager/Courseware.vue";
 
-/**访客页面 */
-import VisitorEliteSong from "@/pages/visitor/VisitorEliteSong.vue";
-import VisitorLogin from "@/pages/visitor/VisitorLogin.vue";
+/**VIP页面 */
+import VipCourseware from "@/pages/vip/VipCourseware.vue";
+import VipLogin from "@/pages/vip/VipLogin.vue";
 
 const routes: Array<RouteRecordRaw> = [
   { path: "/", redirect: "/home/welcome" },
@@ -72,12 +72,12 @@ const routes: Array<RouteRecordRaw> = [
     children: [{ path: "visitorUserInfo", component: SystemVisitorUserInfo }]
   },
   {
-    path: "/visitorEliteSong",
-    component: VisitorEliteSong
+    path: "/vipCourseware",
+    component: VipCourseware
   },
   {
-    path: "/visitorLogin",
-    component: VisitorLogin
+    path: "/vipLogin",
+    component: VipLogin
   },
   { path: "/:notFind(.*)", redirect: { name: "page404" } }
 ];
@@ -88,7 +88,7 @@ const router = createRouter({
 });
 /**忽略的路由 */
 const ignorePath = (path: string): boolean => {
-  const paths = ["/visitorEliteSong", "/visitorLogin"];
+  const paths = ["/vipCourseware", "/vipLogin"];
   return (
     paths.filter((item) => item.toLowerCase() === path.toLowerCase()).length > 0
   );

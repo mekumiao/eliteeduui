@@ -18,7 +18,7 @@ export interface NamePhoneCodeInput extends PhoneCodeInput {
   Name: string;
 }
 /**授权API */
-class Auth extends ApiBase {
+class AdminAuthApi extends ApiBase {
   public readonly baseUrl: string = "/api/admin/Auth";
   /**
    * 获取Token
@@ -58,4 +58,4 @@ class Auth extends ApiBase {
   }
 }
 
-export const apiAuth = new Auth();
+export const apiAuth = new AdminAuthApi();

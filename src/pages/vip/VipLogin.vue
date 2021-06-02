@@ -31,10 +31,10 @@
 </template>
 
 <script lang="ts">
-import { NamePhoneCodeInput } from "@/apis/authApi";
+import { NamePhoneCodeInput } from "@/apis/adminAuthApi";
 import { defineComponent, reactive, ref } from "vue";
 import useTimer from "@/hooks/useTimer";
-import { apiAuth } from "@/apis/authApi";
+import { apiAuth } from "@/apis/adminAuthApi";
 import AppTopMenu from "@/components/AppTopMenu.vue";
 import { FormRule } from "@/types/el-rules";
 
@@ -45,8 +45,8 @@ const rules = reactive({
 });
 
 export default defineComponent({
+  name: "VipLogin",
   components: { AppTopMenu },
-  name: "VisitorLogin",
   setup() {
     const timmerTotal = useTimer.Total;
     const phoneInput = ref<NamePhoneCodeInput>({} as NamePhoneCodeInput);
@@ -62,8 +62,8 @@ export default defineComponent({
         const token = await apiAuth.LoginOrRegisterAtVisitorByPhoneCode(
           this.phoneInput
         );
-        window.localStorage.setItem("visitorToken", token.Token);
-        this.$router.push("/visitorEliteSong");
+        window.localStorage.setItem("vipToken", token.Token);
+        this.$router.push("/vipCourseware");
       } finally {
         this.isLoging = false;
       }

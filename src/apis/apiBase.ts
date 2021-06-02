@@ -5,7 +5,7 @@
   AxiosResponse
 } from "axios";
 import { message } from "@/plugins/el-message";
-import { getMessage } from "@/apis/statuscode";
+import { getMessage } from "@/utils/my-statusCode";
 
 export let rootURL = "http://localhost:8080";
 export let timeout: number | undefined = undefined;
@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === "production") {
   timeout = 20000;
 }
 
-rootURL = "http://an.linshengweb.com:8188";
+//rootURL = "http://an.linshengweb.com:8188";
 
 /**
  * 返回消息模型
@@ -124,6 +124,16 @@ export class ObjFilterInput<T> {
 
 ///通用实体模型
 
+/**下拉框选项 */
+export interface OptionItem {
+  Label: string;
+  Value: string | number | boolean;
+  Disabled: boolean;
+}
+/**级联下拉框选项 */
+export interface CascaderOptionOutput extends OptionItem {
+  Children: OptionItem[];
+}
 /**
  * 键模型
  */
@@ -268,7 +278,6 @@ ajax.interceptors.response.use(
     return Promise.reject<MsgOutput>(errorMsgOutput);
   }
 );
-
 /**基础API */
 export abstract class ApiBase {
   /**基础路径 */
@@ -343,59 +352,6 @@ export abstract class ApiBase {
       }
       throw error;
     }
-  }
-}
-
-/**单表基础Api */
-export abstract class BillApiBase<
-  TView extends Record<string, unknown>,
-  TInput extends Record<string, unknown>,
-  TUpdInput extends Record<string, unknown>
-> extends ApiBase {
-  /**
-   * 条件查询
-   * @param input 条件
-   */
-  public ObjQuery(input: ObjFilterInput<TView>): Promise<PageOutput<TView>> {
-    const url = this.mergeUrl("ObjQuery");
-    return this.tryCatchCall(() => ajax.post(url, input));
-  }
-  /**
-   * 获取完整信息
-   * @param id 主键
-   */
-  public Single(id: string): Promise<TView> {
-    const url = this.mergeUrlParame("Single", id);
-    return this.tryCatchCall(() => ajax.get(url));
-  }
-  /**
-   * 删除项
-   * @param id 主键
-   * @param timestamp 时间戳
-   */
-  public Delete(id: string, timestamp: string): Promise<MsgOutput> {
-    const url = this.mergeUrlParame("Delete", id, timestamp);
-    return this.tryCatchCall(() => ajax.delete(url));
-  }
-  /**
-   * 新增项
-   * @param input 输入模型
-   */
-  public Create(input: TInput): Promise<PidKeyItem> {
-    const url = this.mergeUrl("Create");
-    return this.tryCatchCall(() => ajax.post(url, input));
-  }
-  /**
-   * 保存项
-   * @param input 输入模型
-   */
-  public Update(
-    id: string,
-    timestamp: string,
-    input: TUpdInput
-  ): Promise<MsgOutput> {
-    const url = this.mergeUrlParame("Update", id, timestamp);
-    return this.tryCatchCall(() => ajax.put(url, input));
   }
 }
 

@@ -36,9 +36,9 @@ export interface EliteSongUpdInput {
 }
 
 /**app资源管理api */
-class resourceApi extends ApiBase {
+class EduAppResourceApi extends ApiBase {
   /**基本url */
-  public readonly baseUrl: string = "/api/edu/AppResourcesManager";
+  public readonly baseUrl: string = "/api/edu/AppResource";
   /**查询爱利特儿歌 */
   public QueryPageEliteSong(
     input: ObjFilterInput<EliteSongOutput>
@@ -74,4 +74,4 @@ class resourceApi extends ApiBase {
   }
 }
 /**app资源管理api */
-export const apiResource = new resourceApi();
+export const apiAppResource = new EduAppResourceApi();
