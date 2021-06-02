@@ -24,12 +24,12 @@
             @click="Auth(scope.$index, scope.row)"
             v-if="!scope.row.Auth"
           >
-            审核通过
+            审核
           </el-button>
           <el-button
             plain
             size="mini"
-            type="primary"
+            type="warning"
             @click="UnAuth(scope.$index, scope.row)"
             v-else
           >
@@ -69,7 +69,10 @@ export default defineComponent({
         Page: page,
         Condition: {
           Logic: "or",
-          Items: [{ Compare: "contains", Field: "Name", Value: match }]
+          Items: [
+            { Field: "Name", Value: match, Compare: "startswith" },
+            { Field: "Phone", Value: match, Compare: "startswith" }
+          ]
         }
       };
       return apiUserInfo.QueryPageVisitoryUserInfo(filter);

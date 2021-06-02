@@ -10,7 +10,7 @@
       </el-button>
     </div>
     <template #reference>
-      <el-button type="warning" plain size="mini" @click="show = true">
+      <el-button type="danger" plain size="mini" @click="show = true">
         {{ btnTxt }}
       </el-button>
     </template>

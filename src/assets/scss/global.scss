@@ -38,9 +38,9 @@ body,
 }
 
 /* 隐藏滚动条,同时能够滚动*/
-.hidden_scroll::-webkit-scrollbar {
-  display: none;
-}
+// .hidden_scroll::-webkit-scrollbar {
+//   display: none;
+// }
 
 ::-webkit-scrollbar {
   // display: none;
