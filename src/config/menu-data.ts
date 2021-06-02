@@ -42,7 +42,7 @@ const menuList: MenuItem[] = [
         index: "/systemManager/employee"
       },
       {
-        title: "访客用户",
+        title: "VIP用户",
         icon: "el-icon-document",
         index: "/systemManager/visitorUserInfo"
       }
