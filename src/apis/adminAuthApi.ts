@@ -15,7 +15,7 @@ export interface PhoneCodeInput {
 }
 /**名称手机号验证码输入模型 */
 export interface NamePhoneCodeInput extends PhoneCodeInput {
-  Name: string;
+  Name?: string;
 }
 /**授权API */
 class AdminAuthApi extends ApiBase {

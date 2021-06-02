@@ -89,11 +89,9 @@ export default defineComponent({
       window.localStorage.removeItem("token");
       this.$router.push("/login");
     },
-
     async onReload(): Promise<void> {
       this.reload && (await this.reload());
     },
-
     async selectHeader(msg: string): Promise<void> {
       console.log(msg);
       switch (msg) {

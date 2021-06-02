@@ -11,11 +11,15 @@
               @command="selectHeader"
               trigger="hover"
               placement="bottom-start"
+              size="small"
             >
               <app-head-portrait :size="40"></app-head-portrait>
               <template #dropdown>
                 <el-dropdown-menu class="dropdown-menu">
                   <slot name="dropdown"></slot>
+                  <el-dropdown-item command="adminlogin" icon="el-icon-user">
+                    管理员登录
+                  </el-dropdown-item>
                 </el-dropdown-menu>
               </template>
             </el-dropdown>
@@ -43,8 +47,19 @@ export default defineComponent({
     return { dialogUserInfo };
   },
   methods: {
-    selectHeader(msg: string) {
-      this.$emit("select", msg);
+    logout(): void {
+      window.localStorage.removeItem("token");
+      this.$router.push("/login");
+    },
+    selectHeader(msg: string): void {
+      switch (msg) {
+        case "adminlogin":
+          this.logout();
+          break;
+        default:
+          this.$emit("select", msg);
+          break;
+      }
     }
   }
 });
@@ -85,10 +100,5 @@ export default defineComponent({
       }
     }
   }
-}
-
-.dropdown-menu .el-dropdown-menu__item {
-  font-size: 14px;
-  width: 100px;
 }
 </style>
