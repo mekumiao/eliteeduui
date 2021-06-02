@@ -18,7 +18,7 @@
 
         <!-- 路由视图 -->
         <router-view v-slot="{ Component }" v-if="isRouterActive">
-          <keep-alive include="Home">
+          <keep-alive include="AppEliteSong,Courseware,VipUserInfo">
             <component :is="Component" />
           </keep-alive>
         </router-view>

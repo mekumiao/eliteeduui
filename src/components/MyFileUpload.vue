@@ -23,7 +23,6 @@ import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "MyFileUpload",
-  // emits: ["update:modelValue", "success"],
   emits: {
     "update:modelValue"(value: string) {
       return value !== undefined;

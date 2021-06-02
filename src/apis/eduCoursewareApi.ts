@@ -9,7 +9,7 @@
   PublicWithKeyOutput
 } from "./apiBase";
 
-/**课程输出模型 */
+/**课件输出模型 */
 export interface CoursewareOutput extends PublicWithKeyOutput {
   Name: string;
   Remark: string;
@@ -18,7 +18,7 @@ export interface CoursewareOutput extends PublicWithKeyOutput {
   ResourceTypeName: string;
   PreviewPhoto: string;
 }
-/**课程输入模型 */
+/**课件输入模型 */
 export interface CoursewareInput {
   Name: string;
   Remark: string;
@@ -34,7 +34,7 @@ export interface CoursewareUpdInput {
   ResourceType?: number;
   PreviewPhoto?: string;
 }
-/**课程接口 */
+/**课件接口 */
 class EduCoursewareApi extends ApiBase {
   /**基本路径 */
   public baseUrl = "/api/edu/Courseware";
@@ -50,7 +50,7 @@ class EduCoursewareApi extends ApiBase {
     return this.tryCatchCall(() => ajax.post(url, input));
   }
   /**
-   * 查询课程列表
+   * 查询课件列表
    * @param input 查询模型
    * @returns 分页输出模型
    */

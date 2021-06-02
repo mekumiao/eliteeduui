@@ -338,7 +338,7 @@ export abstract class ApiBase {
   /**
    * 尝试执行异步方法
    * @param func 待执行异步方法
-   * @param showError 发生错误时是否弹窗
+   * @param showError 发生错误时是否显示提示
    */
   protected async tryCatchCall<T>(
     func: () => Promise<T>,

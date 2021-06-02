@@ -88,12 +88,12 @@ export interface CoursewareOutput extends PublicWithKeyOutput {
   ResourceTypeName: string;
   PreviewPhoto: string;
 }
-/**VIP课程访问Api */
+/**VIP课件访问Api */
 class VipCoursewareApi extends ApiBase {
   /**基本路径 */
   public baseUrl = "/api/vip/Courseware";
   /**
-   * 查询课程列表
+   * 查询课件列表
    * @param input 查询模型
    * @returns 分页输出模型
    */

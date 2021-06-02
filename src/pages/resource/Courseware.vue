@@ -1,139 +1,143 @@
 ﻿<template>
-  <el-card>
+  <div>
     <el-card>
-      <el-button type="success" size="mini" @click="create">新增</el-button>
-    </el-card>
-    <my-page-table
-      :get-data="getData"
-      v-model="isLoad"
-      @edit="update"
-      @deleteSave="deleteSave"
-    >
-      <el-table-column label="名称" prop="Name"></el-table-column>
-      <el-table-column label="描述" prop="Remark"></el-table-column>
-      <el-table-column label="课件预览" prop="SourcePath" min-width="150">
-        <template #default="scope">
-          <my-resource-preview
-            :resource-type="scope.row.ResourceType"
-            :source-path="scope.row.SourcePath"
-          ></my-resource-preview>
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="预览图"
-        prop="PreviewPhoto"
-        min-width="150"
-        align="center"
+      <el-card>
+        <el-button type="success" size="mini" @click="create">新增</el-button>
+      </el-card>
+      <my-page-table
+        :get-data="getData"
+        v-model="isLoad"
+        @edit="update"
+        @deleteSave="deleteSave"
       >
-        <template #default="scope">
-          <el-image
-            v-if="scope.row.PreviewPhoto"
-            style="width: 100px"
-            fit="contain"
-            :src="'http://file.linshengweb.com/files/' + scope.row.PreviewPhoto"
-          ></el-image>
-          <div v-else>暂无图片</div>
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="课件类型"
-        prop="ResourceTypeName"
-      ></el-table-column>
-      <my-page-table-column-base></my-page-table-column-base>
-    </my-page-table>
-  </el-card>
-
-  <app-dialog
-    title="新增课件资源"
-    width="60%"
-    v-model="dialogCreate.show"
-    @save="createSave"
-  >
-    <el-form
-      ref="formCreate"
-      label-width="80px"
-      :model="dialogCreate.formData"
-      :rules="rules"
-    >
-      <el-form-item label="名称" prop="Name">
-        <el-input v-model="dialogCreate.formData.Name"></el-input>
-      </el-form-item>
-      <el-form-item label="描述" prop="Remark">
-        <el-input v-model="dialogCreate.formData.Remark"></el-input>
-      </el-form-item>
-      <el-form-item label="资源类型" prop="ResourceType">
-        <el-select
-          v-model="dialogCreate.formData.ResourceType"
-          placeholder="请选择资源类型"
+        <el-table-column label="名称" prop="Name"></el-table-column>
+        <el-table-column label="描述" prop="Remark"></el-table-column>
+        <el-table-column label="课件预览" prop="SourcePath" min-width="150">
+          <template #default="scope">
+            <my-resource-preview
+              :resource-type="scope.row.ResourceType"
+              :source-path="scope.row.SourcePath"
+            ></my-resource-preview>
+          </template>
+        </el-table-column>
+        <el-table-column
+          label="预览图"
+          prop="PreviewPhoto"
+          min-width="150"
+          align="center"
         >
-          <el-option
-            v-for="(item, index) in resourceType.DataList"
-            :key="index"
-            :label="item.Label"
-            :value="item.Value"
-          >
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="资源路径" prop="SourcePath">
-        <my-file-upload
-          v-model="dialogCreate.formData.SourcePath"
-          @success="uploadSuccess"
-        ></my-file-upload>
-      </el-form-item>
-      <el-form-item label="预览图" prop="PreviewPhoto">
-        <my-image-upload
-          v-model="dialogCreate.formData.PreviewPhoto"
-        ></my-image-upload>
-      </el-form-item>
-    </el-form>
-  </app-dialog>
+          <template #default="scope">
+            <el-image
+              v-if="scope.row.PreviewPhoto"
+              style="width: 100px"
+              fit="contain"
+              :src="
+                'http://file.linshengweb.com/files/' + scope.row.PreviewPhoto
+              "
+            ></el-image>
+            <div v-else>暂无图片</div>
+          </template>
+        </el-table-column>
+        <el-table-column
+          label="课件类型"
+          prop="ResourceTypeName"
+        ></el-table-column>
+        <my-page-table-column-base></my-page-table-column-base>
+      </my-page-table>
+    </el-card>
 
-  <app-dialog
-    title="修改课件资源"
-    width="60%"
-    v-model="dialogUpdate.show"
-    @save="updateSave"
-  >
-    <el-form
-      ref="formUpdate"
-      label-width="80px"
-      :model="dialogUpdate.formData"
-      :rules="rules"
+    <app-dialog
+      title="新增课件资源"
+      width="60%"
+      v-model="dialogCreate.show"
+      @save="createSave"
     >
-      <el-form-item label="名称" prop="Name">
-        <el-input v-model="dialogUpdate.formData.Name"></el-input>
-      </el-form-item>
-      <el-form-item label="描述" prop="Remark">
-        <el-input v-model="dialogUpdate.formData.Remark"></el-input>
-      </el-form-item>
-      <el-form-item label="资源类型" prop="ResourceType">
-        <el-select
-          v-model="dialogUpdate.formData.ResourceType"
-          placeholder="请选择资源类型"
-        >
-          <el-option
-            v-for="(item, index) in resourceType.DataList"
-            :key="index"
-            :label="item.Label"
-            :value="item.Value"
+      <el-form
+        ref="formCreate"
+        label-width="80px"
+        :model="dialogCreate.formData"
+        :rules="rules"
+      >
+        <el-form-item label="名称" prop="Name">
+          <el-input v-model="dialogCreate.formData.Name"></el-input>
+        </el-form-item>
+        <el-form-item label="描述" prop="Remark">
+          <el-input v-model="dialogCreate.formData.Remark"></el-input>
+        </el-form-item>
+        <el-form-item label="资源类型" prop="ResourceType">
+          <el-select
+            v-model="dialogCreate.formData.ResourceType"
+            placeholder="请选择资源类型"
           >
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="资源路径" prop="SourcePath">
-        <my-file-upload
-          v-model="dialogUpdate.formData.SourcePath"
-          @success="uploadSuccess"
-        ></my-file-upload>
-      </el-form-item>
-      <el-form-item label="预览图" prop="PreviewPhoto">
-        <my-image-upload
-          v-model="dialogUpdate.formData.PreviewPhoto"
-        ></my-image-upload>
-      </el-form-item>
-    </el-form>
-  </app-dialog>
+            <el-option
+              v-for="(item, index) in resourceType.DataList"
+              :key="index"
+              :label="item.Label"
+              :value="item.Value"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="资源路径" prop="SourcePath">
+          <my-file-upload
+            v-model="dialogCreate.formData.SourcePath"
+            @success="uploadSuccess"
+          ></my-file-upload>
+        </el-form-item>
+        <el-form-item label="预览图" prop="PreviewPhoto">
+          <my-image-upload
+            v-model="dialogCreate.formData.PreviewPhoto"
+          ></my-image-upload>
+        </el-form-item>
+      </el-form>
+    </app-dialog>
+
+    <app-dialog
+      title="修改课件资源"
+      width="60%"
+      v-model="dialogUpdate.show"
+      @save="updateSave"
+    >
+      <el-form
+        ref="formUpdate"
+        label-width="80px"
+        :model="dialogUpdate.formData"
+        :rules="rules"
+      >
+        <el-form-item label="名称" prop="Name">
+          <el-input v-model="dialogUpdate.formData.Name"></el-input>
+        </el-form-item>
+        <el-form-item label="描述" prop="Remark">
+          <el-input v-model="dialogUpdate.formData.Remark"></el-input>
+        </el-form-item>
+        <el-form-item label="资源类型" prop="ResourceType">
+          <el-select
+            v-model="dialogUpdate.formData.ResourceType"
+            placeholder="请选择资源类型"
+          >
+            <el-option
+              v-for="(item, index) in resourceType.DataList"
+              :key="index"
+              :label="item.Label"
+              :value="item.Value"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="资源路径" prop="SourcePath">
+          <my-file-upload
+            v-model="dialogUpdate.formData.SourcePath"
+            @success="uploadSuccess"
+          ></my-file-upload>
+        </el-form-item>
+        <el-form-item label="预览图" prop="PreviewPhoto">
+          <my-image-upload
+            v-model="dialogUpdate.formData.PreviewPhoto"
+          ></my-image-upload>
+        </el-form-item>
+      </el-form>
+    </app-dialog>
+  </div>
 </template>
 
 <script lang="ts">

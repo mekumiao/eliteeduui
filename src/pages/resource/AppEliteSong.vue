@@ -1,131 +1,135 @@
 ﻿<template>
-  <el-card>
+  <div>
     <el-card>
-      <el-button-group>
-        <el-button type="success" size="mini" @click="create">新增</el-button>
-      </el-button-group>
-    </el-card>
-    <my-page-table
-      :get-data="getData"
-      v-model="isLoad"
-      @edit="edit"
-      @deleteSave="deleteSave"
-    >
-      <el-table-column label="名称" prop="Name"></el-table-column>
-      <el-table-column label="描述" prop="Remark"></el-table-column>
-      <el-table-column label="资源路径" prop="VideoPath"></el-table-column>
-      <el-table-column
-        label="预览图"
-        prop="PreviewPhoto"
-        min-width="150"
-        align="center"
+      <el-card>
+        <el-button-group>
+          <el-button type="success" size="mini" @click="create">新增</el-button>
+        </el-button-group>
+      </el-card>
+      <my-page-table
+        :get-data="getData"
+        v-model="isLoad"
+        @edit="edit"
+        @deleteSave="deleteSave"
       >
-        <template #default="scope">
-          <el-image
-            v-if="scope.row.PreviewPhoto"
-            style="width: 100px"
-            fit="contain"
-            :src="'http://file.linshengweb.com/files/' + scope.row.PreviewPhoto"
-          ></el-image>
-          <div v-else>暂无图片</div>
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="儿歌分类"
-        prop="EliteSongClassifyName"
-      ></el-table-column>
-      <my-page-table-column-base></my-page-table-column-base>
-    </my-page-table>
-  </el-card>
-
-  <app-dialog
-    title="新增爱利特儿歌"
-    width="60%"
-    v-model="dialogCreate.show"
-    @save="createSave"
-  >
-    <el-form
-      ref="formCreate"
-      label-width="80px"
-      :model="dialogCreate.formData"
-      :rules="rules"
-    >
-      <el-form-item label="名称" prop="Name">
-        <el-input v-model="dialogCreate.formData.Name" />
-      </el-form-item>
-      <el-form-item label="描述" prop="Remark">
-        <el-input v-model="dialogCreate.formData.Remark" />
-      </el-form-item>
-      <el-form-item label="儿歌分类" prop="EliteSongClassify">
-        <el-select
-          v-model="dialogCreate.formData.EliteSongClassify"
-          placeholder="请选择儿歌分类"
+        <el-table-column label="名称" prop="Name"></el-table-column>
+        <el-table-column label="描述" prop="Remark"></el-table-column>
+        <el-table-column label="资源路径" prop="VideoPath"></el-table-column>
+        <el-table-column
+          label="预览图"
+          prop="PreviewPhoto"
+          min-width="150"
+          align="center"
         >
-          <el-option
-            v-for="(item, index) in eliteSongClassify.DataList"
-            :key="index"
-            :label="item.Label"
-            :value="item.Value"
-          >
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="资源路径" prop="VideoPath">
-        <my-file-upload
-          v-model="dialogCreate.formData.VideoPath"
-        ></my-file-upload>
-      </el-form-item>
-      <el-form-item label="预览图" prop="PreviewPhoto">
-        <my-image-upload
-          v-model="dialogCreate.formData.PreviewPhoto"
-        ></my-image-upload>
-      </el-form-item>
-    </el-form>
-  </app-dialog>
+          <template #default="scope">
+            <el-image
+              v-if="scope.row.PreviewPhoto"
+              style="width: 100px"
+              fit="contain"
+              :src="
+                'http://file.linshengweb.com/files/' + scope.row.PreviewPhoto
+              "
+            ></el-image>
+            <div v-else>暂无图片</div>
+          </template>
+        </el-table-column>
+        <el-table-column
+          label="儿歌分类"
+          prop="EliteSongClassifyName"
+        ></el-table-column>
+        <my-page-table-column-base></my-page-table-column-base>
+      </my-page-table>
+    </el-card>
 
-  <app-dialog
-    title="修改爱利特儿歌"
-    width="60%"
-    v-model="dialogUpdate.show"
-    @save="editSave"
-  >
-    <el-form
-      ref="formUpdate"
-      label-width="80px"
-      :model="dialogUpdate.formData"
-      :rules="rules"
+    <app-dialog
+      title="新增爱利特儿歌"
+      width="60%"
+      v-model="dialogCreate.show"
+      @save="createSave"
     >
-      <el-form-item label="名称" prop="Name">
-        <el-input v-model="dialogUpdate.formData.Name" />
-      </el-form-item>
-      <el-form-item label="描述" prop="Remark">
-        <el-input v-model="dialogUpdate.formData.Remark" /> </el-form-item
-      ><el-form-item label="儿歌分类" prop="EliteSongClassify">
-        <el-select
-          v-model="dialogUpdate.formData.EliteSongClassify"
-          placeholder="请选择儿歌分类"
-        >
-          <el-option
-            v-for="(item, index) in eliteSongClassify.DataList"
-            :key="index"
-            :label="item.Label"
-            :value="item.Value"
+      <el-form
+        ref="formCreate"
+        label-width="80px"
+        :model="dialogCreate.formData"
+        :rules="rules"
+      >
+        <el-form-item label="名称" prop="Name">
+          <el-input v-model="dialogCreate.formData.Name" />
+        </el-form-item>
+        <el-form-item label="描述" prop="Remark">
+          <el-input v-model="dialogCreate.formData.Remark" />
+        </el-form-item>
+        <el-form-item label="儿歌分类" prop="EliteSongClassify">
+          <el-select
+            v-model="dialogCreate.formData.EliteSongClassify"
+            placeholder="请选择儿歌分类"
           >
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="资源路径" prop="VideoPath">
-        <my-file-upload
-          v-model="dialogUpdate.formData.VideoPath"
-        ></my-file-upload>
-      </el-form-item>
-      <el-form-item label="预览图" prop="PreviewPhoto">
-        <my-image-upload
-          v-model="dialogUpdate.formData.PreviewPhoto"
-        ></my-image-upload>
-      </el-form-item>
-    </el-form>
-  </app-dialog>
+            <el-option
+              v-for="(item, index) in eliteSongClassify.DataList"
+              :key="index"
+              :label="item.Label"
+              :value="item.Value"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="资源路径" prop="VideoPath">
+          <my-file-upload
+            v-model="dialogCreate.formData.VideoPath"
+          ></my-file-upload>
+        </el-form-item>
+        <el-form-item label="预览图" prop="PreviewPhoto">
+          <my-image-upload
+            v-model="dialogCreate.formData.PreviewPhoto"
+          ></my-image-upload>
+        </el-form-item>
+      </el-form>
+    </app-dialog>
+
+    <app-dialog
+      title="修改爱利特儿歌"
+      width="60%"
+      v-model="dialogUpdate.show"
+      @save="editSave"
+    >
+      <el-form
+        ref="formUpdate"
+        label-width="80px"
+        :model="dialogUpdate.formData"
+        :rules="rules"
+      >
+        <el-form-item label="名称" prop="Name">
+          <el-input v-model="dialogUpdate.formData.Name" />
+        </el-form-item>
+        <el-form-item label="描述" prop="Remark">
+          <el-input v-model="dialogUpdate.formData.Remark" /> </el-form-item
+        ><el-form-item label="儿歌分类" prop="EliteSongClassify">
+          <el-select
+            v-model="dialogUpdate.formData.EliteSongClassify"
+            placeholder="请选择儿歌分类"
+          >
+            <el-option
+              v-for="(item, index) in eliteSongClassify.DataList"
+              :key="index"
+              :label="item.Label"
+              :value="item.Value"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="资源路径" prop="VideoPath">
+          <my-file-upload
+            v-model="dialogUpdate.formData.VideoPath"
+          ></my-file-upload>
+        </el-form-item>
+        <el-form-item label="预览图" prop="PreviewPhoto">
+          <my-image-upload
+            v-model="dialogUpdate.formData.PreviewPhoto"
+          ></my-image-upload>
+        </el-form-item>
+      </el-form>
+    </app-dialog>
+  </div>
 </template>
 
 <script lang="ts">
