@@ -59,7 +59,7 @@ const menuList: MenuItem[] = [
         index: "/resource/appResource",
         children: [
           {
-            title: "爱丽特儿歌",
+            title: "爱利特儿歌",
             icon: "el-icon-document",
             index: "/resource/appResource/appEliteSong"
           }

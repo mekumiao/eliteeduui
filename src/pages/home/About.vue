@@ -1,6 +1,6 @@
 ﻿<template>
   <div class="about">
-    <h1>关于爱丽特教务系统</h1>
+    <h1>关于爱利特教务系统</h1>
     <el-button @click="showMsg">显示消息</el-button>
   </div>
 </template>
