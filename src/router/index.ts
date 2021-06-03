@@ -18,7 +18,7 @@ import Exception404 from "@/pages/exception/404.vue";
 import Exception500 from "@/pages/exception/500.vue";
 
 /**系统管理 */
-import SystemVisitorUserInfo from "@/pages/system/VipUserInfo.vue";
+import SystemVipUserInfo from "@/pages/system/VipUserInfo.vue";
 
 /**资源管理 */
 import AppEliteSong from "@/pages/resource/AppEliteSong.vue";
@@ -67,9 +67,9 @@ const routes: Array<RouteRecordRaw> = [
     children: [{ path: "courseware", component: Courseware }]
   },
   {
-    path: "/systemManager",
+    path: "/system",
     component: Home,
-    children: [{ path: "visitorUserInfo", component: SystemVisitorUserInfo }]
+    children: [{ path: "vipUserInfo", component: SystemVipUserInfo }]
   },
   {
     path: "/vipCourseware",
