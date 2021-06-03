@@ -1,13 +1,13 @@
-﻿import { PublicWithKeyOutput } from "./apiBase";
-import ajax, {
+﻿import ajax, {
   ApiBase,
   PageOutput,
   ObjFilterInput,
   PidKeyItem,
   MsgOutput,
   OptionFilterInput,
-  OptionOutput
-} from "@/apis/apiBase";
+  OptionOutput,
+  PublicWithKeyOutput
+} from "./apiBase";
 
 /**爱利特儿歌输出模型 */
 export interface EliteSongOutput extends PublicWithKeyOutput {
