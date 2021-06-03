@@ -74,6 +74,7 @@ export default defineComponent({
       match: string,
       page: PageInput<CoursewareOutput>
     ): Promise<PageOutput<CoursewareOutput>> {
+      page.Sorts = [{ Orderby: "Name" }];
       const filter: ObjFilterInput<CoursewareOutput> = {
         Condition: {
           Logic: "or",
