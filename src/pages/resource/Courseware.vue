@@ -15,6 +15,7 @@
         <el-table-column label="课件预览" prop="SourcePath" min-width="150">
           <template #default="scope">
             <my-resource-preview
+              :source-name="scope.row.Name + '.pptx'"
               :resource-type="scope.row.ResourceType"
               :source-path="scope.row.SourcePath"
             ></my-resource-preview>
@@ -79,12 +80,14 @@
           </el-select>
         </el-form-item>
         <el-form-item label="资源路径" prop="SourcePath">
+          <el-input v-model="dialogCreate.formData.SourcePath"></el-input>
           <my-file-upload
             v-model="dialogCreate.formData.SourcePath"
             @success="uploadSuccess"
           ></my-file-upload>
         </el-form-item>
         <el-form-item label="预览图" prop="PreviewPhoto">
+          <el-input v-model="dialogCreate.formData.PreviewPhoto"></el-input>
           <my-image-upload
             v-model="dialogCreate.formData.PreviewPhoto"
           ></my-image-upload>
@@ -125,12 +128,14 @@
           </el-select>
         </el-form-item>
         <el-form-item label="资源路径" prop="SourcePath">
+          <el-input v-model="dialogUpdate.formData.SourcePath"></el-input>
           <my-file-upload
             v-model="dialogUpdate.formData.SourcePath"
             @success="uploadSuccess"
           ></my-file-upload>
         </el-form-item>
         <el-form-item label="预览图" prop="PreviewPhoto">
+          <el-input v-model="dialogUpdate.formData.PreviewPhoto"></el-input>
           <my-image-upload
             v-model="dialogUpdate.formData.PreviewPhoto"
           ></my-image-upload>

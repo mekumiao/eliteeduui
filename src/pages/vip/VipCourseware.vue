@@ -17,6 +17,7 @@
       <el-table-column label="课件预览" prop="SourcePath">
         <template #default="scope">
           <my-resource-preview
+            :source-name="scope.row.Name"
             :resource-type="scope.row.ResourceType"
             :source-path="scope.row.SourcePath"
           ></my-resource-preview>
