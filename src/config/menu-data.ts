@@ -14,37 +14,37 @@ const menuList: MenuItem[] = [
   {
     title: "系统管理",
     icon: "el-icon-document",
-    index: "systemManager",
+    index: "system",
     children: [
       {
         title: "系统参数",
         icon: "el-icon-document",
-        index: "/systemManager/systemconfig"
+        index: "/system/systemconfig"
       },
       {
         title: "校区管理",
         icon: "el-icon-document",
-        index: "/systemManager/school"
+        index: "/system/school"
       },
       {
         title: "角色管理",
         icon: "el-icon-document",
-        index: "/systemManager/role"
+        index: "/system/role"
       },
       {
         title: "教师管理",
         icon: "el-icon-document",
-        index: "/systemManager/teacher"
+        index: "/system/teacher"
       },
       {
         title: "机构人员",
         icon: "el-icon-document",
-        index: "/systemManager/employee"
+        index: "/system/employee"
       },
       {
         title: "VIP用户",
         icon: "el-icon-document",
-        index: "/systemManager/visitorUserInfo"
+        index: "/system/vipUserInfo"
       }
     ]
   },
