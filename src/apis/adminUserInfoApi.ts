@@ -13,7 +13,7 @@ export interface VisitorUserInfoOutput extends PublicWithKeyOutput {
   Auth: boolean;
 }
 /**用户信息接口 */
-class AdminUserInfoApi extends ApiBase {
+class UserInfoApi extends ApiBase {
   public baseUrl = "/api/admin/UserInfo/";
   /**
    * 查询访客用户信息
@@ -51,4 +51,4 @@ class AdminUserInfoApi extends ApiBase {
   }
 }
 
-export const apiUserInfo = new AdminUserInfoApi();
+export const apiUserInfo = new UserInfoApi();

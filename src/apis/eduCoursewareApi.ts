@@ -35,7 +35,7 @@ export interface CoursewareUpdInput {
   PreviewPhoto?: string;
 }
 /**课件接口 */
-class EduCoursewareApi extends ApiBase {
+class CoursewareApi extends ApiBase {
   /**基本路径 */
   public baseUrl = "/api/edu/Courseware";
   /**
@@ -96,4 +96,4 @@ class EduCoursewareApi extends ApiBase {
   }
 }
 
-export const apiEduCourseware = new EduCoursewareApi();
+export const apiEduCourseware = new CoursewareApi();

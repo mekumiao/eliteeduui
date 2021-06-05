@@ -89,7 +89,7 @@ export interface CoursewareOutput extends PublicWithKeyOutput {
   PreviewPhoto: string;
 }
 /**VIP课件访问Api */
-class VipCoursewareApi extends ApiBase {
+class CoursewareApi extends ApiBase {
   /**基本路径 */
   public baseUrl = "/api/vip/Courseware";
   /**
@@ -105,4 +105,4 @@ class VipCoursewareApi extends ApiBase {
   }
 }
 
-export const apiVipCourseware = new VipCoursewareApi();
+export const apiVipCourseware = new CoursewareApi();

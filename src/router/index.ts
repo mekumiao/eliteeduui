@@ -19,6 +19,7 @@ import Exception500 from "@/pages/exception/500.vue";
 
 /**系统管理 */
 import SystemVipUserInfo from "@/pages/system/VipUserInfo.vue";
+import SystemConfig from "@/pages/system/SystemConfig.vue";
 
 /**资源管理 */
 import AppEliteSong from "@/pages/resource/AppEliteSong.vue";
@@ -69,7 +70,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/system",
     component: Home,
-    children: [{ path: "vipUserInfo", component: SystemVipUserInfo }]
+    children: [
+      { path: "vipUserInfo", component: SystemVipUserInfo },
+      { path: "systemConfig", component: SystemConfig }
+    ]
   },
   {
     path: "/vipCourseware",
