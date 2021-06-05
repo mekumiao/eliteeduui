@@ -1,6 +1,6 @@
 ﻿<template>
   <div class="home-left-menu">
-    <div class="logo" v-show="!isCollapse">爱丽特教务系统</div>
+    <div class="logo" v-show="!isCollapse">爱利特教务系统</div>
     <el-menu
       :default-active="currentActive"
       :collapse="isCollapse"
