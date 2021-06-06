@@ -1,9 +1,10 @@
 ﻿<template>
   <el-table
+    ref="pageTable"
+    v-loading="loading"
     :data="pageData.DataList"
     :height="height"
     :max-height="maxHeight"
-    v-loading="loading"
     @sort-change="sortChange"
     @selection-change="$emit('selectionChange', $event)"
   >
@@ -93,7 +94,10 @@ export default defineComponent({
           try {
             loading.value = true;
             if (props.getData) {
-              pageData.value = await props.getData(search.value, page);
+              pageData.value = await props.getData(
+                search.value,
+                new PageInput(page.Index, page.Size, page.Sorts)
+              );
             }
           } finally {
             loading.value = false;
@@ -115,7 +119,10 @@ export default defineComponent({
       await sleep();
       try {
         if (this.getData) {
-          this.pageData = await this.getData(this.search, this.page);
+          this.pageData = await this.getData(
+            this.search,
+            new PageInput(this.page.Index, this.page.Size, this.page.Sorts)
+          );
         }
       } finally {
         this.loading = false;
@@ -138,7 +145,7 @@ export default defineComponent({
         const obj = { Orderby: sort.prop, Desc: desc } as SortInput<unknown>;
         this.page.Sorts = [obj];
       } else {
-        this.page.Sorts = undefined;
+        this.page.Sorts = [];
       }
       this.loadData();
     }

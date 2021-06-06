@@ -7,7 +7,7 @@ import { Plugin, VNode } from "@vue/runtime-core/dist/runtime-core";
 import { ElMessage } from "element-plus";
 import { MsgOutput } from "@/apis/apiBase";
 
-type MsgInfo = MsgOutput | string | string[] | number;
+type MsgInfo = MsgOutput | string | string[] | number | unknown;
 
 export interface ShowMessage {
   showSuccess: (msg: MsgInfo) => IMessageHandle;
@@ -21,7 +21,7 @@ const handMsgInfo = (msg: MsgInfo): VNode | string => {
   const info: MsgOutput = msg as MsgOutput;
   if (info.Title !== undefined && info.Code !== undefined) {
     if (info.MsgDetail) {
-      const array = info.MsgDetail.map((item) => h("p", null, item));
+      const array = info.MsgDetail.map((item) => h("pre", null, item));
       if (info.Title) {
         array.unshift(h("h4", null, info.Title));
       }
@@ -38,7 +38,7 @@ const handMsgInfo = (msg: MsgInfo): VNode | string => {
   } else if (typeof msg === "number") {
     return msg.toString();
   } else {
-    return msg;
+    return `${msg}`;
   }
 };
 
@@ -52,7 +52,7 @@ class ElMessageProvider implements ShowMessage {
       type: "success",
       message: handMsgInfo(msg),
       showClose: false,
-      center: true,
+      center: false,
       duration: 2000,
       offset: 10,
       customClass: "message_cust_success"
@@ -64,7 +64,7 @@ class ElMessageProvider implements ShowMessage {
       type: "error",
       message: handMsgInfo(msg),
       showClose: true,
-      center: true,
+      center: false,
       duration: 4000,
       offset: 10,
       customClass: "message_cust_error"
@@ -83,7 +83,7 @@ class ElMessageProvider implements ShowMessage {
     return this.instance.info({
       type: "info",
       message: handMsgInfo(msg),
-      showClose: true,
+      showClose: false,
       center: true,
       duration: 2000,
       offset: 10,

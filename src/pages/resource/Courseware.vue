@@ -216,7 +216,7 @@ export default defineComponent({
       match: string,
       page: PageInput<CoursewareOutput>
     ): Promise<PageOutput<CoursewareOutput>> {
-      page.Sorts = [{ Orderby: "Name" }];
+      page.TryAddSort("Name");
       const filter: ObjFilterInput<CoursewareOutput> = {
         Page: page,
         Condition: {

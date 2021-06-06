@@ -26,15 +26,15 @@ body,
 }
 
 .message_cust_success {
-  min-width: 240px;
+  max-width: 300px;
 }
 
 .message_cust_error {
-  min-width: 380px;
+  max-width: 95%;
 }
 
 .message_cust_info {
-  min-width: 380px;
+  max-width: 95%;
 }
 
 /* 隐藏滚动条,同时能够滚动*/

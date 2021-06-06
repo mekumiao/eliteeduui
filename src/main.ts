@@ -18,11 +18,11 @@ import locale from "element-plus/lib/locale/lang/zh-cn";
 createApp(App)
   .use(store, key)
   .use(router)
-  .use(ElementPlus, { size: "small", zIndex: 3000, locale })
+  .use(ElementPlus, { size: "mini", zIndex: 3000, locale })
   .use(MyNprogress)
-  .use(VueErrorHander)
   .use(MyLoading)
   .use(ElFormrule)
   .use(ElMessage)
   .use(VueDirectives)
+  .use(VueErrorHander)
   .mount("#app");

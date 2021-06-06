@@ -56,9 +56,43 @@ export class PageOutput<T> {
  * 分页输入模型
  */
 export class PageInput<T> {
-  public Index = 1;
-  public Size = 10;
-  public Sorts?: SortInput<T>[];
+  public Index: number;
+  public Size: number;
+  public Sorts: SortInput<T>[];
+
+  public constructor(index?: number, size?: number, sorts?: SortInput<T>[]) {
+    this.Index = index ?? 1;
+    this.Size = size ?? 10;
+    this.Sorts = sorts ?? [];
+  }
+  /**
+   * 尝试添加排序列
+   * @param order 排序字段
+   * @param desc 降序
+   */
+  public TryAddSort(order: keyof T, desc = false): void {
+    if (!this.Sorts) {
+      this.Sorts = [];
+    }
+    const array = this.Sorts.filter((x) => x.Orderby === order);
+    if (array.length <= 0) {
+      this.Sorts.push({ Orderby: order, Desc: desc });
+    }
+  }
+  /**
+   * 尝试修改排序列
+   * @param order 排序字段
+   * @param desc 降序
+   */
+  public TryUpdSort(order: keyof T, desc = false): void {
+    if (!this.Sorts) {
+      this.Sorts = [];
+    }
+    const array = this.Sorts.filter((x) => x.Orderby === order);
+    if (array.length > 0) {
+      array.forEach((item) => (item.Desc = desc));
+    }
+  }
 }
 /**
  * 选项查询模型
@@ -73,7 +107,7 @@ export class OptionFilterInput {
     this.Tag = tag;
     this.Match = "";
     this.Cascade = "";
-    this.Page = { Index: 1, Size: 50 };
+    this.Page = new PageInput(1, 50);
   }
 }
 /**
@@ -238,44 +272,54 @@ ajax.interceptors.request.use(
   }
 );
 /**
- * 对返回结果进行统一处理
+ * 处理axios错误响应
+ */
+export function ResponseErrorHandle(error: unknown): Promise<MsgOutput> {
+  /**axios错误 */
+  if (axios.isAxiosError(error)) {
+    const axiosError = error as AxiosError;
+
+    /**api模型验证错误 */
+    if (isInputError(axiosError.response?.data)) {
+      const data = axiosError.response?.data as InputError;
+      const keys = Object.keys(data.errors);
+      const arrayMsg = keys.map((x) => JSON.stringify(data.errors[x]));
+      const msgOutput: MsgOutput = {
+        Title: "输入错误",
+        Code: data.status,
+        MsgDetail: arrayMsg
+      };
+      return Promise.reject(msgOutput);
+    }
+
+    /**api接口返回错误 */
+    if (isMsgOutput(axiosError.response?.data)) {
+      const data = axiosError.response?.data as MsgOutput;
+      return Promise.reject(data);
+    }
+
+    /**其他未受控制的Axios错误 */
+    const resp = (error as Record<"response", unknown>).response;
+    const msgResult = getMessage(resp);
+    const errorMsgOutput: MsgOutput = {
+      Title: msgResult.msg,
+      Code: msgResult.code,
+      MsgDetail: [(resp as Record<"data", string>).data]
+    };
+    return Promise.reject<MsgOutput>(errorMsgOutput);
+  } else {
+    return Promise.reject<MsgOutput>(error);
+  }
+}
+/**
+ * 对axios响应进行统一处理
  */
 ajax.interceptors.response.use(
   (result: AxiosResponse): AxiosResponse => {
     return result.data;
   },
   (error: unknown): Promise<MsgOutput> => {
-    /**axios错误 */
-    if (axios.isAxiosError(error)) {
-      const res = error as AxiosError;
-
-      /**api模型验证错误 */
-      if (isInputError(res.response?.data)) {
-        const data = res.response?.data as InputError;
-        const keys = Object.keys(data.errors);
-        const arrayMsg = keys.map((x) => JSON.stringify(data.errors[x]));
-        const msgOutput: MsgOutput = {
-          Title: "输入错误",
-          Code: data.status,
-          MsgDetail: arrayMsg
-        };
-        return Promise.reject(msgOutput);
-      }
-
-      /**api接口返回错误 */
-      if (isMsgOutput(res.response?.data)) {
-        const data = res.response?.data as MsgOutput;
-        return Promise.reject(data);
-      }
-    }
-    /**其他未受控制的错误 */
-    const message = getMessage((error as Record<"response", unknown>).response);
-    const errorMsgOutput: MsgOutput = {
-      Title: message.msg,
-      Code: message.code,
-      MsgDetail: []
-    };
-    return Promise.reject<MsgOutput>(errorMsgOutput);
+    return ResponseErrorHandle(error);
   }
 );
 /**基础API */
@@ -336,21 +380,23 @@ export abstract class ApiBase {
     return `${this.trimEnd(this.mergeUrl(url))}?${this.trimStart(str)}`;
   }
   /**
-   * 尝试执行异步方法
+   * 尝试执行异步方法并通知错误信息
    * @param func 待执行异步方法
-   * @param showError 发生错误时是否显示提示
+   * @param isThrow 是否继续抛出异常
    */
   protected async tryCatchCall<T>(
     func: () => Promise<T>,
-    showError = true
+    isThrow = true
   ): Promise<T> {
     try {
       return await func();
     } catch (error) {
-      if (showError) {
+      if (isThrow) {
         message.showError(error);
+        throw error;
+      } else {
+        return Promise.resolve<T>({} as T);
       }
-      throw error;
     }
   }
 }

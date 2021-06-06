@@ -1,17 +1,25 @@
 ﻿<template>
   <div class="test2">
-    {{ sex }}
+    <el-card>
+      <el-button @click="number++">累加{{ number }}</el-button>
+      <my-customer-file-upload></my-customer-file-upload>
+    </el-card>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent } from "vue";
+import MyCustomerFileUpload, {
+  number
+} from "@/components/MyCustomerFileUpload.vue";
 
 export default defineComponent({
   name: "Test2",
+  components: {
+    MyCustomerFileUpload
+  },
   setup() {
-    const sex = ref("男");
-    return { sex };
+    return { number };
   }
 });
 </script>

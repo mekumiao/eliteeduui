@@ -1,6 +1,7 @@
 ﻿<template>
   <div class="home-left-menu">
-    <div class="logo" v-show="!isCollapse">爱利特教务系统</div>
+    <img class="logo" v-show="isCollapse" src="@/assets/logo.png" />
+    <div class="logo logo-txt" v-show="!isCollapse">爱利特教务系统</div>
     <el-menu
       :default-active="currentActive"
       :collapse="isCollapse"
@@ -55,21 +56,25 @@ export default defineComponent({
 
   .logo {
     background-color: $left-menu-color;
+    height: 60px;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 1;
+    border: 0;
+    margin: 0;
+  }
+
+  .logo-txt {
+    width: $menu-left-open-width;
     display: flex;
     align-items: center;
     align-content: center;
     justify-content: flex-start;
-    width: $menu-left-open-width;
     overflow: hidden;
-    height: 60px;
     font-size: 25px;
     color: #fff;
     padding-left: 20px;
-    margin: 0;
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;

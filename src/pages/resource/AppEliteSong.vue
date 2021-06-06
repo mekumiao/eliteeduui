@@ -102,8 +102,9 @@
           <el-input v-model="dialogUpdate.formData.Name" />
         </el-form-item>
         <el-form-item label="描述" prop="Remark">
-          <el-input v-model="dialogUpdate.formData.Remark" /> </el-form-item
-        ><el-form-item label="儿歌分类" prop="EliteSongClassify">
+          <el-input v-model="dialogUpdate.formData.Remark" />
+        </el-form-item>
+        <el-form-item label="儿歌分类" prop="EliteSongClassify">
           <el-select
             v-model="dialogUpdate.formData.EliteSongClassify"
             placeholder="请选择儿歌分类"
@@ -193,7 +194,6 @@ export default defineComponent({
       formData: {} as EliteSongUpdInput,
       oldData: {} as EliteSongOutput
     });
-
     return {
       isLoad,
       eliteSongClassify,
@@ -207,11 +207,15 @@ export default defineComponent({
       match: string,
       page: PageInput<EliteSongOutput>
     ): Promise<PageOutput<EliteSongOutput>> {
+      page.TryAddSort("CreateTime", true);
       const filter: ObjFilterInput<EliteSongOutput> = {
         Page: page,
         Condition: {
           Logic: "or",
-          Items: [{ Compare: "contains", Field: "Name", Value: match }]
+          Items: [
+            { Compare: "contains", Field: "Name", Value: match },
+            { Compare: "contains", Field: "Remark", Value: match }
+          ]
         }
       };
       return apiAppResource.QueryPageEliteSong(filter);

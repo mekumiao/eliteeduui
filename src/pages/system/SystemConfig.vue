@@ -109,7 +109,7 @@ export default defineComponent({
       match: string,
       page: PageInput<SystemConfigOutput>
     ): Promise<PageOutput<SystemConfigOutput>> {
-      page.Sorts = [{ Orderby: "CreateTime", Desc: true }];
+      page.TryAddSort("CreateTime", true);
       const filter: ObjFilterInput<SystemConfigOutput> = {
         Page: page,
         Condition: {

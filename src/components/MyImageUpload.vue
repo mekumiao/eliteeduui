@@ -10,6 +10,7 @@
     :on-change="handleChange"
     :before-upload="handleBeforeUpload"
     :on-success="handleSuccess"
+    :on-error="handleError"
   >
     <template #default>
       <i v-if="!dialogImageUrl" class="el-icon-plus"></i>
@@ -49,8 +50,12 @@ export default defineComponent({
       this.$loading();
     },
     handleSuccess(response: Record<string, unknown>) {
-      this.$emit("update:modelValue", response.filename);
       this.$closeLoading();
+      this.$emit("update:modelValue", response.filename);
+    },
+    handleError(error: unknown): void {
+      this.$closeLoading();
+      this.$message.showError(error);
     }
   }
 });
