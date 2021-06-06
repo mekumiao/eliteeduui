@@ -31,18 +31,24 @@ module.exports = {
     config.when(process.env.NODE_ENV === "production", (config) => {
       config.entry("app").clear().add("./src/main.ts");
 
-      //用于CDN优化
-      // config.set("externals", {
-      //   "video.js": "Video"
-      // });
+      //CDN优化
+      config.set("externals", {
+        vue: "Vue",
+        "vue-router": "VueRouter",
+        axios: "axios",
+        echarts: "echarts",
+        nprogress: "NProgress",
+        "element-plus": "ElementPlus"
+      });
     });
     config.when(process.env.NODE_ENV === "development", (config) => {
-      config.entry("app").clear().add("./src/main.ts");
+      config.entry("app").clear().add("./src/main-dev.ts");
     });
 
     config.when(process.env.NODE_ENV === "production", (config) => {
       config.plugin("html").tap((args) => {
         args[0].title = "爱利特教务系统";
+        args[0].isProduction = true;
         return args;
       });
     });
@@ -50,6 +56,7 @@ module.exports = {
     config.when(process.env.NODE_ENV === "development", (config) => {
       config.plugin("html").tap((args) => {
         args[0].title = "dev - 爱利特教务系统";
+        args[0].isDevelopment = true;
         return args;
       });
     });

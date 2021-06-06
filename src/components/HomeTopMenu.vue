@@ -75,8 +75,7 @@
 
 <script lang="ts">
 import { UserInfoOutput } from "@/apis/adminUserInfoApi";
-import { inject, reactive, ref } from "vue";
-import { defineComponent } from "vue";
+import { inject, reactive, ref, defineComponent } from "vue";
 import AppHeadPortrait from "./AppHeadPortrait.vue";
 
 export default defineComponent({

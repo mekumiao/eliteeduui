@@ -16,6 +16,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 //rootURL = "http://an.linshengweb.com:8188";
+rootURL = "http://localhost:8080";
 
 /**
  * 返回消息模型

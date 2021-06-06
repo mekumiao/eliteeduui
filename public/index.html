@@ -1,21 +1,40 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <% if (htmlWebpackPlugin.options.isProduction) { %>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-plus@1.0.2-beta.46/lib/theme-chalk/index.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/nprogress@0.2.0/nprogress.css"
+    />
+    <% } %>
+  </head>
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-  <title><%= htmlWebpackPlugin.options.title %></title>
-</head>
+  <body>
+    <noscript>
+      <strong>javascript 被禁用</strong>
+    </noscript>
+    <div id="app"></div>
+    <script src="<%= BASE_URL %>static/lib/jquery/jquery.js"></script>
+    <script src="<%= BASE_URL %>static/lib/layer/layer.js"></script>
 
-<body>
-  <noscript>
-    <strong>javascript 被禁用</strong>
-  </noscript>
-  <div id="app"></div>
-  <script type="text/javascript" src="<%= BASE_URL %>static/lib/jquery/jquery.js"></script>
-  <script type="text/javascript" src="<%= BASE_URL %>static/lib/layer/layer.js"></script>
-</body>
-
+    <% if (htmlWebpackPlugin.options.isProduction) { %>
+    <script src="https://unpkg.com/vue@3.0.11/dist/vue.global.prod.js"></script>
+    <script src="https://unpkg.com/vue-router@4.0.8/dist/vue-router.global.prod.js"></script>
+    <script src="https://unpkg.com/axios@0.21.1/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/element-plus@1.0.2-beta.46/lib/index.full.js"></script>
+    <script src="https://unpkg.com/echarts@5.1.1/dist/echarts.min.js"></script>
+    <!-- <script src="https://unpkg.com/dayjs@1.10.5/locale/zh-cn.js"></script> -->
+    <!-- <script src="https://unpkg.com/element-plus@1.0.2-beta.46/lib/locale/lang/zh-cn.js"></script> -->
+    <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
+    <% } %>
+  </body>
 </html>
