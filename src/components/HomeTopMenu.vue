@@ -17,7 +17,10 @@
               trigger="hover"
               placement="bottom-start"
             >
-              <app-head-portrait :size="40"></app-head-portrait>
+              <app-head-portrait
+                :size="40"
+                :img-url="portrait"
+              ></app-head-portrait>
               <template #dropdown>
                 <el-dropdown-menu class="dropdown-menu">
                   <el-dropdown-item command="userinfo" icon="el-icon-user">
@@ -71,6 +74,7 @@
 </template>
 
 <script lang="ts">
+import { UserInfoOutput } from "@/apis/adminUserInfoApi";
 import { inject, reactive, ref } from "vue";
 import { defineComponent } from "vue";
 import AppHeadPortrait from "./AppHeadPortrait.vue";
@@ -82,11 +86,15 @@ export default defineComponent({
     const isCollapse = inject("isCollapse", ref(false));
     const reload = inject<() => Promise<void>>("reload");
     const dialogUserInfo = reactive({ show: false, formData: {} });
-    return { isCollapse, reload, dialogUserInfo };
+    const msg = window.localStorage.getItem("user");
+    const user = JSON.parse(msg ?? "{}") as UserInfoOutput;
+    const portrait = ref(user?.Portrait);
+    return { isCollapse, reload, dialogUserInfo, portrait };
   },
   methods: {
     logout(): void {
       window.localStorage.removeItem("token");
+      window.localStorage.removeItem("user");
       this.$router.push("/login");
     },
     async onReload(): Promise<void> {

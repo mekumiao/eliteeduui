@@ -1,7 +1,7 @@
 ﻿<template>
   <div class="home-left-menu">
     <img class="logo" v-show="isCollapse" src="@/assets/logo.png" />
-    <div class="logo logo-txt" v-show="!isCollapse">爱利特教务系统</div>
+    <div class="logo logo-txt" v-show="!isCollapse">{{ systemName }}</div>
     <el-menu
       :default-active="currentActive"
       :collapse="isCollapse"
@@ -23,6 +23,7 @@ import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from "vue-router";
 import { onBeforeMount } from "vue";
 import { defineComponent } from "vue";
 import AppMenuItem from "./AppMenuItem.vue";
+import AppSetting from "@/config/app-setting";
 
 export default defineComponent({
   components: { AppMenuItem },
@@ -31,6 +32,7 @@ export default defineComponent({
     const menuData = reactive(menulist);
     const isCollapse = inject("isCollapse", ref(false));
     const currentActive = inject("currentActive", ref(""));
+    const systemName = ref(AppSetting.systemName);
 
     onBeforeMount(() => {
       const route = useRoute();
@@ -44,7 +46,7 @@ export default defineComponent({
     onBeforeRouteLeave((to) => {
       currentActive.value = to.path;
     });
-    return { isCollapse, currentActive, menuData };
+    return { isCollapse, currentActive, menuData, systemName };
   }
 });
 </script>

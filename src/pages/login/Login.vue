@@ -47,6 +47,8 @@ import { defineComponent, Ref, ref } from "vue";
 import { apiAuth, LoginInput } from "@/apis/adminAuthApi";
 import { FormRule } from "@/types/el-rules";
 import AppHeadPortrait from "@/components/AppHeadPortrait.vue";
+import { apiUserInfo } from "@/apis/adminUserInfoApi";
+import { sleep } from "@/utils/my-thread";
 
 declare interface DataRules {
   Account: FormRule[];
@@ -91,7 +93,10 @@ export default defineComponent({
         });
         window.localStorage.setItem("token", token.Token);
         window.sessionStorage.setItem("state", "5200");
-
+        const user = await apiUserInfo.GetCurrentUserInfo();
+        window.localStorage.setItem("user", JSON.stringify(user));
+        this.refImgUrl = user.Portrait;
+        await sleep(500);
         this.$router.push("/");
         this.$message.closeAll();
       } finally {
