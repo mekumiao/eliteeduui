@@ -80,32 +80,26 @@ export default defineComponent({
     return { refImgUrl, refLoginInput, refRules, loginLoading };
   },
   methods: {
-    login(): void {
-      this.$useRules("loginFormRef").validate(async (valid) => {
+    async login(): Promise<void> {
+      try {
+        await this.$useRules("loginFormRef").validate();
         this.loginLoading = true;
         this.$nprogress.start();
-        if (valid) {
-          try {
-            const token = await apiAuth.Token({
-              Account: this.refLoginInput.Account,
-              PassWord: this.refLoginInput.PassWord
-            });
-            window.localStorage.setItem("token", token.Token);
-            window.sessionStorage.setItem("state", "5200");
-            this.$router.push("/");
-            this.$message.closeAll();
-            return true;
-          } catch (error) {
-            return false;
-          } finally {
-            this.loginLoading = false;
-            this.$nprogress.done();
-          }
-        }
+        const token = await apiAuth.Token({
+          Account: this.refLoginInput.Account,
+          PassWord: this.refLoginInput.PassWord
+        });
+        window.localStorage.setItem("token", token.Token);
+        window.sessionStorage.setItem("state", "5200");
+
+        this.$router.push("/");
+        this.$message.closeAll();
+      } finally {
         this.loginLoading = false;
         this.$nprogress.done();
-        return false;
-      });
+      }
+      this.loginLoading = false;
+      this.$nprogress.done();
     }
   }
 });

@@ -304,8 +304,12 @@ export function ResponseErrorHandle(error: unknown): Promise<MsgOutput> {
     const errorMsgOutput: MsgOutput = {
       Title: msgResult.msg,
       Code: msgResult.code,
-      MsgDetail: [(resp as Record<"data", string>).data]
+      MsgDetail: []
     };
+    const detail = (resp as Record<"data", string>)?.data;
+    if (detail) {
+      errorMsgOutput.MsgDetail.push(detail);
+    }
     return Promise.reject<MsgOutput>(errorMsgOutput);
   } else {
     return Promise.reject<MsgOutput>(error);

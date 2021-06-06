@@ -52,7 +52,7 @@ class ElMessageProvider implements ShowMessage {
       type: "success",
       message: handMsgInfo(msg),
       showClose: false,
-      center: false,
+      center: true,
       duration: 2000,
       offset: 10,
       customClass: "message_cust_success"
@@ -64,7 +64,7 @@ class ElMessageProvider implements ShowMessage {
       type: "error",
       message: handMsgInfo(msg),
       showClose: true,
-      center: false,
+      center: true,
       duration: 4000,
       offset: 10,
       customClass: "message_cust_error"
