@@ -18,7 +18,6 @@
               :source-name="scope.row.Name + '.pptx'"
               :resource-type="scope.row.ResourceType"
               :source-path="scope.row.SourcePath"
-              :is-download="true"
             ></my-resource-preview>
           </template>
         </el-table-column>
