@@ -12,7 +12,12 @@
       >
         <el-table-column label="名称" prop="Name"></el-table-column>
         <el-table-column label="描述" prop="Remark"></el-table-column>
-        <el-table-column label="课件预览" prop="SourcePath" min-width="150">
+        <el-table-column
+          label="课件预览"
+          prop="SourcePath"
+          min-width="150"
+          align="center"
+        >
           <template #default="scope">
             <my-resource-preview
               :source-name="scope.row.Name + '.pptx'"

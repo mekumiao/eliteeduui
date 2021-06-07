@@ -14,7 +14,7 @@
         label="课件类型"
         prop="ResourceTypeName"
       ></el-table-column>
-      <el-table-column label="课件预览" prop="SourcePath">
+      <el-table-column label="课件预览" prop="SourcePath" align="center">
         <template #default="scope">
           <my-resource-preview
             :source-name="scope.row.Name"
