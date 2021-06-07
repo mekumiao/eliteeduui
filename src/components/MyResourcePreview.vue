@@ -26,6 +26,7 @@
     >
     </el-image>
     <a
+      v-show="isDownload"
       :href="'http://file.linshengweb.com/files/' + encodeURI(sourcePath)"
       :download="sourceName || sourcePath"
     >
@@ -44,7 +45,8 @@ export default defineComponent({
   props: {
     sourceName: { type: String, default: undefined },
     resourceType: { type: Number, default: 0 },
-    sourcePath: { type: String, default: undefined }
+    sourcePath: { type: String, default: undefined },
+    isDownload: { type: Boolean, default: false }
   },
   methods: {
     download(): void {
