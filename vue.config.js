@@ -29,17 +29,17 @@ module.exports = {
     config.resolve.alias.set("@", resolve("src"));
     /**生产环境入口点 */
     config.when(process.env.NODE_ENV === "production", (config) => {
-      config.entry("app").clear().add("./src/main.ts");
+      config.entry("app").clear().add("./src/main-dev.ts");
 
       //CDN优化
-      config.set("externals", {
-        vue: "Vue",
-        "vue-router": "VueRouter",
-        axios: "axios",
-        echarts: "echarts",
-        nprogress: "NProgress",
-        "element-plus": "ElementPlus"
-      });
+      // config.set("externals", {
+      //   vue: "Vue",
+      //   "vue-router": "VueRouter",
+      //   axios: "axios",
+      //   echarts: "echarts",
+      //   nprogress: "NProgress",
+      //   "element-plus": "ElementPlus"
+      // });
     });
     config.when(process.env.NODE_ENV === "development", (config) => {
       config.entry("app").clear().add("./src/main-dev.ts");
