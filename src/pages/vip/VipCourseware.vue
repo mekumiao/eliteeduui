@@ -75,7 +75,10 @@ export default defineComponent({
       match: string,
       page: PageInput<CoursewareOutput>
     ): Promise<PageOutput<CoursewareOutput>> {
+      page.TryAddSort("Group");
+      page.TryAddSort("Sort");
       page.TryAddSort("Name");
+      page.TryAddSort("CreateTime");
       const filter: ObjFilterInput<CoursewareOutput> = {
         Condition: {
           Logic: "or",

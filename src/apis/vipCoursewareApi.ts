@@ -44,6 +44,8 @@ ajax.interceptors.response.use(
 export interface CoursewareOutput extends PublicWithKeyOutput {
   Name: string;
   Remark: string;
+  Group: string;
+  Sort: number;
   SourcePath: string;
   ResourceType: number;
   ResourceTypeName: string;

@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === "production") {
   timeout = 20000;
 }
 
-rootURL = "http://an.linshengweb.com:8188";
+ rootURL = "http://an.linshengweb.com:8188";
 //rootURL = "http://localhost:8080";
 
 /**

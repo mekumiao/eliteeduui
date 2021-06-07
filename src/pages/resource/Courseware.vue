@@ -12,6 +12,8 @@
       >
         <el-table-column label="名称" prop="Name"></el-table-column>
         <el-table-column label="描述" prop="Remark"></el-table-column>
+        <el-table-column label="分组" prop="Group"></el-table-column>
+        <el-table-column label="排序" prop="Sort"></el-table-column>
         <el-table-column
           label="课件预览"
           prop="SourcePath"
@@ -70,6 +72,12 @@
         <el-form-item label="描述" prop="Remark">
           <el-input v-model="dialogCreate.formData.Remark"></el-input>
         </el-form-item>
+        <el-form-item label="分组" prop="Group">
+          <el-input v-model="dialogCreate.formData.Group"></el-input>
+        </el-form-item>
+        <el-form-item label="排序" prop="Sort">
+          <el-input v-model.number="dialogCreate.formData.Sort"></el-input>
+        </el-form-item>
         <el-form-item label="资源类型" prop="ResourceType">
           <el-select
             v-model="dialogCreate.formData.ResourceType"
@@ -117,6 +125,12 @@
         </el-form-item>
         <el-form-item label="描述" prop="Remark">
           <el-input v-model="dialogUpdate.formData.Remark"></el-input>
+        </el-form-item>
+        <el-form-item label="分组" prop="Group">
+          <el-input v-model="dialogUpdate.formData.Group"></el-input>
+        </el-form-item>
+        <el-form-item label="排序" prop="Sort">
+          <el-input v-model.number="dialogUpdate.formData.Sort"></el-input>
         </el-form-item>
         <el-form-item label="资源类型" prop="ResourceType">
           <el-select
@@ -178,6 +192,8 @@ import { FormRule } from "@/types/el-rules";
 const rules = reactive({
   Name: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
   Remark: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
+  Group: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
+  Sort: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
   ResourceType: [
     { required: true, message: "必填", trigger: "change" }
   ] as FormRule[],
@@ -221,14 +237,18 @@ export default defineComponent({
       match: string,
       page: PageInput<CoursewareOutput>
     ): Promise<PageOutput<CoursewareOutput>> {
+      page.TryAddSort("Group");
+      page.TryAddSort("Sort");
       page.TryAddSort("Name");
+      page.TryAddSort("CreateTime");
       const filter: ObjFilterInput<CoursewareOutput> = {
         Page: page,
         Condition: {
           Logic: "and",
           Items: [
             { Field: "Name", Value: match, Compare: "contains" },
-            { Field: "Remark", Value: match, Compare: "contains" }
+            { Field: "Remark", Value: match, Compare: "contains" },
+            { Field: "Group", Value: match, Compare: "contains" }
           ]
         }
       };
