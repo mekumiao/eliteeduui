@@ -77,20 +77,19 @@
 import { UserInfoOutput } from "@/apis/adminUserInfoApi";
 import { inject, reactive, ref, defineComponent } from "vue";
 import AppHeadPortrait from "./AppHeadPortrait.vue";
-import { exitScreen, fullScreen } from "@/utils/my-fullScreen";
+import fullScreen from "@/utils/my-fullScreen";
 
 export default defineComponent({
   components: { AppHeadPortrait },
   name: "HomeTopMenu",
   setup() {
     const isCollapse = inject("isCollapse", ref(false));
-    const isFullScreen = ref(false);
     const reload = inject<() => Promise<void>>("reload");
     const dialogUserInfo = reactive({ show: false, formData: {} });
     const msg = window.localStorage.getItem("user");
     const user = JSON.parse(msg ?? "{}") as UserInfoOutput;
     const portrait = ref(user?.Portrait);
-    return { isCollapse, isFullScreen, reload, dialogUserInfo, portrait };
+    return { isCollapse, reload, dialogUserInfo, portrait };
   },
   methods: {
     logout(): void {
@@ -112,15 +111,8 @@ export default defineComponent({
       }
       return Promise.resolve();
     },
-    collapseScreen(): void {
-      debugger;
-      if (this.isFullScreen === false) {
-        fullScreen();
-        this.isFullScreen = true;
-      } else {
-        exitScreen();
-        this.isFullScreen = false;
-      }
+    async collapseScreen(): Promise<void> {
+      await fullScreen();
     }
   }
 });

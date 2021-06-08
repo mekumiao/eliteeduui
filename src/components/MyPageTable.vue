@@ -65,7 +65,10 @@ export default defineComponent({
   emits: ["update:modelValue", "edit", "deleteSave"],
   props: {
     searchWidth: { type: [String, Number], default: 190 },
-    maxHeight: { type: [String, Number], default: 700 },
+    maxHeight: {
+      type: [String, Number],
+      default: () => window.innerHeight - 300
+    },
     modelValue: { type: Boolean, default: true },
     showSearch: { type: Boolean, default: true },
     showCheckBox: { type: Boolean, default: false },

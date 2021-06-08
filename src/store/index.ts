@@ -10,8 +10,7 @@ export const useStore = (): Store<State> => {
 
 export default createStore({
   state: {
-    homeMenuCollapse: false,
-    homeMenuActive: ""
+    fileHost: ""
   },
   getters: {},
   mutations: {},

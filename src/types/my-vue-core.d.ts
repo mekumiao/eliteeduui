@@ -8,8 +8,7 @@ import { Layer } from "@/types/my-layer";
 
 declare module "@vue/runtime-core" {
   declare interface State {
-    homeMenuCollapse: boolean;
-    homeMenuActive: string;
+    fileHost: string;
   }
 
   declare interface ComponentCustomProperties {
