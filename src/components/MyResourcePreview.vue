@@ -4,7 +4,7 @@
       v-if="resourceType === 1"
       target="_blank"
       :href="
-        'https://view.officeapps.live.com/op/view.aspx?src=http://file.linshengweb.com/files/' +
+        'http://ow365.cn/?i=24932&furl=http://file.linshengweb.com/files/' +
         encodeURI(sourcePath)
       "
     >
