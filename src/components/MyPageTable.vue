@@ -3,7 +3,6 @@
     ref="pageTable"
     v-loading="loading"
     :data="pageData.DataList"
-    :height="height"
     :max-height="maxHeight"
     @sort-change="sortChange"
     @selection-change="$emit('selectionChange', $event)"
@@ -66,8 +65,7 @@ export default defineComponent({
   emits: ["update:modelValue", "edit", "deleteSave"],
   props: {
     searchWidth: { type: [String, Number], default: 190 },
-    height: { type: [String, Number], default: 520 },
-    maxHeight: { type: [String, Number], default: 520 },
+    maxHeight: { type: [String, Number], default: 700 },
     modelValue: { type: Boolean, default: true },
     showSearch: { type: Boolean, default: true },
     showCheckBox: { type: Boolean, default: false },
