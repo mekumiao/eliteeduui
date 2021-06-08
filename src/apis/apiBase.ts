@@ -224,6 +224,10 @@ export interface PublicWithKeyOutput extends PublicOutput {
 export interface WithKeyOutput {
   Pid: string;
 }
+/**值模型 */
+export interface ValueItem<T> {
+  Value?: T;
+}
 /**检查是否是InputError类型 */
 export const isInputError = (error: unknown): error is InputError => {
   if (!error) return false;

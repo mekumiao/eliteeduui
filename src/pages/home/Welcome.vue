@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from "vue";
-import * as echarts from "echarts";
+const echartsAsync = () => import(/* webpackChunkName: "echarts" */ "echarts");
 
 const option = reactive({
   tooltip: {
@@ -55,7 +55,8 @@ export default defineComponent({
     const myChart = ref<HTMLElement>();
     return { option, myChart };
   },
-  mounted() {
+  async mounted() {
+    const echarts = await echartsAsync();
     if (this.myChart) {
       const myChart = echarts.init(this.myChart);
       myChart.setOption(this.option);

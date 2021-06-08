@@ -43,9 +43,9 @@ import { download } from "@/utils/my-download";
 export default defineComponent({
   name: "MyResourcePreview",
   props: {
-    sourceName: { type: String, default: undefined },
+    sourceName: { type: String, default: "" },
     resourceType: { type: Number, default: 0 },
-    sourcePath: { type: String, default: undefined },
+    sourcePath: { type: String, default: "" },
     isDownload: { type: Boolean, default: false }
   },
   methods: {

@@ -4,7 +4,8 @@
   ObjFilterInput,
   PageOutput,
   PidKeyItem,
-  PublicWithKeyOutput
+  PublicWithKeyOutput,
+  ValueItem
 } from "./apiBase";
 /**系统配置输出模型 */
 export interface SystemConfigOutput extends PublicWithKeyOutput {
@@ -73,6 +74,17 @@ class SystemConfigApi extends ApiBase {
   public Delete(id: string, timestamp: string): Promise<MsgOutput> {
     const url = this.mergeUrlParame("Delete", id, timestamp);
     return this.tryCatchCall(() => ajax.delete(url));
+  }
+  /**
+   * 根据键获取配置
+   * @param name 配置名称
+   * @returns 配置信息
+   */
+  public GetSystemConfigByName(
+    name: string
+  ): Promise<ValueItem<SystemConfigOutput>> {
+    const url = this.mergeUrlParame("GetSystemConfigByName", name);
+    return this.tryCatchCall(() => ajax.get(url));
   }
 }
 
