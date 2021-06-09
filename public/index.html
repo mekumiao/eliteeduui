@@ -6,16 +6,16 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
     <title><%= htmlWebpackPlugin.options.title %></title>
-    <!-- <% if (htmlWebpackPlugin.options.isProduction) { %> -->
+    <% if (htmlWebpackPlugin.options.isProduction) { %>
     <!-- <link
       rel="stylesheet"
       href="https://unpkg.com/element-plus@1.0.2-beta.46/lib/theme-chalk/index.css"
-    /> -->
-    <!-- <link
+    />
+    <link
       rel="stylesheet"
       href="https://unpkg.com/nprogress@0.2.0/nprogress.css"
     /> -->
-    <!-- <% } %> -->
+    <% } %>
   </head>
 
   <body>
@@ -25,16 +25,15 @@
     <div id="app"></div>
     <script src="<%= BASE_URL %>static/lib/jquery/jquery.js"></script>
     <script src="<%= BASE_URL %>static/lib/layer/layer.js"></script>
-
-    <!-- <% if (htmlWebpackPlugin.options.isProduction) { %> -->
-    <!-- <script src="https://unpkg.com/vue@3.0.11/dist/vue.global.prod.js"></script>
-    <script src="https://unpkg.com/vue-router@4.0.8/dist/vue-router.global.prod.js"></script>
-    <script src="https://unpkg.com/axios@0.21.1/dist/axios.min.js"></script>
-    <script src="https://unpkg.com/element-plus@1.0.2-beta.46/lib/index.full.js"></script>
-    <script src="https://unpkg.com/echarts@5.1.1/dist/echarts.min.js"></script> -->
-    <!-- <script src="https://unpkg.com/dayjs@1.10.5/locale/zh-cn.js"></script> -->
-    <!-- <script src="https://unpkg.com/element-plus@1.0.2-beta.46/lib/locale/lang/zh-cn.js"></script> -->
+    <% if (htmlWebpackPlugin.options.isProduction) { %>
+    <!-- <script src="https://unpkg.com/vue@3.0.11/dist/vue.global.js"></script> -->
+    <!-- <script src="https://unpkg.com/vue-router@4.0.8/dist/vue-router.global.js"></script> -->
+    <!-- <script src="https://unpkg.com/vuex@4.0.1/dist/vuex.global.prod.js"></script> -->
     <!-- <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script> -->
-    <!-- <% } %> -->
+    <!-- <script src="https://unpkg.com/axios@0.21.1/dist/axios.min.js"></script> -->
+    <!-- <script src="https://unpkg.com/element-plus@1.0.2-beta.46/lib/index.full.js"></script> -->
+    <!-- <script src="https://unpkg.com/echarts@5.1.1/dist/echarts.min.js"></script> -->
+    <!-- <script src="https://unpkg.com/lodash@4.17.21/lodash.js"></script> -->
+    <% } %>
   </body>
 </html>

@@ -1,5 +1,6 @@
-﻿// eslint-disable-next-line @typescript-eslint/no-var-requires
+﻿/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require("path");
+const webpack = require("webpack");
 
 const resolve = (dir) => {
   return path.join(__dirname, dir);
@@ -8,7 +9,7 @@ const resolve = (dir) => {
 module.exports = {
   publicPath: process.env.NODE_ENV === "production" ? "/adminpage" : "/",
   outputDir: "dist", // 输出文件目录
-  productionSourceMap: false, // 生产环境是否生成 sourceMap 文件
+  productionSourceMap: true, // 生产环境是否生成 sourceMap 文件
   assetsDir: "", //静态资源生成目录
   devServer: {
     port: 3389
@@ -22,6 +23,13 @@ module.exports = {
         maxAssetSize: 2 * 1024 * 1024
       };
     }
+
+    config.plugins.push(
+      new webpack.NormalModuleReplacementPlugin(
+        /element-plus[/]lib[/]locale[/]lang[/]en/,
+        "element-plus/lib/locale/lang/zh-cn"
+      )
+    );
   },
 
   chainWebpack: (config) => {
@@ -29,20 +37,22 @@ module.exports = {
     config.resolve.alias.set("@", resolve("src"));
     /**生产环境入口点 */
     config.when(process.env.NODE_ENV === "production", (config) => {
-      config.entry("app").clear().add("./src/main-dev.ts");
+      config.entry("app").clear().add("./src/main.ts");
 
       //CDN优化
-      // config.set("externals", {
-      //   vue: "Vue",
-      //   "vue-router": "VueRouter",
-      //   axios: "axios",
-      //   echarts: "echarts",
-      //   nprogress: "NProgress",
-      //   "element-plus": "ElementPlus"
-      // });
+      config.set("externals", {
+        // vue: "Vue",
+        // vuex: "Vuex",
+        // "vue-router": "VueRouter",
+        // lodash: "_",
+        // axios: "axios",
+        // echarts: "echarts",
+        // nprogress: "NProgress"
+        // "element-plus": "ElementPlus"
+      });
     });
     config.when(process.env.NODE_ENV === "development", (config) => {
-      config.entry("app").clear().add("./src/main-dev.ts");
+      config.entry("app").clear().add("./src/main.ts");
     });
 
     config.when(process.env.NODE_ENV === "production", (config) => {

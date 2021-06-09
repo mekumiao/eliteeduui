@@ -67,7 +67,10 @@ export default defineComponent({
     searchWidth: { type: [String, Number], default: 190 },
     maxHeight: {
       type: [String, Number],
-      default: () => window.innerHeight - 300
+      default: () => {
+        const max = window.innerHeight - 300;
+        return max < 300 ? 300 : max;
+      }
     },
     modelValue: { type: Boolean, default: true },
     showSearch: { type: Boolean, default: true },
