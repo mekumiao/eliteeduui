@@ -13,14 +13,20 @@
 
       <!-- 内容区域 -->
       <el-main>
-        <!-- 面包屑 -->
-        <app-breadcrumb></app-breadcrumb>
-
         <!-- 路由视图 -->
         <router-view v-slot="{ Component }" v-if="isRouterActive">
-          <keep-alive include="AppEliteSong,Courseware,VipUserInfo">
-            <component :is="Component" />
-          </keep-alive>
+          <transition
+            name="my-fade"
+            enter-active-class="animate__animated animate__fadeIn"
+            leave-active-class="animate__animated animate__fadeOut"
+            mode="out-in"
+          >
+            <keep-alive
+              include="AppEliteSong,Courseware,VipUserInfo,SystemConfig"
+            >
+              <component :is="Component" />
+            </keep-alive>
+          </transition>
         </router-view>
       </el-main>
     </el-container>
@@ -40,7 +46,6 @@ export default defineComponent({
   components: { AppBreadcrumb, HomeTopMenu, HomeLeftMenu },
   setup() {
     const isCollapse = ref(false);
-    const isRouterActive = ref(true);
     const currentActive = ref("");
     const leftWidth = ref(appsetting.homeMenuOpenWidth);
 
@@ -52,7 +57,17 @@ export default defineComponent({
         ? appsetting.homeMenuShrinkWidth
         : appsetting.homeMenuOpenWidth;
     });
-    return { isRouterActive, leftWidth };
+    return { leftWidth };
+  },
+  computed: {
+    isRouterActive: {
+      get(): boolean {
+        return this.$store.state.isRouterActive;
+      },
+      set(newValue: boolean): void {
+        this.$store.commit("setIsRouterActive", newValue);
+      }
+    }
   },
   provide() {
     return { reload: this.reload };

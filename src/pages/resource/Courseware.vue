@@ -1,5 +1,5 @@
 ﻿<template>
-  <div>
+  <div class="courseware">
     <el-card>
       <el-card>
         <el-button type="success" size="mini" @click="create">新增</el-button>
@@ -54,7 +54,7 @@
       </my-page-table>
     </el-card>
 
-    <app-dialog
+    <app-edit-dialog
       title="新增课件资源"
       width="60%"
       v-model="dialogCreate.show"
@@ -106,9 +106,9 @@
           ></my-image-upload>
         </el-form-item>
       </el-form>
-    </app-dialog>
+    </app-edit-dialog>
 
-    <app-dialog
+    <app-edit-dialog
       title="修改课件资源"
       width="60%"
       v-model="dialogUpdate.show"
@@ -160,7 +160,7 @@
           ></my-image-upload>
         </el-form-item>
       </el-form>
-    </app-dialog>
+    </app-edit-dialog>
   </div>
 </template>
 
@@ -178,7 +178,7 @@ import {
   CoursewareOutput,
   CoursewareUpdInput
 } from "@/apis/eduCoursewareApi";
-import AppDialog from "@/components/AppDialog.vue";
+import AppEditDialog from "@/components/AppEditDialog.vue";
 import MyPageTable from "@/components/MyPageTable.vue";
 import MyPageTableColumnBase from "@/components/MyPageTableColumnBase.vue";
 import MyFileUpload from "@/components/MyFileUpload.vue";
@@ -211,7 +211,7 @@ export default defineComponent({
   components: {
     MyPageTable,
     MyPageTableColumnBase,
-    AppDialog,
+    AppEditDialog,
     MyFileUpload,
     MyImageUpload,
     MyResourcePreview

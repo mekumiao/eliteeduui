@@ -41,7 +41,7 @@ function ieFull(): Promise<void> {
  * 判断当前是否全屏显示
  * @returns 当前是否全屏显示
  */
-function isFullScreen(): boolean {
+export function isFullScreen(): boolean {
   const doc = document as unknown as Record<string, unknown>;
   const isFullscreen =
     document.fullscreenElement ||

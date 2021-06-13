@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 //rootURL = "http://an.linshengweb.com:8188";
-rootURL = "http://localhost:8080";
+//rootURL = "http://localhost:8080";
 
 /**
  * 返回消息模型
@@ -391,7 +391,7 @@ export abstract class ApiBase {
   /**
    * 尝试执行异步方法并通知错误信息
    * @param func 待执行异步方法
-   * @param isThrow 是否继续抛出异常
+   * @param isThrow 如果为true则继续抛出异常,否则返回undefined
    */
   protected async tryCatchCall<T>(
     func: () => Promise<T>,
@@ -404,7 +404,7 @@ export abstract class ApiBase {
         message.showError(error);
         throw error;
       } else {
-        return Promise.resolve<T>({} as T);
+        return Promise.resolve<T>(undefined as unknown as T);
       }
     }
   }

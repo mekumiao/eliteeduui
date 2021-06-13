@@ -1,0 +1,142 @@
+{
+  "id": "2464597",
+  "name": "eliteeduui",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "20912262",
+      "name": "展开",
+      "font_class": "zhankai",
+      "unicode": "e8b5",
+      "unicode_decimal": 59573
+    },
+    {
+      "icon_id": "20912243",
+      "name": "收起",
+      "font_class": "shouqi",
+      "unicode": "e8b2",
+      "unicode_decimal": 59570
+    },
+    {
+      "icon_id": "12880769",
+      "name": "appstore",
+      "font_class": "appstore",
+      "unicode": "e674",
+      "unicode_decimal": 58996
+    },
+    {
+      "icon_id": "12880770",
+      "name": "appstore-fill",
+      "font_class": "appstore-fill",
+      "unicode": "e675",
+      "unicode_decimal": 58997
+    },
+    {
+      "icon_id": "12880771",
+      "name": "替换",
+      "font_class": "tihuan",
+      "unicode": "e676",
+      "unicode_decimal": 58998
+    },
+    {
+      "icon_id": "12880772",
+      "name": "bell",
+      "font_class": "bell",
+      "unicode": "e677",
+      "unicode_decimal": 58999
+    },
+    {
+      "icon_id": "12880774",
+      "name": "arrow-left",
+      "font_class": "arrow-left",
+      "unicode": "e678",
+      "unicode_decimal": 59000
+    },
+    {
+      "icon_id": "1621660",
+      "name": "锁",
+      "font_class": "suo",
+      "unicode": "e644",
+      "unicode_decimal": 58948
+    },
+    {
+      "icon_id": "3670671",
+      "name": "锁",
+      "font_class": "suo1",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
+      "icon_id": "9512589",
+      "name": "锁",
+      "font_class": "lock-fill",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "17814576",
+      "name": "锁",
+      "font_class": "suo2",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "566039",
+      "name": "用户",
+      "font_class": "yonghu",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "6119261",
+      "name": "用户",
+      "font_class": "user-line",
+      "unicode": "e635",
+      "unicode_decimal": 58933
+    },
+    {
+      "icon_id": "3785807",
+      "name": "跑步",
+      "font_class": "paobu",
+      "unicode": "e673",
+      "unicode_decimal": 58995
+    },
+    {
+      "icon_id": "9499812",
+      "name": "跑",
+      "font_class": "ziyuan",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "12293696",
+      "name": "跑步",
+      "font_class": "paobu1",
+      "unicode": "e67d",
+      "unicode_decimal": 59005
+    },
+    {
+      "icon_id": "16384709",
+      "name": "跑！！！",
+      "font_class": "pao",
+      "unicode": "e66d",
+      "unicode_decimal": 58989
+    },
+    {
+      "icon_id": "14998103",
+      "name": "ic_exit full screen",
+      "font_class": "ic_exitfullscreen",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "14998113",
+      "name": "ic_full screen",
+      "font_class": "ic_fullscreen",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    }
+  ]
+}

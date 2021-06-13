@@ -14,8 +14,10 @@
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="$emit('update:modelValue', false)">取 消</el-button>
-        <el-button type="primary" @click="save"> 保 存 </el-button>
+        <el-button @click="$emit('update:modelValue', false)">
+          取&nbsp;消
+        </el-button>
+        <el-button type="primary" @click="save">保&nbsp;存</el-button>
       </span>
     </template>
   </el-dialog>
@@ -30,7 +32,7 @@ interface FormItemInfo {
 }
 
 export default defineComponent({
-  name: "AppDialogOne",
+  name: "AppEditDialogOne",
   props: {
     title: { type: String as PropType<string>, default: "标题" },
     width: {

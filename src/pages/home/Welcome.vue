@@ -39,8 +39,7 @@ const option = reactive({
         show: false
       },
       data: [
-        { value: 1048, name: "搜索引擎" },
-        { value: 735, name: "直接访问" },
+        { value: 1048, name: "今日访问" },
         { value: 580, name: "VIP用户" },
         { value: 484, name: "发布作业" },
         { value: 300, name: "题库数量" }

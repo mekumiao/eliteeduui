@@ -1,12 +1,18 @@
 ﻿<template>
   <div class="home-left-menu">
-    <img class="logo" v-show="isCollapse" src="@/assets/logo.png" />
-    <div class="logo logo-txt" v-show="!isCollapse">{{ systemName }}</div>
+    <img class="logo logo-ico" src="@/assets/logo.png" />
+    <transition
+      enter-active-class="animate__animated animate__slideInLeft"
+      leave-active-class="animate__animated animate__slideOutLeft"
+      mode="out-in"
+    >
+      <div class="logo logo-txt" v-show="!isCollapse">{{ systemName }}</div>
+    </transition>
     <el-menu
       :default-active="currentActive"
       :collapse="isCollapse"
       unique-opened
-      background-color="#313743"
+      background-color="#191A23"
       text-color="#fff"
       active-text-color="#ffd04b"
       router
@@ -52,6 +58,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .home-left-menu {
+  width: $menu-left-open-width;
   background-color: $left-menu-color;
   min-height: 100%;
 
@@ -66,8 +73,16 @@ export default defineComponent({
     margin: 0;
   }
 
+  .logo-ico {
+    height: 60px;
+    width: 60px;
+    z-index: 10;
+  }
+
   .logo-txt {
-    width: $menu-left-open-width;
+    z-index: 9;
+    margin-left: 60px;
+    height: 60px;
     display: flex;
     align-items: center;
     align-content: center;
@@ -75,7 +90,6 @@ export default defineComponent({
     overflow: hidden;
     font-size: 25px;
     color: #fff;
-    padding-left: 20px;
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;

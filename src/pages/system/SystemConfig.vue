@@ -1,67 +1,69 @@
 ﻿<template>
-  <el-card>
+  <div class="system-config">
     <el-card>
-      <el-button-group>
-        <el-button type="success" size="mini" @click="create">新增</el-button>
-      </el-button-group>
+      <el-card>
+        <el-button-group>
+          <el-button type="success" size="mini" @click="create">新增</el-button>
+        </el-button-group>
+      </el-card>
+      <my-page-table
+        :get-data="getData"
+        v-model="isLoad"
+        @edit="update"
+        @deleteSave="deleteSave"
+      >
+        <el-table-column label="分组名称" prop="Group"></el-table-column>
+        <el-table-column label="名称" prop="Name"></el-table-column>
+        <el-table-column label="值" prop="Value"></el-table-column>
+        <el-table-column label="描述" prop="Remark"></el-table-column>
+        <my-page-table-column-base></my-page-table-column-base>
+      </my-page-table>
     </el-card>
-    <my-page-table
-      :get-data="getData"
-      v-model="isLoad"
-      @edit="update"
-      @deleteSave="deleteSave"
+
+    <app-edit-dialog
+      title="新增系统配置"
+      width="60%"
+      v-model="dialogCreate.show"
+      @save="createSave"
     >
-      <el-table-column label="分组名称" prop="Group"></el-table-column>
-      <el-table-column label="名称" prop="Name"></el-table-column>
-      <el-table-column label="值" prop="Value"></el-table-column>
-      <el-table-column label="描述" prop="Remark"></el-table-column>
-      <my-page-table-column-base></my-page-table-column-base>
-    </my-page-table>
-  </el-card>
+      <el-form ref="formCreate" :model="dialogCreate.formData" :rules="rules">
+        <el-form-item label="分组名称" prop="Group">
+          <el-input v-model="dialogCreate.formData.Group"></el-input>
+        </el-form-item>
+        <el-form-item label="名称" prop="Name">
+          <el-input v-model="dialogCreate.formData.Name"></el-input>
+        </el-form-item>
+        <el-form-item label="值" prop="Value">
+          <el-input v-model="dialogCreate.formData.Value"></el-input>
+        </el-form-item>
+        <el-form-item label="描述" prop="Remark">
+          <el-input v-model="dialogCreate.formData.Remark"></el-input>
+        </el-form-item>
+      </el-form>
+    </app-edit-dialog>
 
-  <app-dialog
-    title="新增系统配置"
-    width="60%"
-    v-model="dialogCreate.show"
-    @save="createSave"
-  >
-    <el-form ref="formCreate" :model="dialogCreate.formData" :rules="rules">
-      <el-form-item label="分组名称" prop="Group">
-        <el-input v-model="dialogCreate.formData.Group"></el-input>
-      </el-form-item>
-      <el-form-item label="名称" prop="Name">
-        <el-input v-model="dialogCreate.formData.Name"></el-input>
-      </el-form-item>
-      <el-form-item label="值" prop="Value">
-        <el-input v-model="dialogCreate.formData.Value"></el-input>
-      </el-form-item>
-      <el-form-item label="描述" prop="Remark">
-        <el-input v-model="dialogCreate.formData.Remark"></el-input>
-      </el-form-item>
-    </el-form>
-  </app-dialog>
-
-  <app-dialog
-    title="修改系统配置"
-    width="60%"
-    v-model="dialogUpdate.show"
-    @save="updateSave"
-  >
-    <el-form ref="formUpdate" :model="dialogUpdate.formData" :rules="rules">
-      <el-form-item label="分组名称" prop="Group">
-        <el-input v-model="dialogUpdate.formData.Group"></el-input>
-      </el-form-item>
-      <el-form-item label="名称" prop="Name">
-        <el-input v-model="dialogUpdate.formData.Name"></el-input>
-      </el-form-item>
-      <el-form-item label="值" prop="Value">
-        <el-input v-model="dialogUpdate.formData.Value"></el-input>
-      </el-form-item>
-      <el-form-item label="描述" prop="Remark">
-        <el-input v-model="dialogUpdate.formData.Remark"></el-input>
-      </el-form-item>
-    </el-form>
-  </app-dialog>
+    <app-edit-dialog
+      title="修改系统配置"
+      width="60%"
+      v-model="dialogUpdate.show"
+      @save="updateSave"
+    >
+      <el-form ref="formUpdate" :model="dialogUpdate.formData" :rules="rules">
+        <el-form-item label="分组名称" prop="Group">
+          <el-input v-model="dialogUpdate.formData.Group"></el-input>
+        </el-form-item>
+        <el-form-item label="名称" prop="Name">
+          <el-input v-model="dialogUpdate.formData.Name"></el-input>
+        </el-form-item>
+        <el-form-item label="值" prop="Value">
+          <el-input v-model="dialogUpdate.formData.Value"></el-input>
+        </el-form-item>
+        <el-form-item label="描述" prop="Remark">
+          <el-input v-model="dialogUpdate.formData.Remark"></el-input>
+        </el-form-item>
+      </el-form>
+    </app-edit-dialog>
+  </div>
 </template>
 
 <script lang="ts">
@@ -74,7 +76,7 @@ import {
 import { ObjFilterInput, PageInput, PageOutput } from "@/apis/apiBase";
 import MyPageTable from "@/components/MyPageTable.vue";
 import MyPageTableColumnBase from "@/components/MyPageTableColumnBase.vue";
-import AppDialog from "@/components/AppDialog.vue";
+import AppEditDialog from "@/components/AppEditDialog.vue";
 import { DialogData, DialogEditData } from "@/types/el-dialog";
 import { defineComponent, reactive, ref } from "vue";
 import { FormRule } from "@/types/el-rules";
@@ -87,7 +89,8 @@ const rules = reactive({
 });
 
 export default defineComponent({
-  components: { MyPageTable, MyPageTableColumnBase, AppDialog },
+  name: "SystemConfig",
+  components: { MyPageTable, MyPageTableColumnBase, AppEditDialog },
   setup() {
     const isLoad = ref(true);
     const dialogCreate = reactive<DialogData<SystemConfigInput>>({

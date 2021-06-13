@@ -22,7 +22,7 @@
 import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
-  name: "AppDialog",
+  name: "AppEditDialog",
   emits: ["save", "update:modelValue"],
   props: {
     title: { type: String as PropType<string>, default: "标题" },

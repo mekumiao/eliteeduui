@@ -7,8 +7,12 @@
     @sort-change="sortChange"
     @selection-change="$emit('selectionChange', $event)"
   >
-    <el-table-column v-if="showCheckBox" type="selection" />
-    <el-table-column v-if="showIndex" label="序号" type="index" />
+    <el-table-column v-if="showCheckBox" type="selection"></el-table-column>
+    <el-table-column
+      v-if="showIndex"
+      label="序号"
+      type="index"
+    ></el-table-column>
     <slot></slot>
     <my-page-table-column-search
       v-if="showSearch"

@@ -5,12 +5,9 @@ import { INotification } from "element-plus/lib/el-notification/src/notification
 import { Store } from "vuex";
 import { Rules } from "@/types/el-rules";
 import { Layer } from "@/types/my-layer";
+import type { State } from "@/store/index";
 
 declare module "@vue/runtime-core" {
-  declare interface State {
-    fileHost: string;
-  }
-
   declare interface ComponentCustomProperties {
     $store: Store<State>;
     $elMessage: IMessage;

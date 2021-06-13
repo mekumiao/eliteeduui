@@ -1,6 +1,6 @@
 ﻿import { apiSystemConfig } from "@/apis/adminSystemConfigApi";
-import { State } from "vue";
 import { ActionContext } from "vuex";
+import type { State } from "@/store/index";
 
 export interface SystemConfigState {
   SourceHost: string | undefined;

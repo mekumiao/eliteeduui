@@ -1,5 +1,5 @@
 ﻿<template>
-  <div>
+  <div class="app-elite-song">
     <el-card>
       <el-card>
         <el-button-group>
@@ -41,7 +41,7 @@
       </my-page-table>
     </el-card>
 
-    <app-dialog
+    <app-edit-dialog
       title="新增爱利特儿歌"
       width="60%"
       v-model="dialogCreate.show"
@@ -84,9 +84,9 @@
           ></my-image-upload>
         </el-form-item>
       </el-form>
-    </app-dialog>
+    </app-edit-dialog>
 
-    <app-dialog
+    <app-edit-dialog
       title="修改爱利特儿歌"
       width="60%"
       v-model="dialogUpdate.show"
@@ -129,7 +129,7 @@
           ></my-image-upload>
         </el-form-item>
       </el-form>
-    </app-dialog>
+    </app-edit-dialog>
   </div>
 </template>
 
@@ -150,7 +150,7 @@ import {
   EliteSongUpdInput
 } from "@/apis/eduAppResourceApi";
 import MyPageTableColumnBase from "@/components/MyPageTableColumnBase.vue";
-import AppDialog from "@/components/AppDialog.vue";
+import AppEditDialog from "@/components/AppEditDialog.vue";
 import { DialogData, DialogEditData } from "@/types/el-dialog";
 import MyImageUpload from "@/components/MyImageUpload.vue";
 import MyFileUpload from "@/components/MyFileUpload.vue";
@@ -175,7 +175,7 @@ export default defineComponent({
   components: {
     MyPageTable,
     MyPageTableColumnBase,
-    AppDialog,
+    AppEditDialog,
     MyImageUpload,
     MyFileUpload
   },

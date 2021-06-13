@@ -9,9 +9,12 @@ import MyLoading from "@/plugins/my-loading";
 import ElFormrule from "@/plugins/el-formrule";
 import ElMessage from "@/plugins/el-message";
 import VueDirectives from "@/plugins/vue-directives";
-import "@/assets/scss/global.scss";
+import "animate.css/animate.css";
 import "@/utils/my-extension";
 import "element-plus/lib/theme-chalk/index.css";
+import "@/assets/fonts/iconfont.css";
+import "@/assets/scss/helper.scss";
+import "@/assets/scss/global.scss";
 import "dayjs/locale/zh-cn";
 import locale from "element-plus/lib/locale/lang/zh-cn";
 
