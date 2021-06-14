@@ -109,12 +109,19 @@ export default defineComponent({
       console.log(msg);
       switch (msg) {
         case "logout":
-          this.logout();
+          layer.confirm("确定要退出吗?", { btn: ["确定", "取消"] }, (idx) => {
+            this.logout();
+            layer.close(idx);
+          });
           break;
         case "userinfo":
           this.$router.push("/home/myInformation");
           break;
+        case "password":
+          layer.msg("目前不能修改密码");
+          break;
         default:
+          layer.msg(`${msg}:该功能开发中`);
           break;
       }
       return Promise.resolve();

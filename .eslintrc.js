@@ -13,10 +13,15 @@
     "@vue/prettier/@typescript-eslint"
   ],
 
+  plugins: ["@typescript-eslint"],
+
   parserOptions: {
+    parser: "@typescript-eslint/parser",
     ecmaVersion: 2020
   },
-
+  globals: {
+    layer: true
+  },
   rules: {
     "no-console": "off",
     "no-debugger": "off",

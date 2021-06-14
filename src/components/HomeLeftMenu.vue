@@ -1,6 +1,6 @@
 ﻿<template>
   <div class="home-left-menu">
-    <router-link to="/">
+    <router-link to="/" class="home-route">
       <img class="logo logo-ico" src="@/assets/logo.png" />
       <transition
         enter-active-class="animate__animated animate__backInLeft"
@@ -14,7 +14,6 @@
     <el-menu
       :default-active="currentActive"
       :collapse="isCollapse"
-      unique-opened
       background-color="#191A23"
       text-color="#fff"
       active-text-color="#ffd04b"
@@ -67,25 +66,24 @@ export default defineComponent({
 
   .logo {
     background-color: $left-menu-color;
-    height: 60px;
+    height: 58px;
     position: fixed;
-    top: 0;
+    top: 2px;
     left: 0;
-    z-index: 1;
     border: 0;
     margin: 0;
   }
 
   .logo-ico {
-    height: 60px;
+    height: 58px;
     width: 60px;
-    z-index: 10;
+    z-index: 2;
   }
 
   .logo-txt {
-    z-index: 9;
+    z-index: 1;
     margin-left: 60px;
-    height: 60px;
+    height: 58px;
     display: flex;
     align-items: center;
     align-content: center;

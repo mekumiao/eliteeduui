@@ -13,6 +13,7 @@ import createPersistedState from "vuex-persistedstate";
 
 export interface TabInfo {
   active: number;
+  max: number;
   tabs: TabItem[];
 }
 
@@ -53,6 +54,7 @@ export default createStore<State>({
     isRouterActive: true,
     opendRouter: {
       active: 0,
+      max: 10,
       tabs: [defaultTab]
     },
     SourceHost: undefined

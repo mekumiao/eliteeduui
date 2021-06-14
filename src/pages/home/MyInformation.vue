@@ -3,7 +3,7 @@
     <el-card>
       <el-descriptions title="个人信息" :column="2" size="medium">
         <template #extra>
-          <el-button type="primary" size="small">操作</el-button>
+          <el-button type="primary">操作</el-button>
         </template>
         <el-descriptions-item label="姓名">
           {{ formData.FullName }}

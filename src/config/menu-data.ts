@@ -13,6 +13,12 @@ const menuList: MenuItem[] = [
     index: "/home/welcome"
   },
   {
+    show: false,
+    title: "个人中心",
+    icon: "el-icon-document",
+    index: "/home/myInformation"
+  },
+  {
     title: "系统管理",
     icon: "el-icon-document",
     index: "system",
@@ -46,12 +52,6 @@ const menuList: MenuItem[] = [
         title: "VIP用户",
         icon: "el-icon-document",
         index: "/system/vipUserInfo"
-      },
-      {
-        show: false,
-        title: "个人中心",
-        icon: "el-icon-document",
-        index: "/system/myInformation"
       }
     ]
   },

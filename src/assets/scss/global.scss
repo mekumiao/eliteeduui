@@ -18,9 +18,9 @@ body,
   font-weight: 200;
 }
 
-/* 自定义进度条颜色 */
+/* 自定义进度条 */
 #nprogress .bar {
-  background: green !important;
+  background: #409eff !important;
 }
 
 .el-card {
@@ -51,7 +51,7 @@ body,
   // border-radius: 50px;
   border-radius: 25px;
 }
-/* // 滚动条的滑块 */
+/*滚动条的滑块 */
 ::-webkit-scrollbar-thumb {
   background-color: #a1a3a9;
   border-radius: 5px;

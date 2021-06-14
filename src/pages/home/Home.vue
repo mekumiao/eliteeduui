@@ -26,6 +26,7 @@
           >
             <keep-alive
               include="AppEliteSong,Courseware,VipUserInfo,SystemConfig"
+              :max="cacheMaxViewNumber"
             >
               <component :is="Component" />
             </keep-alive>
@@ -61,6 +62,7 @@ export default defineComponent({
         ? appsetting.homeMenuShrinkWidth
         : appsetting.homeMenuOpenWidth;
     });
+
     return { leftWidth };
   },
   computed: {
@@ -71,6 +73,9 @@ export default defineComponent({
       set(newValue: boolean): void {
         this.$store.commit("setIsRouterActive", newValue);
       }
+    },
+    cacheMaxViewNumber(): number {
+      return this.$store.state.opendRouter.max;
     }
   },
   provide() {
