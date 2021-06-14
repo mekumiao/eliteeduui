@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from "vue";
-const echartsAsync = () => import(/* webpackChunkName: "echarts" */ "echarts");
+import { echartsAsync } from "@/plugins/my-asyncComponent";
 
 const option = reactive({
   tooltip: {

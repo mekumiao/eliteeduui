@@ -54,6 +54,9 @@
                 <el-dropdown-item command="password" icon="el-icon-lock">
                   修改密码
                 </el-dropdown-item>
+                <el-dropdown-item command="about" icon="el-icon-lock">
+                  关于我们
+                </el-dropdown-item>
                 <el-dropdown-item
                   command="logout"
                   icon="el-icon-switch-button"
@@ -98,8 +101,7 @@ export default defineComponent({
   },
   methods: {
     logout(): void {
-      window.localStorage.removeItem("token");
-      window.localStorage.removeItem("user");
+      window.localStorage.clear();
       this.$router.push("/login");
     },
     async onReload(): Promise<void> {
@@ -119,6 +121,9 @@ export default defineComponent({
           break;
         case "password":
           layer.msg("目前不能修改密码");
+          break;
+        case "about":
+          this.$router.push("/home/about");
           break;
         default:
           layer.msg(`${msg}:该功能开发中`);

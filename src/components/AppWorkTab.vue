@@ -2,6 +2,7 @@
   <div class="app-work-tab">
     <el-tag
       size="medium"
+      effect="plain"
       v-for="(tab, idx) in opendRouter.tabs"
       :disable-transitions="false"
       :closable="idx !== 0"
@@ -57,17 +58,21 @@ export default defineComponent({
   },
   methods: {
     handleClose(_tab: TabInfo, index: number): void {
-      layer.confirm("确认移除标签?", { btn: ["确认", "取消"] }, (idx) => {
-        this.$store.commit("removeOpendRouterPaths", index);
-        const tab =
-          this.$store.state.opendRouter.tabs[
-            this.$store.state.opendRouter.active
-          ];
-        if (this.$route.path !== tab.path) {
-          this.$router.push(tab.path);
+      layer.confirm(
+        "确认移除标签?",
+        { btn: ["确认", "取消"], shadeClose: true },
+        (idx) => {
+          this.$store.commit("removeOpendRouterPaths", index);
+          const tab =
+            this.$store.state.opendRouter.tabs[
+              this.$store.state.opendRouter.active
+            ];
+          if (this.$route.path !== tab.path) {
+            this.$router.push(tab.path);
+          }
+          layer.close(idx);
         }
-        layer.close(idx);
-      });
+      );
     },
     handleClick(path: string): void {
       this.$router.push(path);

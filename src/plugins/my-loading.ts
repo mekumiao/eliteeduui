@@ -5,7 +5,8 @@ let index: number | undefined = undefined;
 
 const loading = (): number => {
   index = layer.load(0, {
-    shade: 0.1
+    shade: 0.1,
+    shadeClose: false
   });
   return index;
 };

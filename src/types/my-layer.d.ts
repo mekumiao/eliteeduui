@@ -1,4 +1,8 @@
-﻿declare type Content = string | HTMLElement | Array<string | HTMLElement>;
+﻿declare type Content =
+  | string
+  | HTMLElement
+  | Element
+  | Array<string | HTMLElement | Element>;
 declare type DilogType = "dialog" | "page" | "iframe" | "loading" | "tips";
 declare type IconOption = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 declare type YesCallBack = (index: number) => void;
@@ -7,11 +11,13 @@ declare type EndCallBack = () => void;
 
 export declare interface Options {
   type?: number;
-  title?: string;
+  title?: string | string[] | boolean;
   content?: Content;
   skin?: string;
   area?: string | Array<string>;
   offset?: string | Array<string>;
+  closeBtn?: number | boolean;
+  shadeClose?: boolean;
   icon?: IconOption;
   btn?: string | Array<string>;
   time?: number;

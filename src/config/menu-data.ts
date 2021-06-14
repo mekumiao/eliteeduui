@@ -13,12 +13,6 @@ const menuList: MenuItem[] = [
     index: "/home/welcome"
   },
   {
-    show: false,
-    title: "个人中心",
-    icon: "el-icon-document",
-    index: "/home/myInformation"
-  },
-  {
     title: "系统管理",
     icon: "el-icon-document",
     index: "system",
@@ -238,9 +232,30 @@ const testPage = {
   ]
 };
 
+const hidenPage = {
+  title: "隐藏页面",
+  icon: "el-icon-open",
+  index: "hiden",
+  children: [
+    {
+      show: false,
+      title: "个人中心",
+      icon: "el-icon-document",
+      index: "/home/myInformation"
+    },
+    {
+      show: false,
+      title: "关于我们",
+      icon: "el-icon-document",
+      index: "/home/about"
+    }
+  ]
+};
+
 if (process.env.NODE_ENV === "development") {
   menuList.push(exceptionPage);
   menuList.push(testPage);
+  menuList.push(hidenPage);
 }
 
 export default menuList;

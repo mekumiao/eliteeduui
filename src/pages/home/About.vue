@@ -1,21 +1,32 @@
 ﻿<template>
   <div class="about">
     <h1>关于爱利特教务系统</h1>
-    <el-button @click="showMsg">显示消息</el-button>
+    <el-button-group>
+      <el-button @click="show">弹出</el-button>
+      <el-button @click="close">关闭</el-button>
+    </el-button-group>
+    <div class="dialogLayerTest">
+      <div>xxxxx</div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { PropType, defineComponent } from "vue";
+import { defineComponent } from "vue";
+import { DialogElementLayer } from "@/plugins/my-dialogLayer";
 
 export default defineComponent({
   name: "About",
-  props: {
-    msg: { type: String as PropType<string>, default: "" }
+  setup() {
+    const dialog = new DialogElementLayer("dialogLayerTest");
+    return { dialog };
   },
   methods: {
-    showMsg(): void {
-      console.log(this.$props.msg);
+    show() {
+      this.dialog?.Show();
+    },
+    close() {
+      this.dialog?.Close();
     }
   }
 });
