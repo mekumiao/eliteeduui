@@ -191,7 +191,7 @@ const menuList: MenuItem[] = [
   }
 ];
 
-const exceptionPage = {
+const exceptionPage: MenuItem = {
   title: "异常页面",
   icon: "el-icon-error",
   index: "exception",
@@ -214,7 +214,7 @@ const exceptionPage = {
   ]
 };
 
-const testPage = {
+const testPage: MenuItem = {
   title: "测试页面",
   icon: "el-icon-open",
   index: "testPage",
@@ -232,7 +232,8 @@ const testPage = {
   ]
 };
 
-const hidenPage = {
+const hidenPage: MenuItem = {
+  show: false,
   title: "隐藏页面",
   icon: "el-icon-open",
   index: "hiden",
