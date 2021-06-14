@@ -9,6 +9,7 @@ import {
 import _ from "lodash";
 import { apiSystemConfig } from "@/apis/adminSystemConfigApi";
 import menuList from "@/config/menu-data";
+import setting from "@/config/app-setting";
 import createPersistedState from "vuex-persistedstate";
 
 export interface TabInfo {
@@ -49,16 +50,20 @@ const defaultTab: TabItem = {
   name: firstMenuItem?.title ?? ""
 };
 
-export default createStore<State>({
-  state: {
+const createState = (): State => {
+  return {
     isRouterActive: true,
     opendRouter: {
       active: 0,
       max: 10,
       tabs: [defaultTab]
     },
-    SourceHost: undefined
-  },
+    SourceHost: setting.defaultSourceHost
+  };
+};
+
+export default createStore<State>({
+  state: createState(),
   mutations: {
     setIsRouterActive(state: State, value: boolean): void {
       state.isRouterActive = value;
@@ -80,22 +85,28 @@ export default createStore<State>({
       }
     },
     removeOpendRouterPaths(state: State, index: number): void {
-      if (index > 0) {
+      if (index > 0 && index < state.opendRouter.tabs.length) {
         state.opendRouter.tabs.splice(index, 1);
-        if (state.opendRouter.active >= index) {
+        if (index === state.opendRouter.active) {
+          if (index >= state.opendRouter.tabs.length) {
+            state.opendRouter.active = state.opendRouter.tabs.length - 1;
+          }
+        } else if (index <= state.opendRouter.active) {
           state.opendRouter.active--;
         }
       }
+    },
+    resetState(state: State) {
+      Object.assign(state, createState());
     }
   },
   actions: {
     async LoadSourceHost(context: ActionContext<State, State>): Promise<void> {
-      if (context.state.SourceHost === undefined) {
-        const sourceHost = await apiSystemConfig.GetSystemConfigByName(
-          "SourceHost"
-        );
-        context.commit("setSourceHost", sourceHost.Value?.Value);
-      }
+      const sourceHost = await apiSystemConfig.GetSystemConfigByName(
+        "sourcehost"
+      );
+      context.commit("setSourceHost", sourceHost.Value?.Value);
+      console.log(sourceHost);
     }
   },
   getters: {

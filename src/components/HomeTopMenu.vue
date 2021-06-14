@@ -101,6 +101,7 @@ export default defineComponent({
   },
   methods: {
     logout(): void {
+      this.$store.commit("resetState");
       window.localStorage.clear();
       this.$router.push("/login");
     },
