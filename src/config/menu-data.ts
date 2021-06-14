@@ -253,10 +253,11 @@ const hidenPage: MenuItem = {
   ]
 };
 
+menuList.push(hidenPage);
+
 if (process.env.NODE_ENV === "development") {
   menuList.push(exceptionPage);
   menuList.push(testPage);
-  menuList.push(hidenPage);
 }
 
 export default menuList;
