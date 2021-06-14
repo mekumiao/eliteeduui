@@ -64,9 +64,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
-.welcome {
-  width: 95%;
-  height: 95%;
-}
-</style>
+<style lang="scss" scoped></style>

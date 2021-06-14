@@ -112,7 +112,7 @@ export default defineComponent({
 
 <style lang="scss">
 .login {
-  background-color: #dfdfdf;
+  background-color: #f6f7f9;
   min-height: 100%;
   height: 100%;
 
