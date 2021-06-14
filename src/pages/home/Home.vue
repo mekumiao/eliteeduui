@@ -13,6 +13,9 @@
 
       <!-- 内容区域 -->
       <el-main>
+        <!-- 标签切换组件 -->
+        <app-work-tab></app-work-tab>
+
         <!-- 路由视图 -->
         <router-view v-slot="{ Component }" v-if="isRouterActive">
           <transition
@@ -40,10 +43,11 @@ import appsetting from "@/config/app-setting";
 import AppBreadcrumb from "@/components/AppBreadcrumb.vue";
 import HomeTopMenu from "@/components/HomeTopMenu.vue";
 import HomeLeftMenu from "@/components/HomeLeftMenu.vue";
+import AppWorkTab from "@/components/AppWorkTab.vue";
 
 export default defineComponent({
   name: "Home",
-  components: { AppBreadcrumb, HomeTopMenu, HomeLeftMenu },
+  components: { AppBreadcrumb, HomeTopMenu, HomeLeftMenu, AppWorkTab },
   setup() {
     const isCollapse = ref(false);
     const currentActive = ref("");
@@ -106,6 +110,9 @@ export default defineComponent({
   background-color: $default-background;
   overflow-x: hidden;
   overflow-y: auto;
+  padding: 0;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 aside {

@@ -12,7 +12,11 @@
       <app-menu-item :menu-data="item.children"></app-menu-item>
     </el-submenu>
 
-    <el-menu-item v-else :index="item.index" :key="item.index">
+    <el-menu-item
+      v-else-if="item.show || item.show === undefined"
+      :index="item.index"
+      :key="item.index"
+    >
       <i :class="item.icon"></i>
       <template #title>{{ item.title }}</template>
     </el-menu-item>
@@ -30,7 +34,12 @@ export default defineComponent({
   },
   methods: {
     isNotEmpty(children: MenuItem[]): boolean {
-      return children && children.length > 0;
+      return (
+        children &&
+        children.length > 0 &&
+        children.filter((x) => x.show === undefined || x.show === true).length >
+          0
+      );
     }
   }
 });

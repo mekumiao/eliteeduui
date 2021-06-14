@@ -68,33 +68,6 @@
       </div>
     </div>
   </div>
-
-  <el-dialog title="个人中心" v-model="dialogUserInfo.show" width="30%">
-    <el-form status-icon label-width="100px" class="demo-ruleForm">
-      <el-form-item label="PID" prop="pid">
-        <span>{{ dialogUserInfo.formData.pid }}</span>
-      </el-form-item>
-      <el-form-item label="用户名" prop="username">
-        <span>{{ dialogUserInfo.formData.username }}</span>
-      </el-form-item>
-      <el-form-item label="性别" prop="rolename">
-        <span>{{ dialogUserInfo.formData.gender === 0 ? "男" : "女" }}</span>
-      </el-form-item>
-      <el-form-item label="年龄" prop="rolename">
-        <span>{{ dialogUserInfo.formData.age || 18 }}</span>
-      </el-form-item>
-      <el-form-item label="生日" prop="rolename">
-        <time>{{ dialogUserInfo.formData.birthday || "--" }}</time>
-      </el-form-item>
-    </el-form>
-    <template #footer>
-      <span class="dialog-footer">
-        <el-button type="primary" @click="dialogUserInfo.show = false">
-          确 定
-        </el-button>
-      </span>
-    </template>
-  </el-dialog>
 </template>
 
 <script lang="ts">
@@ -137,6 +110,9 @@ export default defineComponent({
       switch (msg) {
         case "logout":
           this.logout();
+          break;
+        case "userinfo":
+          this.$router.push("/home/myInformation");
           break;
         default:
           break;

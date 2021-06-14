@@ -34,8 +34,11 @@ function findMenu(path: string, data: MenuItem[]): RouteMapInfo[] | undefined {
  * @param path 路径
  * @param exclude 排除的路径
  */
-function getRoute(path: string, exclude: string[]): RouteMapInfo[] | undefined {
-  if (exclude.filter((x) => x === path).length <= 0) {
+export function getRoutePath(
+  path: string,
+  exclude: string[] = []
+): RouteMapInfo[] | undefined {
+  if (exclude.indexOf(path) < 0) {
     return findMenu(path, menuList);
   }
   return undefined;
@@ -50,15 +53,15 @@ export function getRouteMap(exclude?: string[]): Ref<RouteMapInfo[]> {
 
   onBeforeMount(() => {
     const path = useRoute().path;
-    routerMap.value = getRoute(path, exclude ?? []) || [];
+    routerMap.value = getRoutePath(path, exclude) || [];
   });
 
   onBeforeRouteUpdate((to) => {
-    routerMap.value = getRoute(to.path, exclude ?? []) || [];
+    routerMap.value = getRoutePath(to.path, exclude) || [];
   });
 
   onBeforeRouteLeave((to) => {
-    routerMap.value = getRoute(to.path, exclude ?? []) || [];
+    routerMap.value = getRoutePath(to.path, exclude) || [];
   });
   return routerMap;
 }

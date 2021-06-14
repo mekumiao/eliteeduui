@@ -1,13 +1,16 @@
 ﻿<template>
   <div class="home-left-menu">
-    <img class="logo logo-ico" src="@/assets/logo.png" />
-    <transition
-      enter-active-class="animate__animated animate__slideInLeft"
-      leave-active-class="animate__animated animate__slideOutLeft"
-      mode="out-in"
-    >
-      <div class="logo logo-txt" v-show="!isCollapse">{{ systemName }}</div>
-    </transition>
+    <router-link to="/">
+      <img class="logo logo-ico" src="@/assets/logo.png" />
+      <transition
+        enter-active-class="animate__animated animate__backInLeft"
+        leave-active-class="animate__animated animate__backOutLeft"
+        mode="out-in"
+      >
+        <div class="logo logo-txt" v-show="!isCollapse">{{ systemName }}</div>
+      </transition>
+    </router-link>
+
     <el-menu
       :default-active="currentActive"
       :collapse="isCollapse"

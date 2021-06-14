@@ -7,6 +7,7 @@ import Login from "@/pages/login/Login.vue";
 /**首页相关 */
 import Welcome from "@/pages/home/Welcome.vue";
 import About from "@/pages/home/About.vue";
+import MyInformation from "@/pages/home/MyInformation.vue";
 
 /**测试页面 */
 import Test1 from "@/pages/testpage/Test1.vue";
@@ -37,7 +38,8 @@ const routes: Array<RouteRecordRaw> = [
     component: Home,
     children: [
       { path: "welcome", component: Welcome },
-      { path: "about", component: About }
+      { path: "about", component: About },
+      { path: "myInformation", component: MyInformation }
     ]
   },
   {

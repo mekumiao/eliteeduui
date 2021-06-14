@@ -1,4 +1,5 @@
 ﻿export interface MenuItem {
+  show?: boolean;
   title: string;
   icon: string;
   index: string;
@@ -7,7 +8,7 @@
 
 const menuList: MenuItem[] = [
   {
-    title: "回到首页",
+    title: "工作台",
     icon: "el-icon-s-home",
     index: "/home/welcome"
   },
@@ -45,6 +46,12 @@ const menuList: MenuItem[] = [
         title: "VIP用户",
         icon: "el-icon-document",
         index: "/system/vipUserInfo"
+      },
+      {
+        show: false,
+        title: "个人中心",
+        icon: "el-icon-document",
+        index: "/system/myInformation"
       }
     ]
   },
