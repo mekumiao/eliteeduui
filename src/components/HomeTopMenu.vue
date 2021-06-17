@@ -79,6 +79,7 @@ import { inject, reactive, ref, defineComponent } from "vue";
 import AppHeadPortrait from "./AppHeadPortrait.vue";
 import fullScreen, { isFullScreen } from "@/utils/my-fullScreen";
 import { getRouteMap } from "@/plugins/my-routeMap";
+import { sleep } from "@/utils/my-thread";
 
 export default defineComponent({
   components: { AppHeadPortrait },
@@ -100,10 +101,16 @@ export default defineComponent({
     }
   },
   methods: {
-    logout(): void {
-      this.$store.commit("resetState");
-      window.localStorage.clear();
-      this.$router.push("/login");
+    async logout(): Promise<void> {
+      try {
+        this.$loading();
+        await sleep(500);
+        this.$store.commit("resetState");
+        window.localStorage.clear();
+        this.$router.push("/login");
+      } finally {
+        this.$closeLoading();
+      }
     },
     async onReload(): Promise<void> {
       this.reload && (await this.reload());
@@ -112,10 +119,14 @@ export default defineComponent({
       console.log(msg);
       switch (msg) {
         case "logout":
-          layer.confirm("确定要退出吗?", { btn: ["确定", "取消"] }, (idx) => {
-            this.logout();
-            layer.close(idx);
-          });
+          layer.confirm(
+            "确定要退出吗?",
+            { btn: ["确定", "取消"] },
+            async (idx) => {
+              layer.close(idx);
+              await this.logout();
+            }
+          );
           break;
         case "userinfo":
           this.$router.push("/home/myInformation");

@@ -4,6 +4,7 @@ import type { App } from "vue";
 
 export default {
   install: <T>(app: App<T>) => {
+    //权限指令
     app.directive("allow", {
       mounted: (el, binding, vnode) => {
         el;
@@ -13,10 +14,11 @@ export default {
         // }
       }
     });
-
+    //聚焦元素指令
     app.directive("focus", {
       mounted(el) {
-        el.focus(); // 聚焦元素
+        debugger;
+        el.focus();
       }
     });
   }

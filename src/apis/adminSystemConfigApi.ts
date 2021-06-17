@@ -86,6 +86,17 @@ class SystemConfigApi extends ApiBase {
     const url = this.mergeUrlParame("GetSystemConfigByName", name);
     return this.tryCatchCall(() => ajax.get(url));
   }
+  /**
+   * 根据键获取配置(再store中调用,不需要显示错误)
+   * @param name 配置名称
+   * @returns 配置信息
+   */
+  public GetSystemConfigByNameAtStore(
+    name: string
+  ): Promise<ValueItem<SystemConfigOutput>> {
+    const url = this.mergeUrlParame("GetSystemConfigByName", name);
+    return this.tryCatchCall(() => ajax.get(url), false);
+  }
 }
 
 export const apiSystemConfig = new SystemConfigApi();

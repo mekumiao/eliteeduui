@@ -2,13 +2,13 @@
 $theme-color: #3296fa;
 
 // 系统背景色
-$default-background: #f6f7f9;
-// 左侧菜单背景色
-$left-menu-color: #191A23;
-// 顶部菜单背景色
-$top-menu-color: #ffffff;
+$default-background: #e0e2e6;
 // 卡片背景色
-$card-background: #ffffff;
+$card-background: #f0efef;
+// 顶部菜单背景色
+$top-menu-color: $card-background;
+// 左侧菜单背景色
+$left-menu-color: #191a23;
 
 // 蒙版背景色
 $mask-color: #000000;

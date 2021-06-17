@@ -102,10 +102,10 @@ export default createStore<State>({
   },
   actions: {
     async LoadSourceHost(context: ActionContext<State, State>): Promise<void> {
-      const sourceHost = await apiSystemConfig.GetSystemConfigByName(
+      const sourceHost = await apiSystemConfig.GetSystemConfigByNameAtStore(
         "sourcehost"
       );
-      context.commit("setSourceHost", sourceHost.Value?.Value);
+      context.commit("setSourceHost", sourceHost?.Value?.Value);
       console.log(sourceHost);
     }
   },

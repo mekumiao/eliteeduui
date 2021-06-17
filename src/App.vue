@@ -9,9 +9,6 @@ export default defineComponent({
   name: "App",
   setup() {
     return {};
-  },
-  async mounted() {
-    await this.$store.dispatch("LoadSourceHost");
   }
 });
 </script>

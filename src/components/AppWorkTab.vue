@@ -91,19 +91,19 @@ export default defineComponent({
 
   .el-tag {
     margin-right: 5px;
-    border-radius: 0;
+    border-radius: 3px;
     background-color: #fff;
     color: #999;
     border: 0;
   }
 
   .el-tag:hover {
-    background-color: #cee3ec;
+    background-color: #f0efef;
     cursor: pointer;
   }
 
   .tab-active {
-    color: #27658a;
+    color: $theme-color;
     font-weight: 400;
   }
 }

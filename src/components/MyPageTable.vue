@@ -78,7 +78,7 @@ export default defineComponent({
     },
     modelValue: { type: Boolean, default: true },
     showSearch: { type: Boolean, default: true },
-    showCheckBox: { type: Boolean, default: false },
+    showCheckBox: { type: Boolean, default: true },
     showIndex: { type: Boolean, default: true },
     getData: {
       type: Function as PropType<

@@ -65,6 +65,9 @@ export default defineComponent({
 
     return { leftWidth };
   },
+  async beforeMount() {
+    await this.$store.dispatch("LoadSourceHost");
+  },
   computed: {
     isRouterActive: {
       get(): boolean {
