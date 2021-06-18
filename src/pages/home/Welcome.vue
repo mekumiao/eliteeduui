@@ -57,8 +57,8 @@ export default defineComponent({
   async mounted() {
     const echarts = await echartsAsync();
     if (this.myChart) {
-      const myChart = echarts.init(this.myChart);
-      myChart.setOption(this.option);
+      const chart = echarts.init(this.myChart);
+      chart.setOption(this.option);
     }
   }
 });
