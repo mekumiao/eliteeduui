@@ -11,6 +11,7 @@ import { apiSystemConfig } from "@/apis/adminSystemConfigApi";
 import menuList from "@/config/menu-data";
 import setting from "@/config/app-setting";
 import createPersistedState from "vuex-persistedstate";
+import type { UserInfoOutput } from "@/apis/adminUserInfoApi";
 
 export interface TabInfo {
   active: number;
@@ -24,6 +25,8 @@ export interface TabItem {
 }
 
 export interface State {
+  /**用户信息 */
+  User: UserInfoOutput | undefined;
   /**路由是否激活 */
   isRouterActive: boolean;
   /**资源路径 */
@@ -52,6 +55,7 @@ const defaultTab: TabItem = {
 
 const createState = (): State => {
   return {
+    User: undefined,
     isRouterActive: true,
     opendRouter: {
       active: 0,
@@ -65,6 +69,9 @@ const createState = (): State => {
 export default createStore<State>({
   state: createState(),
   mutations: {
+    setUser(state: State, user: UserInfoOutput): void {
+      state.User = user;
+    },
     setIsRouterActive(state: State, value: boolean): void {
       state.isRouterActive = value;
     },

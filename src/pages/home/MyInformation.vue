@@ -23,16 +23,14 @@
 </template>
 
 <script lang="ts">
-import { UserInfoOutput } from "@/apis/adminUserInfoApi";
+import { useStore } from "@/store";
 import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "MyInformation",
   setup() {
-    const jsonData = window.localStorage.getItem("user") ?? "{}";
-    const user: UserInfoOutput = JSON.parse(jsonData);
     const formData = ref({});
-    formData.value = user;
+    formData.value = useStore().state.User ?? {};
     return { formData };
   }
 });

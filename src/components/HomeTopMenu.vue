@@ -80,6 +80,7 @@ import AppHeadPortrait from "./AppHeadPortrait.vue";
 import fullScreen, { isFullScreen } from "@/utils/my-fullScreen";
 import { getRouteMap } from "@/plugins/my-routeMap";
 import { sleep } from "@/utils/my-thread";
+import { useStore } from "@/store";
 
 export default defineComponent({
   components: { AppHeadPortrait },
@@ -88,9 +89,7 @@ export default defineComponent({
     const isCollapse = inject("isCollapse", ref(false));
     const reload = inject<() => Promise<void>>("reload");
     const dialogUserInfo = reactive({ show: false, formData: {} });
-    const msg = window.localStorage.getItem("user");
-    const user = JSON.parse(msg ?? "{}") as UserInfoOutput;
-    const portrait = ref(user?.Portrait);
+    const portrait = ref(useStore().state.User?.Portrait);
     const isFull = ref(isFullScreen());
     const routeMap = getRouteMap(["/home/welcome"]);
     return { isCollapse, reload, dialogUserInfo, portrait, isFull, routeMap };

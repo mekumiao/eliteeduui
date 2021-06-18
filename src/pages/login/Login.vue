@@ -2,14 +2,16 @@
   <div class="my-login">
     <div class="box">
       <h2>{{ systemName }}</h2>
-      <el-form label-width="0" :model="authData" :rules="rules" ref="loginForm">
+      <el-form ref="loginForm" label-width="0" :model="authData" :rules="rules">
         <el-form-item prop="Account">
           <el-input
+            ref="accountRef"
             size="medium"
             prefix-icon="iconfont iconuser-line"
             type="text"
             placeholder="请输入账号"
             v-model="authData.Account"
+            @keypress.enter.stop="login"
           ></el-input>
         </el-form-item>
         <el-form-item prop="PassWord">
@@ -20,12 +22,13 @@
             autocomplete="off"
             placeholder="请输入密码"
             v-model="authData.PassWord"
+            @keypress.enter.stop="login"
           ></el-input>
         </el-form-item>
         <el-form-item class="submit-btn">
-          <el-button plain size="medium" :loading="loginLoading" @click="login"
-            >登录</el-button
-          >
+          <el-button plain size="medium" :loading="loginLoading" @click="login">
+            登录
+          </el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -58,6 +61,7 @@ const rules = reactive<DataRules>({
 
 export default defineComponent({
   setup() {
+    const accountRef = ref<HTMLElement | undefined>(undefined);
     const systemName = ref(setting.systemName);
     const loginLoading = ref(false);
     const authData = reactive<LoginInput>({
@@ -67,7 +71,16 @@ export default defineComponent({
         process.env.NODE_ENV === "development" ? setting.authData.passWord : ""
     });
 
-    return { systemName, authData, rules, loginLoading };
+    return {
+      accountRef,
+      systemName,
+      authData,
+      rules,
+      loginLoading
+    };
+  },
+  mounted() {
+    this.accountRef?.focus();
   },
   methods: {
     async login(): Promise<void> {
@@ -79,10 +92,11 @@ export default defineComponent({
           Account: this.authData.Account,
           PassWord: this.authData.PassWord
         });
+        this.$store.commit("resetState");
         window.localStorage.setItem("token", token.Token);
         window.sessionStorage.setItem("state", "5200");
         const user = await apiUserInfo.GetCurrentUserInfo();
-        window.localStorage.setItem("user", JSON.stringify(user));
+        this.$store.commit("setUser", user);
         await sleep(500);
         this.$router.push("/");
         this.$message.closeAll();

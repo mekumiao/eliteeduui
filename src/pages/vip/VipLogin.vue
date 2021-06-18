@@ -2,54 +2,84 @@
   <app-top-menu title="登录或注册"></app-top-menu>
   <el-card class="login-card" v-if="!passwordLogin">
     <el-form
-      :rules="rules"
-      :model="phoneInput"
       ref="formLoginByCode"
-      label-position="top"
+      label-width="0"
+      :rules="rulesCode"
+      :model="phoneInput"
     >
-      <el-form-item label="名称" prop="Name">
-        <el-input v-model="phoneInput.Name"></el-input>
+      <el-form-item prop="Name">
+        <el-input
+          size="medium"
+          placeholder="请输入名称"
+          prefix-icon="el-icon-user"
+          type="text"
+          v-model="phoneInput.Name"
+        ></el-input>
       </el-form-item>
-      <el-form-item label="手机号" prop="Phone">
-        <el-input v-model="phoneInput.Phone"></el-input>
+      <el-form-item prop="Phone">
+        <el-input
+          size="medium"
+          placeholder="请输入手机号"
+          prefix-icon="el-icon-mobile"
+          type="text"
+          v-model="phoneInput.Phone"
+        ></el-input>
       </el-form-item>
-      <el-form-item label="验证码" prop="Code">
+      <el-form-item prop="Code">
         <el-space>
-          <el-input v-model="phoneInput.Code"></el-input>
+          <el-input
+            placeholder="验证码"
+            type="text"
+            autocomplete="off"
+            v-model="phoneInput.Code"
+          ></el-input>
           <el-button :disabled="timmerTotal > 0" @click="SendCode">
             发送验证码{{ timmerTotal > 0 ? timmerTotal.toString() : "" }}
           </el-button>
         </el-space>
       </el-form-item>
       <el-form-item>
-        <el-button @click="passwordLogin = true">使用密码登录</el-button>
-      </el-form-item>
-      <el-form-item>
         <el-button type="primary" @click="Login" :loading="isLoging">
-          立即登录
+          注册或登录
+        </el-button>
+        <el-button @click="passwordLogin = true" type="text">
+          密码登录
         </el-button>
       </el-form-item>
     </el-form>
   </el-card>
   <el-card class="login-card" v-else>
     <el-form
-      :rules="rules"
-      :model="loginInput"
       ref="formLoginByPassword"
-      label-position="top"
+      label-width="0"
+      :rules="rolesPassword"
+      :model="loginInput"
     >
-      <el-form-item label="手机号" prop="Account">
-        <el-input v-model="loginInput.Account"></el-input>
+      <el-form-item prop="Account">
+        <el-input
+          size="medium"
+          prefix-icon="iconfont iconuser-line"
+          type="text"
+          placeholder="请输入手机号"
+          v-model="loginInput.Account"
+        ></el-input>
       </el-form-item>
-      <el-form-item label="密码" prop="PassWord">
-        <el-input v-model="loginInput.PassWord" show-password></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button @click="passwordLogin = false">使用验证码登录</el-button>
+      <el-form-item prop="PassWord">
+        <el-input
+          size="medium"
+          prefix-icon="iconfont iconsuo2"
+          type="password"
+          autocomplete="off"
+          placeholder="请输入密码"
+          v-model="loginInput.PassWord"
+        ></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="Login" :loading="isLoging">
           立即登录
+        </el-button>
+        <el-button @click="passwordLogin = false" type="text">
+          验证码登录
         </el-button>
       </el-form-item>
     </el-form>
@@ -75,7 +105,7 @@ const rulesCode = reactive({
 });
 
 const rolesPassword = reactive({
-  Phone: [
+  Account: [
     { required: true, message: "手机号不能为空", trigger: "blur" },
     { max: 40, message: "长度不能大于 40", trigger: "blur" }
   ] as FormRule[],
@@ -145,6 +175,10 @@ export default defineComponent({
 <style lang="scss" scoped>
 .login-card {
   width: 400px;
-  margin: 20px auto;
+  padding: 30px;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>
