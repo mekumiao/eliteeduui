@@ -102,10 +102,14 @@ export default defineComponent({
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background: url(~@/assets/img/shiTou.jpg);
+  background: url(~@/assets/img/library.png);
   background-size: cover;
   width: 100%;
   height: 100%;
+  filter: brightness(0.9);
+  -webkit-filter: brightness(0.9);
+  -o-filter: brightness(0.9);
+  -moz-filter: brightness(0.9);
 }
 
 .box {
