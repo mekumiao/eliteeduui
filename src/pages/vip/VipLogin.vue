@@ -89,7 +89,7 @@ export default defineComponent({
   name: "VipLogin",
   components: { AppTopMenu },
   setup() {
-    const passwordLogin = ref(false);
+    const passwordLogin = ref(true);
     const timmerTotal = useTimer.Total;
     const phoneInput = reactive<NamePhoneCodeInput>({} as NamePhoneCodeInput);
     const loginInput = reactive<LoginInput>({} as LoginInput);
