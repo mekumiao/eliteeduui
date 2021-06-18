@@ -1,18 +1,36 @@
 ﻿<template>
   <div class="app-work-tab">
-    <el-tag
-      size="medium"
-      effect="plain"
+    <el-dropdown
+      trigger="contextmenu"
+      @command="handleCommand($event, idx)"
       v-for="(tab, idx) in opendRouter.tabs"
-      :disable-transitions="false"
-      :closable="idx !== 0"
-      :class="idx === opendRouter.active ? 'tab-active' : ''"
       :key="idx"
-      @close="handleClose(tab, idx)"
-      @click.stop="handleClick(tab.path)"
     >
-      {{ tab.name }}
-    </el-tag>
+      <el-tag
+        size="medium"
+        effect="plain"
+        :disable-transitions="false"
+        :closable="idx !== 0"
+        :class="idx === opendRouter.active ? 'tab-active' : ''"
+        @close="handleClose(tab, idx)"
+        @click.stop="handleClick(tab.path)"
+      >
+        {{ tab.name }}
+      </el-tag>
+      <template #dropdown>
+        <el-dropdown-menu>
+          <el-dropdown-item command="right" icon="el-icon-circle-plus">
+            关闭右侧
+          </el-dropdown-item>
+          <el-dropdown-item command="all" icon="el-icon-circle-plus">
+            全部关闭
+          </el-dropdown-item>
+          <el-dropdown-item command="other" icon="el-icon-circle-plus">
+            关闭其他
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </template>
+    </el-dropdown>
   </div>
 </template>
 
@@ -80,6 +98,9 @@ export default defineComponent({
       if (this.$route.path !== tab.path) {
         this.$router.push(tab.path);
       }
+    },
+    handleCommand(command: string, idx: number) {
+      layer.msg(`关闭${command}:当前位置:${idx}`);
     }
   }
 });

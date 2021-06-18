@@ -24,10 +24,7 @@
             leave-active-class="animate__animated animate__fadeOut"
             mode="out-in"
           >
-            <keep-alive
-              include="AppEliteSong,Courseware,VipUserInfo,SystemConfig"
-              :max="cacheMaxViewNumber"
-            >
+            <keep-alive :include="/.+/" :max="cacheMaxViewNumber">
               <component :is="Component" />
             </keep-alive>
           </transition>
