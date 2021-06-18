@@ -74,7 +74,6 @@
 </template>
 
 <script lang="ts">
-import { UserInfoOutput } from "@/apis/adminUserInfoApi";
 import { inject, reactive, ref, defineComponent } from "vue";
 import AppHeadPortrait from "./AppHeadPortrait.vue";
 import fullScreen, { isFullScreen } from "@/utils/my-fullScreen";
