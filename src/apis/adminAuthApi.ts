@@ -39,7 +39,7 @@ class AuthApi extends ApiBase {
     }
   }
   /**
-   * VIP登录或注册
+   * VIP使用手机号和验证码登录或注册
    * @param input 手机号验证码模型
    */
   public VipLoginOrRegisterByPhoneCode(
@@ -55,6 +55,17 @@ class AuthApi extends ApiBase {
   public VipSendVerificationCode(phone: string): Promise<MsgOutput> {
     const url = this.mergeUrlParame("VipSendVerificationCode", phone);
     return this.tryCatchCall(() => ajax.get(url));
+  }
+  /**
+   * VIP使用手机号和密码登录或注册
+   * @param input 账号密码模型
+   * @returns Token
+   */
+  public VipLoginOrRegisterByAccountCode(
+    input: LoginInput
+  ): Promise<TokenItem> {
+    const url = this.mergeUrl("VipLoginOrRegisterByAccountCode");
+    return this.tryCatchCall(() => ajax.post(url, input));
   }
 }
 

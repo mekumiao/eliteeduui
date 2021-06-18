@@ -67,7 +67,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .app-top-meun {
-  background-color: $top-menu-color;
+  background-color: #14151c;
   display: flex;
   justify-content: space-between;
   align-items: center;

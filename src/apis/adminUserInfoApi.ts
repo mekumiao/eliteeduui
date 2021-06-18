@@ -30,17 +30,20 @@ export interface UserInfoOutput extends PublicWithKeyOutput {
 export interface VipUserInfoOutput extends PublicWithKeyOutput {
   Name: string;
   Phone: string;
+  PassWord: string;
   Auth: boolean;
 }
 /**VIP用户创建模型 */
 export interface VipUserInfoInput {
   Name: string;
   Phone: string;
+  PassWord: string;
 }
 /**VIP用户修改模型 */
 export interface VipUserInfoUpdInput {
   Name?: string;
   Phone?: string;
+  PassWord?: string;
 }
 /**用户信息接口 */
 class UserInfoApi extends ApiBase {

@@ -71,6 +71,9 @@
         <el-form-item label="手机号码" prop="Phone">
           <el-input v-model="dialogCreate.formData.Phone" />
         </el-form-item>
+        <el-form-item label="登录密码" prop="PassWord">
+          <el-input v-model="dialogCreate.formData.PassWord" />
+        </el-form-item>
       </el-form>
     </app-edit-dialog>
 
@@ -91,6 +94,9 @@
         </el-form-item>
         <el-form-item label="手机号码" prop="Phone">
           <el-input v-model="dialogUpdate.formData.Phone" />
+        </el-form-item>
+        <el-form-item label="登录密码" prop="PassWord">
+          <el-input v-model="dialogUpdate.formData.PassWord" />
         </el-form-item>
       </el-form>
     </app-edit-dialog>
@@ -115,7 +121,8 @@ import { DialogData, DialogEditData } from "@/types/el-dialog";
 
 const rules = reactive({
   Name: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
-  Phone: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[]
+  Phone: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
+  PassWord: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[]
 });
 
 export default defineComponent({
