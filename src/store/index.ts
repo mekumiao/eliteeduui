@@ -106,7 +106,6 @@ export default createStore<State>({
         "sourcehost"
       );
       context.commit("setSourceHost", sourceHost?.Value?.Value);
-      console.log(sourceHost);
     }
   },
   getters: {
