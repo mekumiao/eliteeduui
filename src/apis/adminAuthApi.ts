@@ -1,4 +1,5 @@
 ﻿import ajax, { ApiBase, MsgOutput } from "./apiBase";
+import vipAjax from "./apiVipBase";
 /**账号密码模型 */
 export interface LoginInput {
   Account: string;
@@ -16,6 +17,20 @@ export interface PhoneCodeInput {
 /**名称手机号验证码输入模型 */
 export interface NamePhoneCodeInput extends PhoneCodeInput {
   Name?: string;
+}
+/**用户根据手机验证码修改密码模型 */
+export interface PasswordWithPhoneCodeUpdInput {
+  Code: string;
+  PassWord: string;
+}
+/**用户账号密码修改时输入模型 */
+export interface PasswordUpdInput {
+  /**原密码 */
+  OldPassWord: string;
+  /**确认密码 */
+  ConfirmPassWord: string;
+  /**新密码 */
+  PassWord: string;
 }
 /**授权API */
 class AuthApi extends ApiBase {
@@ -66,6 +81,42 @@ class AuthApi extends ApiBase {
   ): Promise<TokenItem> {
     const url = this.mergeUrl("VipLoginOrRegisterByAccountCode");
     return this.tryCatchCall(() => ajax.post(url, input));
+  }
+  /**
+   * 根据手机验证码重置密码
+   * @param input 验证码模型
+   * @returns 消息码
+   */
+  public VipResetPasswordByVerificationCode(
+    input: PasswordWithPhoneCodeUpdInput
+  ): Promise<MsgOutput> {
+    const url = this.mergeUrl("VipResetPasswordByVerificationCode");
+    return this.tryCatchCall(() => vipAjax.post(url, input));
+  }
+  /**
+   * 发送根据手机号重置密码时用的验证码
+   * @param phone 手机号
+   * @returns 消息码
+   */
+  public SendVerificationCodeByResetPassword(
+    phone: string
+  ): Promise<MsgOutput> {
+    const url = this.mergeUrlParame(
+      "SendVerificationCodeByResetPassword",
+      phone
+    );
+    return this.tryCatchCall(() => vipAjax.get(url));
+  }
+  /**
+   * 根据原密码修改登录密码
+   * @param input 修改密码时实体模型
+   * @returns 消息码
+   */
+  public VipUpdatePasswordByOldPassword(
+    input: PasswordUpdInput
+  ): Promise<MsgOutput> {
+    const url = this.mergeUrl("VipUpdatePasswordByOldPassword");
+    return this.tryCatchCall(() => vipAjax.post(url, input));
   }
 }
 
