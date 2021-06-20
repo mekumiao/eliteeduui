@@ -55,7 +55,7 @@
 </template>
 
 <script lang="ts">
-import { PageInput, PageOutput, SortInput } from "@/apis/apiBase";
+import { PageInput, PageOutput, SortInput } from "@/apis/base/publicEntity";
 import { sleep } from "@/utils/my-thread";
 import { PropType, reactive, ref, watch } from "vue";
 import { SortTableColumn } from "@/types/el-rules";

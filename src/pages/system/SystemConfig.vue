@@ -73,13 +73,17 @@ import {
   SystemConfigOutput,
   SystemConfigUpdInput
 } from "@/apis/adminSystemConfigApi";
-import { ObjFilterInput, PageInput, PageOutput } from "@/apis/apiBase";
 import MyPageTable from "@/components/MyPageTable.vue";
 import MyPageTableColumnBase from "@/components/MyPageTableColumnBase.vue";
 import AppEditDialog from "@/components/AppEditDialog.vue";
 import { DialogData, DialogEditData } from "@/types/el-dialog";
 import { defineComponent, reactive, ref } from "vue";
 import { FormRule } from "@/types/el-rules";
+import {
+  ObjFilterInput,
+  PageInput,
+  PageOutput
+} from "@/apis/base/publicEntity";
 
 const rules = reactive({
   Name: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],

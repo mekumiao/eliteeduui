@@ -1,12 +1,12 @@
-﻿import ajax, {
-  ApiBase,
+﻿import { ApiBase } from "./base/apiBase";
+import {
   MsgOutput,
   ObjFilterInput,
   PageOutput,
   PidKeyItem,
   PublicWithKeyOutput,
   ValueItem
-} from "./apiBase";
+} from "./base/publicEntity";
 /**系统配置输出模型 */
 export interface SystemConfigOutput extends PublicWithKeyOutput {
   Group: string;
@@ -41,7 +41,7 @@ class SystemConfigApi extends ApiBase {
     input: ObjFilterInput<SystemConfigOutput>
   ): Promise<PageOutput<SystemConfigOutput>> {
     const url = this.mergeUrl("QueryPage");
-    return this.tryCatchCall(() => ajax.post(url, input));
+    return this.tryCatchCall(() => this.ajax.post(url, input));
   }
   /**
    * 创建系统配置
@@ -50,7 +50,7 @@ class SystemConfigApi extends ApiBase {
    */
   public Create(input: SystemConfigInput): Promise<PidKeyItem> {
     const url = this.mergeUrl("Create");
-    return this.tryCatchCall(() => ajax.post(url, input));
+    return this.tryCatchCall(() => this.ajax.post(url, input));
   }
   /**
    * 修改系统配置
@@ -63,7 +63,7 @@ class SystemConfigApi extends ApiBase {
     input: SystemConfigUpdInput
   ): Promise<MsgOutput> {
     const url = this.mergeUrlParame("Update", id, timestamp);
-    return this.tryCatchCall(() => ajax.put(url, input));
+    return this.tryCatchCall(() => this.ajax.put(url, input));
   }
   /**
    * 删除系统配置
@@ -73,7 +73,7 @@ class SystemConfigApi extends ApiBase {
    */
   public Delete(id: string, timestamp: string): Promise<MsgOutput> {
     const url = this.mergeUrlParame("Delete", id, timestamp);
-    return this.tryCatchCall(() => ajax.delete(url));
+    return this.tryCatchCall(() => this.ajax.delete(url));
   }
   /**
    * 根据键获取配置
@@ -84,7 +84,7 @@ class SystemConfigApi extends ApiBase {
     name: string
   ): Promise<ValueItem<SystemConfigOutput>> {
     const url = this.mergeUrlParame("GetSystemConfigByName", name);
-    return this.tryCatchCall(() => ajax.get(url));
+    return this.tryCatchCall(() => this.ajax.get(url));
   }
   /**
    * 根据键获取配置(再store中调用,不需要显示错误)
@@ -95,7 +95,7 @@ class SystemConfigApi extends ApiBase {
     name: string
   ): Promise<ValueItem<SystemConfigOutput>> {
     const url = this.mergeUrlParame("GetSystemConfigByName", name);
-    return this.tryCatchCall(() => ajax.get(url), false);
+    return this.tryCatchCall(() => this.ajax.get(url), false);
   }
 }
 

@@ -90,7 +90,7 @@ export default defineComponent({
         await this.$useRules("loginForm").validate();
         this.loginLoading = true;
         this.$nprogress.start();
-        const token = await apiAuth.Token({
+        const token = await apiAuth.GetToken({
           Account: this.authData.Account,
           PassWord: this.authData.PassWord
         });

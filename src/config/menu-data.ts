@@ -43,9 +43,9 @@ const menuList: MenuItem[] = [
         index: "/system/employee"
       },
       {
-        title: "VIP用户",
+        title: "VIP管理",
         icon: "el-icon-document",
-        index: "/system/vipUserInfo"
+        index: "/system/vipInfo"
       }
     ]
   },

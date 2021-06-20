@@ -8,7 +8,7 @@
         <el-space>
           <i>
             <el-dropdown
-              @command="selectHeader"
+              @command="select"
               trigger="hover"
               placement="bottom-start"
               size="small"
@@ -16,8 +16,24 @@
               <app-head-portrait :size="40"></app-head-portrait>
               <template #dropdown>
                 <el-dropdown-menu class="dropdown-menu">
-                  <slot name="dropdown"></slot>
-                  <el-dropdown-item command="adminlogin" icon="el-icon-user">
+                  <el-dropdown-item
+                    command="password"
+                    icon="el-icon-switch-button"
+                  >
+                    修改密码
+                  </el-dropdown-item>
+                  <el-dropdown-item
+                    command="logout"
+                    icon="el-icon-switch-button"
+                    v-if="showMenu"
+                  >
+                    退出登录
+                  </el-dropdown-item>
+                  <el-dropdown-item
+                    command="adminlogin"
+                    icon="el-icon-user"
+                    divided
+                  >
                     管理员登录
                   </el-dropdown-item>
                 </el-dropdown-menu>
@@ -31,6 +47,7 @@
 </template>
 
 <script lang="ts">
+import { sleep } from "@/utils/my-thread";
 import { reactive } from "vue";
 import { defineComponent } from "vue";
 import AppHeadPortrait from "./AppHeadPortrait.vue";
@@ -38,27 +55,44 @@ import AppHeadPortrait from "./AppHeadPortrait.vue";
 export default defineComponent({
   components: { AppHeadPortrait },
   name: "AppTopMenu",
-  emits: ["select"],
   props: {
-    title: { type: String, default: "" }
+    title: { type: String, default: "" },
+    showMenu: {
+      type: Boolean,
+      default: true
+    }
   },
   setup() {
     const dialogUserInfo = reactive({ show: false, formData: {} });
     return { dialogUserInfo };
   },
   methods: {
-    logout(): void {
-      window.localStorage.removeItem("token");
-      this.$router.push("/login");
+    async logout(): Promise<void> {
+      try {
+        this.$loading();
+        await sleep(500);
+        this.$store.commit("resetState");
+        window.localStorage.clear();
+        this.$router.push("/login");
+      } finally {
+        this.$closeLoading();
+      }
     },
-    selectHeader(msg: string): void {
-      switch (msg) {
-        case "adminlogin":
-          this.logout();
-          break;
-        default:
-          this.$emit("select", msg);
-          break;
+    async select(tag: string) {
+      if (tag === "adminlogin") {
+        await this.logout();
+      } else if (tag === "logout") {
+        try {
+          this.$loading();
+          await sleep(500);
+          this.$store.commit("resetState");
+          window.localStorage.clear();
+          this.$router.push("/vipLogin");
+        } finally {
+          this.$closeLoading();
+        }
+      } else if (tag === "password") {
+        this.$router.push("/vipUpdPassword");
       }
     }
   }

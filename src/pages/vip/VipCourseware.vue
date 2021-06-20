@@ -1,14 +1,5 @@
 ﻿<template>
-  <app-top-menu title="浏览课件" @select="select">
-    <template #dropdown>
-      <el-dropdown-item command="password" icon="el-icon-switch-button">
-        修改密码
-      </el-dropdown-item>
-      <el-dropdown-item command="logout" icon="el-icon-switch-button">
-        退出登录
-      </el-dropdown-item>
-    </template>
-  </app-top-menu>
+  <app-top-menu title="浏览课件"></app-top-menu>
   <el-card>
     <my-page-table :get-data="getData" v-model="isLoad">
       <el-table-column label="名称" prop="Name"></el-table-column>
@@ -50,113 +41,28 @@
       </template>
     </my-page-table>
   </el-card>
-
-  <app-edit-dialog
-    title="修改密码"
-    v-model="dialogUpdPassword.show"
-    @save="save"
-  >
-    <el-form
-      ref="formOldPassword"
-      :model="dialogUpdPassword"
-      :rules="rolesUpdPassword"
-      v-if="isOldUpdPassword"
-    >
-      <el-form-item label="手机号">
-        <span>{{ dialogUpdPassword.formData.Phone }}</span>
-      </el-form-item>
-      <el-form-item label="原密码">
-        <el-input
-          type="password"
-          v-model="dialogUpdPassword.formData.OldPassWord"
-          autocomplete="off"
-          show-password
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="新密码">
-        <el-input
-          type="password"
-          v-model="dialogUpdPassword.formData.PassWord"
-          autocomplete="off"
-          show-password
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="确认密码">
-        <el-input
-          type="password"
-          v-model="dialogUpdPassword.formData.ConfirmPassWord"
-          autocomplete="off"
-          show-password
-        ></el-input>
-      </el-form-item>
-    </el-form>
-    <el-form
-      ref="formVerificationCode"
-      :model="dialogUpdPassword"
-      :rules="rolesResetPassword"
-      v-else
-    >
-      <el-form-item label="手机号">
-        <span>{{ dialogUpdPassword.formData.Phone }}</span>
-      </el-form-item>
-      <el-form-item label="新密码">
-        <el-input
-          type="text"
-          v-model="dialogUpdPassword.formData.PassWord"
-          autocomplete="off"
-          show-password
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="验证码">
-        <el-input
-          type="text"
-          v-model="dialogUpdPassword.formData.Code"
-          autocomplete="off"
-          show-password
-        ></el-input>
-      </el-form-item>
-    </el-form>
-  </app-edit-dialog>
 </template>
 
 <script lang="ts">
-import {
-  apiAuth,
-  PasswordUpdInput,
-  PasswordWithPhoneCodeUpdInput
-} from "@/apis/adminAuthApi";
-import { apiVipUserInfo } from "@/apis/vipUserInfoApi";
-import { ObjFilterInput, PageInput, PageOutput } from "@/apis/apiBase";
 import { apiVipCourseware, CoursewareOutput } from "@/apis/vipCoursewareApi";
-import AppEditDialog from "@/components/AppEditDialog.vue";
-import AppTopMenu from "@/components/AppTopMenu.vue";
+import AppTopMenu from "@/components/VipTopMenu.vue";
 import MyPageTable from "@/components/MyPageTable.vue";
 import MyResourcePreview from "@/components/MyResourcePreview.vue";
-import { DialogData } from "@/types/el-dialog";
-import { defineComponent, reactive, ref } from "vue";
+import { defineComponent, ref } from "vue";
+import {
+  ObjFilterInput,
+  PageInput,
+  PageOutput
+} from "@/apis/base/publicEntity";
+import { sleep } from "@/utils/my-thread";
 
 export default defineComponent({
   name: "VipCourseware",
-  components: { MyPageTable, AppTopMenu, MyResourcePreview, AppEditDialog },
+  components: { MyPageTable, AppTopMenu, MyResourcePreview },
   setup() {
     const eliteSongs = ref<CoursewareOutput[]>();
     const isLoad = ref(true);
-    const isOldUpdPassword = ref(true);
-    const dialogUpdPassword = reactive<
-      DialogData<
-        PasswordUpdInput & PasswordWithPhoneCodeUpdInput & { Phone: string }
-      >
-    >({
-      show: false,
-      formData: {} as PasswordUpdInput &
-        PasswordWithPhoneCodeUpdInput & { Phone: string }
-    });
-    return { eliteSongs, isLoad, dialogUpdPassword, isOldUpdPassword };
-  },
-  beforeMount() {
-    if (!window.localStorage.getItem("vipToken")) {
-      this.$router.push("/vipLogin");
-    }
+    return { eliteSongs, isLoad };
   },
   methods: {
     async getData(
@@ -178,30 +84,6 @@ export default defineComponent({
         Page: page
       };
       return await apiVipCourseware.QueryPageCourseware(filter);
-    },
-    async select(tag: string) {
-      if (tag === "logout") {
-        window.localStorage.removeItem("vipToken");
-        this.$router.push("/vipLogin");
-      } else if (tag === "password") {
-        const vipUser = await apiVipUserInfo.GetCurrentVipUserInfo();
-        debugger;
-        this.dialogUpdPassword.formData.Phone = vipUser.Phone;
-        this.dialogUpdPassword.show = true;
-      }
-    },
-    async save(colse: () => void) {
-      if (this.isOldUpdPassword) {
-        await this.$useRules("formOldPassword").validate();
-        apiAuth.VipUpdatePasswordByOldPassword(this.dialogUpdPassword.formData);
-        colse();
-      } else {
-        await this.$useRules("formVerificationCode").validate();
-        apiAuth.VipResetPasswordByVerificationCode(
-          this.dialogUpdPassword.formData
-        );
-        colse();
-      }
     }
   }
 });

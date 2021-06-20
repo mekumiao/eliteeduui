@@ -1,5 +1,6 @@
-﻿import ajax, { ApiBase, MsgOutput } from "./apiBase";
-import vipAjax from "./apiVipBase";
+﻿import { ApiBase } from "./base/apiBase";
+import { MsgOutput } from "./base/publicEntity";
+
 /**账号密码模型 */
 export interface LoginInput {
   Account: string;
@@ -18,17 +19,18 @@ export interface PhoneCodeInput {
 export interface NamePhoneCodeInput extends PhoneCodeInput {
   Name?: string;
 }
-/**用户根据手机验证码修改密码模型 */
-export interface PasswordWithPhoneCodeUpdInput {
+/**重置用户密码(手机验证码) */
+export interface ResetPasswordByPhoneCodeInput {
+  Phone: string;
   Code: string;
   PassWord: string;
 }
 /**用户账号密码修改时输入模型 */
 export interface PasswordUpdInput {
+  /**账号 */
+  Account: string;
   /**原密码 */
   OldPassWord: string;
-  /**确认密码 */
-  ConfirmPassWord: string;
   /**新密码 */
   PassWord: string;
 }
@@ -39,15 +41,15 @@ class AuthApi extends ApiBase {
    * 获取Token
    * @param input 用户信息
    */
-  public Token(input: LoginInput): Promise<TokenItem> {
-    const url = this.mergeUrl("Token");
-    return this.tryCatchCall(() => ajax.post(url, input));
+  public GetToken(input: LoginInput): Promise<TokenItem> {
+    const url = this.mergeUrl("GetToken");
+    return this.tryCatchCall(() => this.ajax.post(url, input));
   }
   /**检查当前状态是否登录 */
   public async CheckState(): Promise<boolean> {
     try {
       const url = this.mergeUrl("CheckState");
-      await ajax.get<MsgOutput>(url);
+      await this.ajax.get<MsgOutput>(url);
       return true;
     } catch {
       return false;
@@ -61,37 +63,26 @@ class AuthApi extends ApiBase {
     input: NamePhoneCodeInput
   ): Promise<TokenItem> {
     const url = this.mergeUrl("VipLoginOrRegisterByPhoneCode");
-    return this.tryCatchCall(() => ajax.post(url, input));
+    return this.tryCatchCall(() => this.ajax.post(url, input));
   }
   /**
-   * 发送VIP注册或登录时用的验证码
+   * 发送注册或登录时用的验证码
    * @param phone 手机号
    */
-  public VipSendVerificationCode(phone: string): Promise<MsgOutput> {
-    const url = this.mergeUrlParame("VipSendVerificationCode", phone);
-    return this.tryCatchCall(() => ajax.get(url));
+  public SendVerificationCode(phone: string): Promise<MsgOutput> {
+    const url = this.mergeUrlParame("SendVerificationCode", phone);
+    return this.tryCatchCall(() => this.ajax.get(url));
   }
   /**
-   * VIP使用手机号和密码登录或注册
-   * @param input 账号密码模型
-   * @returns Token
-   */
-  public VipLoginOrRegisterByAccountCode(
-    input: LoginInput
-  ): Promise<TokenItem> {
-    const url = this.mergeUrl("VipLoginOrRegisterByAccountCode");
-    return this.tryCatchCall(() => ajax.post(url, input));
-  }
-  /**
-   * 根据手机验证码重置密码
+   * 根据手机验证码重置登录密码
    * @param input 验证码模型
    * @returns 消息码
    */
-  public VipResetPasswordByVerificationCode(
-    input: PasswordWithPhoneCodeUpdInput
+  public UserResetPasswordByVerificationCode(
+    input: ResetPasswordByPhoneCodeInput
   ): Promise<MsgOutput> {
-    const url = this.mergeUrl("VipResetPasswordByVerificationCode");
-    return this.tryCatchCall(() => vipAjax.post(url, input));
+    const url = this.mergeUrl("UserResetPasswordByVerificationCode");
+    return this.tryCatchCall(() => this.ajax.post(url, input));
   }
   /**
    * 发送根据手机号重置密码时用的验证码
@@ -105,18 +96,18 @@ class AuthApi extends ApiBase {
       "SendVerificationCodeByResetPassword",
       phone
     );
-    return this.tryCatchCall(() => vipAjax.get(url));
+    return this.tryCatchCall(() => this.ajax.get(url));
   }
   /**
-   * 根据原密码修改登录密码
+   * 当前用户根据原密码修改登录密码
    * @param input 修改密码时实体模型
    * @returns 消息码
    */
-  public VipUpdatePasswordByOldPassword(
+  public CurrentUserUpdatePasswordByOldPassword(
     input: PasswordUpdInput
   ): Promise<MsgOutput> {
-    const url = this.mergeUrl("VipUpdatePasswordByOldPassword");
-    return this.tryCatchCall(() => vipAjax.post(url, input));
+    const url = this.mergeUrl("CurrentUserUpdatePasswordByOldPassword");
+    return this.tryCatchCall(() => this.ajax.post(url, input));
   }
 }
 

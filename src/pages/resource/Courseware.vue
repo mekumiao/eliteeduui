@@ -171,7 +171,7 @@ import {
   OptionItem,
   PageInput,
   PageOutput
-} from "@/apis/apiBase";
+} from "@/apis/base/publicEntity";
 import {
   apiEduCourseware,
   CoursewareInput,

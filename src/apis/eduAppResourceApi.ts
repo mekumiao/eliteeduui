@@ -1,5 +1,5 @@
-﻿import ajax, {
-  ApiBase,
+﻿import { ApiBase } from "./base/apiBase";
+import {
   PageOutput,
   ObjFilterInput,
   PidKeyItem,
@@ -7,7 +7,7 @@
   OptionFilterInput,
   OptionOutput,
   PublicWithKeyOutput
-} from "./apiBase";
+} from "./base/publicEntity";
 
 /**爱利特儿歌输出模型 */
 export interface EliteSongOutput extends PublicWithKeyOutput {
@@ -44,12 +44,12 @@ class AppResourceApi extends ApiBase {
     input: ObjFilterInput<EliteSongOutput>
   ): Promise<PageOutput<EliteSongOutput>> {
     const url = this.mergeUrl("QueryPageEliteSong");
-    return this.tryCatchCall(() => ajax.post(url, input));
+    return this.tryCatchCall(() => this.ajax.post(url, input));
   }
   /**创建爱利特儿歌 */
   public CreateEliteSong(input: EliteSongInput): Promise<PidKeyItem> {
     const url = this.mergeUrl("CreateEliteSong");
-    return this.tryCatchCall(() => ajax.post(url, input));
+    return this.tryCatchCall(() => this.ajax.post(url, input));
   }
   /**修改爱利特儿歌 */
   public UpdateEliteSong(
@@ -58,19 +58,19 @@ class AppResourceApi extends ApiBase {
     input: EliteSongUpdInput
   ): Promise<MsgOutput> {
     const url = this.mergeUrlParame("UpdateEliteSong", id, timestamp);
-    return this.tryCatchCall(() => ajax.put(url, input));
+    return this.tryCatchCall(() => this.ajax.put(url, input));
   }
   /**查询下拉值选项 */
   public QueryOption(
     input: OptionFilterInput
   ): Promise<PageOutput<OptionOutput>> {
     const url = this.mergeUrl("QueryOption");
-    return this.tryCatchCall(() => ajax.post(url, input));
+    return this.tryCatchCall(() => this.ajax.post(url, input));
   }
   /**删除爱利特儿歌 */
   public DeleteEliteSong(id: string, timestamp: string): Promise<MsgOutput> {
     const url = this.mergeUrlParame("DeleteEliteSong", id, timestamp);
-    return this.tryCatchCall(() => ajax.delete(url));
+    return this.tryCatchCall(() => this.ajax.delete(url));
   }
 }
 /**app资源管理api */

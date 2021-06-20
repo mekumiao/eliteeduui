@@ -17,7 +17,6 @@ export default {
     //聚焦元素指令
     app.directive("focus", {
       mounted(el) {
-        debugger;
         el.focus();
       }
     });

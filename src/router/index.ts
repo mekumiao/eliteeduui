@@ -1,4 +1,9 @@
-﻿import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
+﻿import {
+  createRouter,
+  createWebHashHistory,
+  NavigationGuardNext,
+  RouteRecordRaw
+} from "vue-router";
 import { apiAuth } from "@/apis/adminAuthApi";
 import { nprogress } from "@/plugins/my-nprogress";
 import Home from "@/pages/home/Home.vue";
@@ -19,7 +24,7 @@ import Exception404 from "@/pages/exception/404.vue";
 import Exception500 from "@/pages/exception/500.vue";
 
 /**系统管理 */
-import SystemVipUserInfo from "@/pages/system/VipUserInfo.vue";
+import SystemVipInfo from "@/pages/system/VipInfo.vue";
 import SystemConfig from "@/pages/system/SystemConfig.vue";
 
 /**资源管理 */
@@ -29,6 +34,7 @@ import Courseware from "@/pages/resource/Courseware.vue";
 /**VIP页面 */
 import VipCourseware from "@/pages/vip/VipCourseware.vue";
 import VipLogin from "@/pages/vip/VipLogin.vue";
+import VipUpdPassword from "@/pages/vip/VipUpdPassword.vue";
 
 const routes: Array<RouteRecordRaw> = [
   { path: "/", redirect: "/home/welcome" },
@@ -73,7 +79,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/system",
     component: Home,
     children: [
-      { path: "vipUserInfo", component: SystemVipUserInfo },
+      { path: "vipInfo", component: SystemVipInfo },
       { path: "systemConfig", component: SystemConfig }
     ]
   },
@@ -85,6 +91,10 @@ const routes: Array<RouteRecordRaw> = [
     path: "/vipLogin",
     component: VipLogin
   },
+  {
+    path: "/vipUpdPassword",
+    component: VipUpdPassword
+  },
   { path: "/:notFind(.*)", redirect: { name: "page404" } }
 ];
 
@@ -94,30 +104,38 @@ const router = createRouter({
 });
 /**忽略的路由 */
 const ignorePath = (path: string): boolean => {
-  const paths = ["/vipCourseware", "/vipLogin"];
+  const paths = ["/login", "/vipLogin", "/vipUpdPassword"];
   return (
     paths.filter((item) => item.toLowerCase() === path.toLowerCase()).length > 0
   );
 };
+/**登录失败时跳转到登录逻辑 */
+const backLogin = (path: string, next: NavigationGuardNext): void => {
+  if (path.startsWith("/vip")) {
+    next("vipLogin");
+  } else {
+    next("login");
+  }
+};
 /**开始进度条 */
-router.beforeEach((_to, _from, next) => {
+router.beforeEach((_to, _from, next): void => {
   nprogress.start();
   next();
 });
 /**处理未登录 */
-router.beforeEach((to, _from, next) => {
-  if (to.path.toLowerCase() === "/login" || ignorePath(to.path)) {
+router.beforeEach((to, _from, next): void => {
+  if (ignorePath(to.path)) {
     return next();
   }
   const token = window.localStorage.getItem("token");
   if (!token) {
-    return next("/login");
+    return backLogin(to.path, next);
   }
   next();
 });
 /**处理Token失效后依然能访问首页的问题 */
 router.beforeEach((to, _from, next) => {
-  if (to.path === "/login" || ignorePath(to.path)) {
+  if (ignorePath(to.path)) {
     return next();
   }
   const session = window.sessionStorage.getItem("state");
@@ -129,11 +147,11 @@ router.beforeEach((to, _from, next) => {
           window.sessionStorage.setItem("state", "5200");
           next();
         } else {
-          next("/login");
+          backLogin(to.path, next);
         }
       })
       .catch(() => {
-        next("/login");
+        backLogin(to.path, next);
       });
   } else {
     next();

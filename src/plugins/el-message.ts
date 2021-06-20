@@ -5,7 +5,7 @@
 import { App, h } from "vue";
 import { Plugin, VNode } from "@vue/runtime-core/dist/runtime-core";
 import { ElMessage } from "element-plus";
-import { MsgOutput } from "@/apis/apiBase";
+import { MsgOutput } from "@/apis/base/publicEntity";
 
 type MsgInfo = MsgOutput | string | string[] | number | unknown;
 

@@ -140,7 +140,7 @@ import {
   OptionOutput,
   PageInput,
   PageOutput
-} from "@/apis/apiBase";
+} from "@/apis/base/publicEntity";
 import MyPageTable from "@/components/MyPageTable.vue";
 import { defineComponent, reactive, ref } from "vue";
 import {

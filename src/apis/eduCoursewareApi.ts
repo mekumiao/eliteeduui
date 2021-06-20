@@ -1,5 +1,5 @@
-﻿import ajax, {
-  ApiBase,
+﻿import { ApiBase } from "./base/apiBase";
+import {
   MsgOutput,
   ObjFilterInput,
   OptionFilterInput,
@@ -7,7 +7,7 @@
   PageOutput,
   PidKeyItem,
   PublicWithKeyOutput
-} from "./apiBase";
+} from "./base/publicEntity";
 
 /**课件输出模型 */
 export interface CoursewareOutput extends PublicWithKeyOutput {
@@ -49,7 +49,7 @@ class CoursewareApi extends ApiBase {
     input: OptionFilterInput
   ): Promise<PageOutput<OptionItem>> {
     const url = this.mergeUrl("QueryOption");
-    return this.tryCatchCall(() => ajax.post(url, input));
+    return this.tryCatchCall(() => this.ajax.post(url, input));
   }
   /**
    * 查询课件列表
@@ -60,7 +60,7 @@ class CoursewareApi extends ApiBase {
     input: ObjFilterInput<CoursewareOutput>
   ): Promise<PageOutput<CoursewareOutput>> {
     const url = this.mergeUrl("QueryPageCourseware");
-    return this.tryCatchCall(() => ajax.post(url, input));
+    return this.tryCatchCall(() => this.ajax.post(url, input));
   }
   /**
    * 创建课件
@@ -69,7 +69,7 @@ class CoursewareApi extends ApiBase {
    */
   public CreateCourseware(input: CoursewareInput): Promise<PidKeyItem> {
     const url = this.mergeUrl("CreateCourseware");
-    return this.tryCatchCall(() => ajax.post(url, input));
+    return this.tryCatchCall(() => this.ajax.post(url, input));
   }
   /**
    * 修改课件
@@ -84,7 +84,7 @@ class CoursewareApi extends ApiBase {
     input: CoursewareUpdInput
   ): Promise<MsgOutput> {
     const url = this.mergeUrlParame("UpdateCourseware", id, timestamp);
-    return this.tryCatchCall(() => ajax.put(url, input));
+    return this.tryCatchCall(() => this.ajax.put(url, input));
   }
   /**
    * 删除课件
@@ -94,7 +94,7 @@ class CoursewareApi extends ApiBase {
    */
   public DeleteCourseware(id: string, timestamp: string): Promise<MsgOutput> {
     const url = this.mergeUrlParame("DeleteCourseware", id, timestamp);
-    return this.tryCatchCall(() => ajax.delete(url));
+    return this.tryCatchCall(() => this.ajax.delete(url));
   }
 }
 

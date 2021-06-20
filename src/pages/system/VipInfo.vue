@@ -93,10 +93,14 @@
           <el-input v-model="dialogUpdate.formData.Name" />
         </el-form-item>
         <el-form-item label="手机号码" prop="Phone">
-          <el-input v-model="dialogUpdate.formData.Phone" />
+          {{ dialogUpdate.formData.Phone }}
         </el-form-item>
         <el-form-item label="登录密码" prop="PassWord">
-          <el-input v-model="dialogUpdate.formData.PassWord" />
+          <el-input
+            type="password"
+            v-model="dialogUpdate.formData.PassWord"
+            show-password
+          />
         </el-form-item>
       </el-form>
     </app-edit-dialog>
@@ -104,25 +108,38 @@
 </template>
 
 <script lang="ts">
-import { ObjFilterInput, PageInput, PageOutput } from "@/apis/apiBase";
+import {
+  ObjFilterInput,
+  PageInput,
+  PageOutput
+} from "@/apis/base/publicEntity";
 import MyPageTable from "@/components/MyPageTable.vue";
 import { defineComponent, reactive, ref } from "vue";
-import {
-  apiUserInfo,
-  VipUserInfoInput,
-  VipUserInfoOutput,
-  VipUserInfoUpdInput
-} from "@/apis/adminUserInfoApi";
 import MyPageTableColumnBase from "@/components/MyPageTableColumnBase.vue";
 import AppButtonPopover from "@/components/AppButtonPopover.vue";
 import AppEditDialog from "@/components/AppEditDialog.vue";
 import { FormRule } from "@/types/el-rules";
 import { DialogData, DialogEditData } from "@/types/el-dialog";
+import {
+  apiVipInfo,
+  VipInfoInput,
+  VipInfoOutput,
+  VipInfoUpdInput
+} from "@/apis/vipInfoApi";
+import { UserInfoOutput } from "@/apis/adminUserInfoApi";
 
-const rules = reactive({
-  Name: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
-  Phone: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
-  PassWord: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[]
+interface DataRules {
+  Name: FormRule[];
+  Phone: FormRule[];
+  PassWord: FormRule[];
+}
+
+const rules = reactive<DataRules>({
+  Name: [{ required: true, message: "必填", trigger: "blur" }],
+  Phone: [{ required: true, message: "必填", trigger: "blur" }],
+  PassWord: [
+    { min: 6, max: 10, message: "长度在 6 - 16 之间", trigger: "blur" }
+  ]
 });
 
 export default defineComponent({
@@ -135,16 +152,16 @@ export default defineComponent({
   },
   setup() {
     const isLoad = ref(true);
-    const dialogCreate = reactive<DialogData<VipUserInfoInput>>({
+    const dialogCreate = reactive<DialogData<VipInfoInput>>({
       show: false,
-      formData: {} as VipUserInfoInput
+      formData: {} as VipInfoInput
     });
     const dialogUpdate = reactive<
-      DialogEditData<VipUserInfoUpdInput, VipUserInfoOutput>
+      DialogEditData<VipInfoUpdInput, VipInfoOutput>
     >({
       show: false,
-      formData: {} as VipUserInfoUpdInput,
-      oldData: {} as VipUserInfoOutput
+      formData: {} as VipInfoUpdInput,
+      oldData: {} as VipInfoOutput
     });
     return { isLoad, dialogCreate, dialogUpdate, rules };
   },
@@ -152,45 +169,46 @@ export default defineComponent({
     /**获取数据 */
     async getData(
       match: string,
-      page: PageInput<VipUserInfoOutput>
-    ): Promise<PageOutput<VipUserInfoOutput>> {
-      const filter: ObjFilterInput<VipUserInfoOutput> = {
+      page: PageInput<UserInfoOutput>
+    ): Promise<PageOutput<VipInfoOutput>> {
+      const filter: ObjFilterInput<UserInfoOutput> = {
         Page: page,
         Condition: {
           Logic: "or",
           Items: [
-            { Field: "Name", Value: match, Compare: "startswith" },
+            { Field: "FullName", Value: match, Compare: "startswith" },
+            { Field: "NickName", Value: match, Compare: "startswith" },
             { Field: "Phone", Value: match, Compare: "startswith" }
           ]
         }
       };
-      return apiUserInfo.QueryPageVipUserInfo(filter);
+      return apiVipInfo.QueryPageVipInfo(filter);
     },
     /**审核通过 */
-    async Auth(_index: number, row: VipUserInfoOutput) {
+    async Auth(_index: number, row: VipInfoOutput) {
       try {
         this.$loading();
-        await apiUserInfo.AuthVipUserInfoById(row.Pid);
+        await apiVipInfo.AuthVipInfoById(row.Pid);
       } finally {
         this.$closeLoading();
         this.isLoad = true;
       }
     },
     /**取消审核 */
-    async UnAuth(_index: number, row: VipUserInfoOutput) {
+    async UnAuth(_index: number, row: VipInfoOutput) {
       try {
         this.$loading();
-        await apiUserInfo.UnAuthVipUserInfoById(row.Pid);
+        await apiVipInfo.UnAuthVipInfoById(row.Pid);
       } finally {
         this.$closeLoading();
         this.isLoad = true;
       }
     },
     /**删除VIP用户 */
-    async deleteSave(_index: number, row: VipUserInfoOutput) {
+    async deleteSave(_index: number, row: VipInfoOutput) {
       try {
         this.$loading();
-        await apiUserInfo.DeleteVipUserInfoById(row.Pid);
+        await apiVipInfo.DeleteVipInfoById(row.Pid);
       } finally {
         this.$closeLoading();
         this.isLoad = true;
@@ -198,7 +216,7 @@ export default defineComponent({
     },
     /**打开新增 */
     async create() {
-      this.dialogCreate.formData = {} as VipUserInfoInput;
+      this.dialogCreate.formData = {} as VipInfoInput;
       this.dialogCreate.show = true;
       return Promise.resolve();
     },
@@ -207,7 +225,7 @@ export default defineComponent({
       try {
         await this.$useRules("formCreate").validate();
         this.$loading();
-        await apiUserInfo.CreateVipUserInfo(this.dialogCreate.formData);
+        await apiVipInfo.CreateVipInfo(this.dialogCreate.formData);
         close();
         this.isLoad = true;
       } finally {
@@ -215,7 +233,7 @@ export default defineComponent({
       }
     },
     /**打开编辑 */
-    async update(_index: number, row: VipUserInfoOutput) {
+    async update(_index: number, row: VipInfoOutput) {
       this.dialogUpdate.oldData = row;
       this.dialogUpdate.formData = { ...row };
       this.dialogUpdate.show = true;
@@ -226,7 +244,7 @@ export default defineComponent({
       try {
         this.$loading();
         await this.$useRules("formUpdate").validate();
-        await apiUserInfo.UpdateVipUserInfo(
+        await apiVipInfo.UpdateVipInfo(
           this.dialogUpdate.oldData.Pid,
           this.dialogUpdate.oldData.Timestamp,
           this.dialogUpdate.formData

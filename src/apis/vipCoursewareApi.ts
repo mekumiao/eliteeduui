@@ -1,10 +1,9 @@
-﻿import {
-  ApiBase,
+﻿import { ApiBase } from "./base/apiBase";
+import {
   ObjFilterInput,
   PageOutput,
   PublicWithKeyOutput
-} from "./apiBase";
-import ajax from "./apiVipBase";
+} from "./base/publicEntity";
 
 /**课件输出模型 */
 export interface CoursewareOutput extends PublicWithKeyOutput {
@@ -30,7 +29,7 @@ class CoursewareApi extends ApiBase {
     input: ObjFilterInput<CoursewareOutput>
   ): Promise<PageOutput<CoursewareOutput>> {
     const url = this.mergeUrl("QueryPageCourseware");
-    return this.tryCatchCall(() => ajax.post(url, input));
+    return this.tryCatchCall(() => this.ajax.post(url, input));
   }
 }
 

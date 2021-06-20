@@ -1,5 +1,5 @@
 ﻿<template>
-  <app-top-menu title="登录或注册"></app-top-menu>
+  <app-top-menu title="登录或注册" :show-menu="false"></app-top-menu>
   <el-card class="login-card" v-if="!passwordLogin">
     <el-form
       ref="formLoginByCode"
@@ -91,8 +91,9 @@ import { LoginInput, NamePhoneCodeInput } from "@/apis/adminAuthApi";
 import { defineComponent, reactive, ref } from "vue";
 import useTimer from "@/hooks/useTimer";
 import { apiAuth } from "@/apis/adminAuthApi";
-import AppTopMenu from "@/components/AppTopMenu.vue";
+import AppTopMenu from "@/components/VipTopMenu.vue";
 import { FormRule } from "@/types/el-rules";
+import { apiUserInfo } from "@/apis/adminUserInfoApi";
 
 const rulesCode = reactive({
   Phone: [
@@ -141,16 +142,22 @@ export default defineComponent({
         this.isLoging = true;
         if (this.passwordLogin) {
           await this.$useRules("formLoginByPassword").validate();
-          const token = await apiAuth.VipLoginOrRegisterByAccountCode(
-            this.loginInput
-          );
-          window.localStorage.setItem("vipToken", token.Token);
+          const token = await apiAuth.GetToken(this.loginInput);
+          this.$store.commit("resetState");
+          window.localStorage.setItem("token", token.Token);
+          window.sessionStorage.setItem("state", "5200");
+          const user = await apiUserInfo.GetCurrentUserInfo();
+          this.$store.commit("setUser", user);
         } else {
           await this.$useRules("formLoginByCode").validate();
           const token = await apiAuth.VipLoginOrRegisterByPhoneCode(
             this.phoneInput
           );
-          window.localStorage.setItem("vipToken", token.Token);
+          this.$store.commit("resetState");
+          window.localStorage.setItem("token", token.Token);
+          window.sessionStorage.setItem("state", "5200");
+          const user = await apiUserInfo.GetCurrentUserInfo();
+          this.$store.commit("setUser", user);
         }
         this.$router.push("/vipCourseware");
       } finally {
@@ -163,7 +170,7 @@ export default defineComponent({
         async (error) => {
           if (!error) {
             useTimer.Start(60);
-            await apiAuth.VipSendVerificationCode(this.phoneInput.Phone);
+            await apiAuth.SendVerificationCode(this.phoneInput.Phone);
           }
         }
       );
