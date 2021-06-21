@@ -54,7 +54,6 @@ import {
   PageInput,
   PageOutput
 } from "@/apis/base/publicEntity";
-import { sleep } from "@/utils/my-thread";
 
 export default defineComponent({
   name: "VipCourseware",

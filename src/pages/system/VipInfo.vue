@@ -63,7 +63,7 @@
         ref="formCreate"
         label-width="80px"
         :model="dialogCreate.formData"
-        :rules="rules"
+        :rules="rulesCreate"
       >
         <el-form-item label="名称" prop="Name">
           <el-input v-model="dialogCreate.formData.Name" />
@@ -87,7 +87,7 @@
         ref="formUpdate"
         label-width="80px"
         :model="dialogUpdate.formData"
-        :rules="rules"
+        :rules="rulesUpdate"
       >
         <el-form-item label="名称" prop="Name">
           <el-input v-model="dialogUpdate.formData.Name" />
@@ -134,7 +134,16 @@ interface DataRules {
   PassWord: FormRule[];
 }
 
-const rules = reactive<DataRules>({
+const rulesCreate = reactive<DataRules>({
+  Name: [{ required: true, message: "必填", trigger: "blur" }],
+  Phone: [{ required: true, message: "必填", trigger: "blur" }],
+  PassWord: [
+    { required: true, message: "必填", trigger: "blur" },
+    { min: 6, max: 10, message: "长度在 6 - 16 之间", trigger: "blur" }
+  ]
+});
+
+const rulesUpdate = reactive<DataRules>({
   Name: [{ required: true, message: "必填", trigger: "blur" }],
   Phone: [{ required: true, message: "必填", trigger: "blur" }],
   PassWord: [
@@ -163,7 +172,7 @@ export default defineComponent({
       formData: {} as VipInfoUpdInput,
       oldData: {} as VipInfoOutput
     });
-    return { isLoad, dialogCreate, dialogUpdate, rules };
+    return { isLoad, dialogCreate, dialogUpdate, rulesCreate, rulesUpdate };
   },
   methods: {
     /**获取数据 */

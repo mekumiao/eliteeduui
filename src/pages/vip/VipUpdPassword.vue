@@ -1,7 +1,7 @@
 ﻿<template>
   <app-top-menu title="修改密码"></app-top-menu>
   <el-card class="vip-upd-password">
-    <my-upd-password></my-upd-password>
+    <my-upd-password @success="success"></my-upd-password>
   </el-card>
 </template>
 
@@ -14,6 +14,11 @@ export default defineComponent({
   components: { AppTopMenu, MyUpdPassword },
   setup() {
     return {};
+  },
+  methods: {
+    success() {
+      this.$router.push("/vipLogin");
+    }
   }
 });
 </script>

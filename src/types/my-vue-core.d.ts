@@ -18,5 +18,7 @@ declare module "@vue/runtime-core" {
     $notify: INotification;
     $layer: Layer;
     $useRules(ref: string | Record<string, unknown>): Rules;
+    $logout(path?: string): Promise<void>;
+    $logoutConfirm(path?: string): void;
   }
 }

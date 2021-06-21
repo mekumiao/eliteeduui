@@ -9,6 +9,7 @@ import MyLoading from "@/plugins/my-loading";
 import ElFormrule from "@/plugins/el-formrule";
 import ElMessage from "@/plugins/el-message";
 import VueDirectives from "@/plugins/vue-directives";
+import Logout from "@/plugins/my-logout";
 import "animate.css/animate.css";
 import "@/utils/my-extension";
 import "element-plus/lib/theme-chalk/index.css";
@@ -27,5 +28,6 @@ createApp(App)
   .use(ElFormrule)
   .use(ElMessage)
   .use(VueDirectives)
+  .use(Logout)
   .use(VueErrorHander)
   .mount("#app");

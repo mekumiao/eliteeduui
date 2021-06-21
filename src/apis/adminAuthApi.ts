@@ -99,14 +99,14 @@ class AuthApi extends ApiBase {
     return this.tryCatchCall(() => this.ajax.get(url));
   }
   /**
-   * 当前用户根据原密码修改登录密码
+   * 用户根据原密码修改登录密码
    * @param input 修改密码时实体模型
    * @returns 消息码
    */
-  public CurrentUserUpdatePasswordByOldPassword(
+  public UserUpdatePasswordByOldPassword(
     input: PasswordUpdInput
   ): Promise<MsgOutput> {
-    const url = this.mergeUrl("CurrentUserUpdatePasswordByOldPassword");
+    const url = this.mergeUrl("UserUpdatePasswordByOldPassword");
     return this.tryCatchCall(() => this.ajax.post(url, input));
   }
 }

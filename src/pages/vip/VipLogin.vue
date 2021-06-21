@@ -33,7 +33,7 @@
             autocomplete="off"
             v-model="phoneInput.Code"
           ></el-input>
-          <el-button :disabled="timmerTotal > 0" @click="SendCode">
+          <el-button :disabled="timmerTotal > 0" @click="sendCode">
             发送验证码{{ timmerTotal > 0 ? timmerTotal.toString() : "" }}
           </el-button>
         </el-space>
@@ -164,7 +164,7 @@ export default defineComponent({
         this.isLoging = false;
       }
     },
-    async SendCode(): Promise<void> {
+    async sendCode(): Promise<void> {
       this.$useRules("formLoginByCode").validateField(
         "Phone",
         async (error) => {

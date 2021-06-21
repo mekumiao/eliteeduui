@@ -16,16 +16,18 @@
               <app-head-portrait :size="40"></app-head-portrait>
               <template #dropdown>
                 <el-dropdown-menu class="dropdown-menu">
-                  <el-dropdown-item
-                    command="password"
-                    icon="el-icon-switch-button"
-                  >
+                  <el-dropdown-item command="updPassword" icon="el-icon-edit">
                     修改密码
+                  </el-dropdown-item>
+                  <el-dropdown-item
+                    command="resetPassword"
+                    icon="el-icon-edit-outline"
+                  >
+                    重置密码
                   </el-dropdown-item>
                   <el-dropdown-item
                     command="logout"
                     icon="el-icon-switch-button"
-                    v-if="showMenu"
                   >
                     退出登录
                   </el-dropdown-item>
@@ -80,19 +82,15 @@ export default defineComponent({
     },
     async select(tag: string) {
       if (tag === "adminlogin") {
-        await this.logout();
+        this.$router.push("/login");
       } else if (tag === "logout") {
-        try {
-          this.$loading();
-          await sleep(500);
-          this.$store.commit("resetState");
-          window.localStorage.clear();
-          this.$router.push("/vipLogin");
-        } finally {
-          this.$closeLoading();
-        }
+        this.$logoutConfirm("/vipLogin");
       } else if (tag === "password") {
         this.$router.push("/vipUpdPassword");
+      } else if (tag === "updPassword") {
+        this.$router.push("/vipUpdPassword");
+      } else if (tag === "resetPassword") {
+        this.$router.push("/vipResetPassword");
       }
     }
   }
