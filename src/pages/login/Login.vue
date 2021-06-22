@@ -51,11 +51,11 @@ interface DataRules {
 const rules = reactive<DataRules>({
   Account: [
     { required: true, message: "用户名不能为空", trigger: "blur" },
-    { min: 3, max: 10, message: "长度在 3 - 10 之间", trigger: "blur" }
+    { min: 3, max: 20, message: "长度在 3 - 20 之间", trigger: "blur" }
   ],
   PassWord: [
     { required: true, message: "密码不能为空", trigger: "blur" },
-    { min: 6, max: 10, message: "长度在 6 - 16 之间", trigger: "blur" }
+    { min: 6, max: 16, message: "长度在 6 - 16 之间", trigger: "blur" }
   ]
 });
 
@@ -96,10 +96,21 @@ export default defineComponent({
         window.localStorage.setItem("token", token.Token);
         window.sessionStorage.setItem("state", "5200");
         const user = await apiUserInfo.GetCurrentUserInfo();
-        this.$store.commit("setUser", user);
-        await sleep(500);
-        this.$router.push("/");
-        this.$message.closeAll();
+        const isSuccess = user.Roles.filter(
+          (x) =>
+            x.RoleName === "system" ||
+            x.RoleName === "admin" ||
+            x.RoleName === "teacher"
+        );
+        debugger;
+        if (isSuccess.length > 0) {
+          this.$store.commit("setUser", user);
+          await sleep(500);
+          this.$router.push("/");
+          this.$message.closeAll();
+        } else {
+          this.$message.showError("您没有权限登录后台系统");
+        }
       } finally {
         this.loginLoading = false;
         this.$nprogress.done();

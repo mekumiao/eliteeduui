@@ -52,7 +52,7 @@ router.beforeEach((to, _from, next) => {
   const session = window.sessionStorage.getItem("state");
   if (!session) {
     apiAuth
-      .CheckState()
+      .CheckCurrentAdminUserState()
       .then((flag) => {
         if (flag) {
           window.sessionStorage.setItem("state", "5200");

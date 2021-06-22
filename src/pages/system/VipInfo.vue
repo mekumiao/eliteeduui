@@ -4,7 +4,7 @@
       <el-card>
         <el-button-group>
           <el-button type="success" @click="create" size="mini">
-            新增VIP用户
+            添加VIP
           </el-button>
         </el-button-group>
       </el-card>

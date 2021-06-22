@@ -46,9 +46,9 @@ class AuthApi extends ApiBase {
     return this.tryCatchCall(() => this.ajax.post(url, input));
   }
   /**检查当前状态是否登录 */
-  public async CheckState(): Promise<boolean> {
+  public async CheckCurrentAdminUserState(): Promise<boolean> {
     try {
-      const url = this.mergeUrl("CheckState");
+      const url = this.mergeUrl("CheckCurrentAdminUserState");
       await this.ajax.get<MsgOutput>(url);
       return true;
     } catch {
