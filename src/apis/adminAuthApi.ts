@@ -45,6 +45,14 @@ class AuthApi extends ApiBase {
     const url = this.mergeUrl("GetToken");
     return this.tryCatchCall(() => this.ajax.post(url, input));
   }
+  /**
+   * 刷新Token(以旧换新)
+   * @param input token信息
+   */
+  public RefreshToken(input: TokenItem): Promise<TokenItem> {
+    const url = this.mergeUrl("RefreshToken");
+    return this.tryCatchCall(() => this.ajax.post(url, input));
+  }
   /**检查当前状态是否登录 */
   public async CheckCurrentAdminUserState(): Promise<boolean> {
     try {

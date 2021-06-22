@@ -11,7 +11,7 @@ import { apiSystemConfig } from "@/apis/adminSystemConfigApi";
 import menuList from "@/config/menu-data";
 import setting from "@/config/app-setting";
 import createPersistedState from "vuex-persistedstate";
-import type { UserInfoOutput } from "@/apis/adminUserInfoApi";
+import { decodeAccessToken, TokenInfo } from "@/utils/my-token";
 
 export interface TabInfo {
   active: number;
@@ -26,11 +26,12 @@ export interface TabItem {
 
 export interface State {
   /**用户信息 */
-  User: UserInfoOutput | undefined;
+  user: TokenInfo | undefined;
+  accessToken: string | undefined;
   /**路由是否激活 */
   isRouterActive: boolean;
   /**资源路径 */
-  SourceHost: string | undefined;
+  sourceHost: string | undefined;
   /**打开的路由路径 */
   opendRouter: TabInfo;
 }
@@ -55,28 +56,30 @@ const defaultTab: TabItem = {
 
 const createState = (): State => {
   return {
-    User: undefined,
+    user: undefined,
+    accessToken: undefined,
     isRouterActive: true,
     opendRouter: {
       active: 0,
       max: 10,
       tabs: [defaultTab]
     },
-    SourceHost: setting.defaultSourceHost
+    sourceHost: setting.defaultSourceHost
   };
 };
 
 export default createStore<State>({
   state: createState(),
   mutations: {
-    setUser(state: State, user: UserInfoOutput): void {
-      state.User = user;
+    setAccessToken(state: State, token: string): void {
+      state.accessToken = token;
+      state.user = decodeAccessToken(token);
     },
     setIsRouterActive(state: State, value: boolean): void {
       state.isRouterActive = value;
     },
     setSourceHost(state: State, host: string): void {
-      state.SourceHost = host;
+      state.sourceHost = host;
     },
     changeOpendRouterPaths(state: State, value: TabItem): void {
       const index = _.findIndex(
@@ -119,7 +122,7 @@ export default createStore<State>({
     mergeSourceHost:
       (state: State) =>
       (url: string): string => {
-        const sourceHostTrim = state.SourceHost?.replace(/(\/)*$/gi, "");
+        const sourceHostTrim = state.sourceHost?.replace(/(\/)*$/gi, "");
         const urlTrim = url?.replace(/^(\/)*/gi, "");
         return `${sourceHostTrim}/${urlTrim}`;
       }

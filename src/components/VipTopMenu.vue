@@ -16,28 +16,28 @@
               <app-head-portrait :size="40"></app-head-portrait>
               <template #dropdown>
                 <el-dropdown-menu class="dropdown-menu">
-                  <el-dropdown-item command="updPassword" icon="el-icon-edit">
-                    修改密码
-                  </el-dropdown-item>
                   <el-dropdown-item
                     command="resetPassword"
                     icon="el-icon-edit-outline"
                   >
                     重置密码
                   </el-dropdown-item>
+                  <el-dropdown-item command="updPassword" icon="el-icon-edit">
+                    修改密码
+                  </el-dropdown-item>
                   <el-dropdown-item
                     command="logout"
                     icon="el-icon-switch-button"
                   >
-                    退出登录
+                    重新登录
                   </el-dropdown-item>
-                  <el-dropdown-item
+                  <!-- <el-dropdown-item
                     command="adminlogin"
                     icon="el-icon-user"
                     divided
                   >
                     管理员登录
-                  </el-dropdown-item>
+                  </el-dropdown-item> -->
                 </el-dropdown-menu>
               </template>
             </el-dropdown>
@@ -74,7 +74,6 @@ export default defineComponent({
         this.$loading();
         await sleep(500);
         this.$store.commit("resetState");
-        window.localStorage.clear();
         this.$router.push("/login");
       } finally {
         this.$closeLoading();

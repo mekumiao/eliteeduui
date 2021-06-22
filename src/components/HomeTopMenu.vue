@@ -62,7 +62,7 @@
                   icon="el-icon-switch-button"
                   divided
                 >
-                  退出登录
+                  重新登录
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -87,7 +87,7 @@ export default defineComponent({
     const isCollapse = inject("isCollapse", ref(false));
     const reload = inject<() => Promise<void>>("reload");
     const dialogUserInfo = reactive({ show: false, formData: {} });
-    const portrait = ref(useStore().state.User?.Portrait);
+    const portrait = ref(useStore().state.user?.picture);
     const isFull = ref(isFullScreen());
     const routeMap = getRouteMap(["/home/welcome"]);
     return { isCollapse, reload, dialogUserInfo, portrait, isFull, routeMap };

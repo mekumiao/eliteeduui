@@ -3,9 +3,11 @@
   createWebHashHistory,
   NavigationGuardNext
 } from "vue-router";
-import { apiAuth } from "@/apis/adminAuthApi";
 import { nprogress } from "@/plugins/my-nprogress";
-import { routes } from "./pages";
+import { routes } from "./pages"; //+
+import { apiAuth } from "@/apis/adminAuthApi"; //+ 发现一个很神奇的东西,试着把带+的这两项调换,就会报错
+import { IsExpire } from "@/utils/my-token";
+import store from "@/store";
 
 routes.push({ path: "/:notFind(.*)", redirect: { name: "page404" } });
 
@@ -38,34 +40,53 @@ router.beforeEach((to, _from, next): void => {
   if (ignorePath(to.path)) {
     return next();
   }
-  const token = window.localStorage.getItem("token");
-  if (!token) {
-    return redirectLogin(to.path, next);
+  const token = store.state.accessToken;
+  if (token) {
+    return next();
   }
-  next();
+  return redirectLogin(to.path, next);
 });
 /**处理Token失效后依然能访问首页的问题 */
 router.beforeEach((to, _from, next) => {
   if (ignorePath(to.path)) {
     return next();
   }
-  const session = window.sessionStorage.getItem("state");
-  if (!session) {
-    apiAuth
-      .CheckCurrentAdminUserState()
-      .then((flag) => {
-        if (flag) {
-          window.sessionStorage.setItem("state", "5200");
+  if (IsExpire(store.state.user)) {
+    const accessToken = store.state.accessToken;
+    if (accessToken) {
+      apiAuth
+        .RefreshToken({ Token: accessToken ?? "" })
+        .then((res) => {
+          store.commit("setAccessToken", res.Token);
           next();
-        } else {
+        })
+        .catch(() => {
           redirectLogin(to.path, next);
-        }
-      })
-      .catch(() => {
-        redirectLogin(to.path, next);
-      });
+        });
+      return next();
+    } else {
+      return redirectLogin(to.path, next);
+    }
   } else {
-    next();
+    return next();
+  }
+});
+/**处理vip */
+router.beforeEach((to, _form, next): void => {
+  if (ignorePath(to.path)) {
+    return next();
+  }
+  if (
+    store.state.user &&
+    store.state.user.role.filter((x) => x === "vip").length > 0
+  ) {
+    if (to.path.startsWith("/vip")) {
+      return next();
+    } else {
+      return next(false);
+    }
+  } else {
+    return next();
   }
 });
 /**完成进度条 */

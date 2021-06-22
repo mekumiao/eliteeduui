@@ -119,7 +119,6 @@ import {
 import { UserInfoOutput } from "@/apis/adminUserInfoApi";
 
 const rulesCreate = reactive({
-  Name: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
   Phone: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[]
 });
 

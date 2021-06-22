@@ -6,16 +6,16 @@
           <el-button type="primary">操作</el-button>
         </template>
         <el-descriptions-item label="姓名">
-          {{ formData.FullName }}
+          {{ formData.name }}
         </el-descriptions-item>
         <el-descriptions-item label="昵称">
-          {{ formData.NickName }}
+          {{ formData.nickname }}
         </el-descriptions-item>
         <el-descriptions-item label="性别">
-          {{ formData.Gender }}
+          {{ formData.gender }}
         </el-descriptions-item>
         <el-descriptions-item label="出生日期">
-          {{ formData.Birthday }}
+          {{ formData.birthdate }}
         </el-descriptions-item>
       </el-descriptions>
     </el-card>
@@ -30,7 +30,7 @@ export default defineComponent({
   name: "MyInformation",
   setup() {
     const formData = ref({});
-    formData.value = useStore().state.User ?? {};
+    formData.value = useStore().state.user ?? {};
     return { formData };
   }
 });

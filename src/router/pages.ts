@@ -1,4 +1,4 @@
-﻿import { RouteRecordRaw } from "vue-router";
+﻿import type { RouteRecordRaw } from "vue-router";
 import Home from "@/pages/home/Home.vue";
 import Login from "@/pages/login/Login.vue";
 

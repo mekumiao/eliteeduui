@@ -1,4 +1,4 @@
-﻿import { App, ComponentPublicInstance } from "vue";
+﻿import type { App, ComponentPublicInstance } from "vue";
 import type { Plugin } from "@vue/runtime-core/dist/runtime-core";
 import { sleep } from "@/utils/my-thread";
 
@@ -10,7 +10,6 @@ async function logout(
     this.$loading();
     await sleep(500);
     this.$store.commit("resetState");
-    window.localStorage.clear();
     this.$router.push(path ?? "/login");
   } finally {
     this.$closeLoading();
@@ -18,10 +17,18 @@ async function logout(
 }
 
 function logoutConfirm(this: ComponentPublicInstance, path?: string): void {
-  layer.confirm("确定要退出吗?", { btn: ["确定", "取消"] }, async (idx) => {
-    layer.close(idx);
+  if (this.$store.state.accessToken) {
+    layer.confirm(
+      "确定要重新登录吗?",
+      { btn: ["确定", "取消"] },
+      async (idx) => {
+        layer.close(idx);
+        this.$logout(path);
+      }
+    );
+  } else {
     this.$logout(path);
-  });
+  }
 }
 
 export default {

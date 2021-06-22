@@ -1,4 +1,6 @@
-﻿export interface TokenInfo {
+﻿import jwt_decode from "jwt-decode";
+
+export interface TokenInfo {
   sub: string;
   name: string;
   nickname: string;
@@ -7,27 +9,49 @@
   gender: GenderEnum;
   birthdate: Date;
   picture: string;
-  role: string;
-  roleid: string;
+  role: string[];
+  roleid: string[];
   refexp: string;
   nbf: number;
   exp: number;
   iss: string;
   aud: string;
 }
-/**解析本地token */
-export const getUserByToken = (): TokenInfo | undefined => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    debugger;
-    const str = token.split(".")[1];
-    const msg = window.atob(str);
-    const info = JSON.parse(msg) as TokenInfo;
-    info.birthdate = new Date(info.birthdate);
-    info.gender = new Number(info.gender) as GenderEnum;
-    info.nbf = new Number(info.nbf) as number;
-    info.exp = new Number(info.exp) as number;
-    return info as TokenInfo;
+
+/**
+ * token解析为TokenInfo
+ * @param token token
+ */
+export function decodeAccessToken(token: string): TokenInfo | undefined {
+  try {
+    const decoded = jwt_decode<TokenInfo>(token);
+    if (decoded) {
+      decoded.birthdate = new Date(decoded.birthdate);
+      decoded.gender = new Number(decoded.gender) as GenderEnum;
+      decoded.nbf = new Number(decoded.nbf) as number;
+      decoded.exp = new Number(decoded.exp) as number;
+      if (typeof decoded.role === "string") {
+        decoded.role = [decoded.role as unknown as string];
+      }
+      if (typeof decoded.roleid === "string") {
+        decoded.roleid = [decoded.roleid as unknown as string];
+      }
+      return decoded;
+    }
+  } catch (error) {
+    return undefined;
   }
   return undefined;
-};
+}
+/**
+ * 检查tokenInfo是否过期
+ * @param info TokenInfo
+ */
+export function IsExpire(info?: TokenInfo): boolean {
+  if (info) {
+    return Math.round(Date.now() / 1000) > info.exp;
+  }
+  return true;
+}
+
+export default {};

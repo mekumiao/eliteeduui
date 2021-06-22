@@ -40,8 +40,8 @@ import { apiAuth, LoginInput } from "@/apis/adminAuthApi";
 import { defineComponent, reactive, ref } from "vue";
 import setting from "@/config/app-setting";
 import { FormRule } from "@/types/el-rules";
-import { apiUserInfo } from "@/apis/adminUserInfoApi";
 import { sleep } from "@/utils/my-thread";
+import { decodeAccessToken } from "@/utils/my-token";
 
 interface DataRules {
   Account: FormRule[];
@@ -86,37 +86,32 @@ export default defineComponent({
     async login(): Promise<void> {
       try {
         await this.$useRules("loginForm").validate();
-        this.loginLoading = true;
         this.$nprogress.start();
+        this.loginLoading = true;
         const token = await apiAuth.GetToken({
           Account: this.authData.Account,
           PassWord: this.authData.PassWord
         });
-        this.$store.commit("resetState");
-        window.localStorage.setItem("token", token.Token);
-        window.sessionStorage.setItem("state", "5200");
-        const user = await apiUserInfo.GetCurrentUserInfo();
-        const isSuccess = user.Roles.filter(
-          (x) =>
-            x.RoleName === "system" ||
-            x.RoleName === "admin" ||
-            x.RoleName === "teacher"
-        );
-        debugger;
+        const user = decodeAccessToken(token.Token);
+        const isSuccess =
+          user?.role.filter(
+            (x) => x === "system" || x === "admin" || x === "teacher"
+          ) ?? [];
         if (isSuccess.length > 0) {
-          this.$store.commit("setUser", user);
+          this.$store.commit("resetState");
+          this.$store.commit("setAccessToken", token.Token);
           await sleep(500);
           this.$router.push("/");
           this.$message.closeAll();
         } else {
           this.$message.showError("您没有权限登录后台系统");
         }
+      } catch (error) {
+        this.$message.showError(error);
       } finally {
         this.loginLoading = false;
         this.$nprogress.done();
       }
-      this.loginLoading = false;
-      this.$nprogress.done();
     }
   }
 });

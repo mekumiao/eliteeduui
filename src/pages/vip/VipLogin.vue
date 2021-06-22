@@ -1,5 +1,5 @@
 ﻿<template>
-  <app-top-menu title="登录或注册" :show-menu="false"></app-top-menu>
+  <app-top-menu title="VIP登录" :show-menu="false"></app-top-menu>
   <el-card class="login-card" v-if="!passwordLogin">
     <el-form
       ref="formLoginByCode"
@@ -93,7 +93,7 @@ import useTimer from "@/hooks/useTimer";
 import { apiAuth } from "@/apis/adminAuthApi";
 import AppTopMenu from "@/components/VipTopMenu.vue";
 import { FormRule } from "@/types/el-rules";
-import { apiUserInfo } from "@/apis/adminUserInfoApi";
+import { decodeAccessToken } from "@/utils/my-token";
 
 const rulesCode = reactive({
   Phone: [
@@ -139,29 +139,24 @@ export default defineComponent({
     /**VIP登录 */
     async Login(): Promise<void> {
       try {
-        this.isLoging = true;
         if (this.passwordLogin) {
           await this.$useRules("formLoginByPassword").validate();
+          this.$nprogress.start();
+          this.isLoging = true;
           const token = await apiAuth.GetToken(this.loginInput);
-          this.$store.commit("resetState");
-          window.localStorage.setItem("token", token.Token);
-          window.sessionStorage.setItem("state", "5200");
-          const user = await apiUserInfo.GetCurrentUserInfo();
-          this.$store.commit("setUser", user);
+          this.setToken(token.Token);
         } else {
           await this.$useRules("formLoginByCode").validate();
+          this.$nprogress.start();
+          this.isLoging = true;
           const token = await apiAuth.VipLoginOrRegisterByPhoneCode(
             this.phoneInput
           );
-          this.$store.commit("resetState");
-          window.localStorage.setItem("token", token.Token);
-          window.sessionStorage.setItem("state", "5200");
-          const user = await apiUserInfo.GetCurrentUserInfo();
-          this.$store.commit("setUser", user);
+          this.setToken(token.Token);
         }
-        this.$router.push("/vipCourseware");
       } finally {
         this.isLoging = false;
+        this.$nprogress.done();
       }
     },
     async sendCode(): Promise<void> {
@@ -174,6 +169,17 @@ export default defineComponent({
           }
         }
       );
+    },
+    setToken(token: string): void {
+      const user = decodeAccessToken(token);
+      const superRoles = user?.role.filter((x) => x === "vip") ?? [];
+      if (superRoles.length > 0) {
+        this.$store.commit("resetState");
+        this.$store.commit("setAccessToken", token);
+        this.$router.push("/vipCourseware");
+      } else {
+        this.$message.showError("您不是vip用户,不能通过该方式登录");
+      }
     }
   }
 });
