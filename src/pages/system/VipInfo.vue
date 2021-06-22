@@ -71,9 +71,6 @@
         <el-form-item label="手机号码" prop="Phone">
           <el-input v-model="dialogCreate.formData.Phone" />
         </el-form-item>
-        <el-form-item label="登录密码" prop="PassWord">
-          <el-input v-model="dialogCreate.formData.PassWord" />
-        </el-form-item>
       </el-form>
     </app-edit-dialog>
 
@@ -92,15 +89,8 @@
         <el-form-item label="名称" prop="Name">
           <el-input v-model="dialogUpdate.formData.Name" />
         </el-form-item>
-        <el-form-item label="手机号码" prop="Phone">
+        <el-form-item label="手机号码">
           {{ dialogUpdate.formData.Phone }}
-        </el-form-item>
-        <el-form-item label="登录密码" prop="PassWord">
-          <el-input
-            type="password"
-            v-model="dialogUpdate.formData.PassWord"
-            show-password
-          />
         </el-form-item>
       </el-form>
     </app-edit-dialog>
@@ -128,27 +118,13 @@ import {
 } from "@/apis/vipInfoApi";
 import { UserInfoOutput } from "@/apis/adminUserInfoApi";
 
-interface DataRules {
-  Name: FormRule[];
-  Phone: FormRule[];
-  PassWord: FormRule[];
-}
-
-const rulesCreate = reactive<DataRules>({
-  Name: [{ required: true, message: "必填", trigger: "blur" }],
-  Phone: [{ required: true, message: "必填", trigger: "blur" }],
-  PassWord: [
-    { required: true, message: "必填", trigger: "blur" },
-    { min: 6, max: 10, message: "长度在 6 - 16 之间", trigger: "blur" }
-  ]
+const rulesCreate = reactive({
+  Name: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
+  Phone: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[]
 });
 
-const rulesUpdate = reactive<DataRules>({
-  Name: [{ required: true, message: "必填", trigger: "blur" }],
-  Phone: [{ required: true, message: "必填", trigger: "blur" }],
-  PassWord: [
-    { min: 6, max: 10, message: "长度在 6 - 16 之间", trigger: "blur" }
-  ]
+const rulesUpdate = reactive({
+  Name: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[]
 });
 
 export default defineComponent({

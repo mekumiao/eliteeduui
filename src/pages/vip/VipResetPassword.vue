@@ -18,3 +18,13 @@ export default defineComponent({
   }
 });
 </script>
+
+<style lang="scss" scoped>
+.vip-reset-password {
+  width: 500px;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+</style>

@@ -52,9 +52,6 @@ export default defineComponent({
       rolesResetPassword
     };
   },
-  mounted() {
-    this.updPassword.Account = this.$store.state.User?.Phone ?? "";
-  },
   methods: {
     async save() {
       try {

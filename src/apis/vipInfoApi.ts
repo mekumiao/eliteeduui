@@ -12,20 +12,17 @@ import {
 export interface VipInfoOutput extends PublicWithKeyOutput {
   Name: string;
   Phone: string;
-  PassWord: string;
   Auth: boolean;
 }
 /**VIP创建模型 */
 export interface VipInfoInput {
   Name: string;
   Phone: string;
-  PassWord: string;
 }
 /**VIP修改模型 */
 export interface VipInfoUpdInput {
   Name?: string;
   Phone?: string;
-  PassWord?: string;
 }
 
 class VipInfo extends ApiBase {

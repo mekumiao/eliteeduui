@@ -1,5 +1,5 @@
 ﻿<template>
-  <el-form ref="form" :model="resetPassword" :rules="rolesResetPassword">
+  <el-form ref="form" :model="resetPassword">
     <el-form-item label="手机号" prop="Phone">
       <el-input v-model="resetPassword.Phone"></el-input>
     </el-form-item>
@@ -42,11 +42,9 @@ export default defineComponent({
   emits: ["success"],
   setup() {
     const isLoging = ref(false);
+    const timmerTotal = useTimer.Total;
     const resetPassword = reactive({} as ResetPasswordByPhoneCodeInput);
-    return { isLoging, resetPassword };
-  },
-  mounted() {
-    this.resetPassword.Phone = this.$store.state.User?.Phone ?? "";
+    return { isLoging, timmerTotal, resetPassword };
   },
   methods: {
     async save(): Promise<void> {
@@ -59,7 +57,6 @@ export default defineComponent({
           this.resetPassword
         );
         this.$message.showSuccess(msg);
-
         this.$emit("success");
       } finally {
         this.$closeLoading();
@@ -70,7 +67,9 @@ export default defineComponent({
       this.$useRules("form").validateField("Phone", async (error) => {
         if (!error) {
           useTimer.Start(60);
-          await apiAuth.SendVerificationCode(this.resetPassword.Phone);
+          await apiAuth.SendVerificationCodeByResetPassword(
+            this.resetPassword.Phone
+          );
         }
       });
     }
