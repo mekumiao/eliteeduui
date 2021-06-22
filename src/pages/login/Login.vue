@@ -100,7 +100,7 @@ export default defineComponent({
         if (isSuccess.length > 0) {
           this.$store.commit("resetState");
           this.$store.commit("setAccessToken", token.Token);
-          await sleep(500);
+          await sleep();
           this.$router.push("/");
           this.$message.closeAll();
         } else {

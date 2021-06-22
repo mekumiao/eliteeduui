@@ -99,7 +99,7 @@ export default defineComponent({
         const user = await apiUserInfo.GetCurrentUserInfo();
         window.localStorage.setItem("user", JSON.stringify(user));
         this.imgUrl = user.Portrait;
-        await sleep(500);
+        await sleep();
         this.$router.push("/");
         this.$message.closeAll();
       } finally {

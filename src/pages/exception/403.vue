@@ -25,7 +25,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 .page-content {
   width: 100%;
-  height: 100%;
 
   .tips {
     width: 630px;

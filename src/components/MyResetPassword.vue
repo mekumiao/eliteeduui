@@ -18,8 +18,8 @@
           v-model="resetPassword.Code"
           autocomplete="off"
         ></el-input>
-        <el-button :disabled="timer.Total > 0" @click="sendCode">
-          发送验证码{{ timer.Total > 0 ? timer.Total.toString() : "" }}
+        <el-button :disabled="timerTotal > 0" @click="sendCode">
+          发送验证码{{ timerTotal > 0 ? timerTotal.toString() : "" }}
         </el-button>
       </el-space>
     </el-form-item>
@@ -43,8 +43,9 @@ export default defineComponent({
   setup() {
     const isLoging = ref(false);
     const timer = new Timer();
+    const timerTotal = timer.Total;
     const resetPassword = reactive({} as ResetPasswordByPhoneCodeInput);
-    return { isLoging, timer, resetPassword };
+    return { isLoging, timer, timerTotal, resetPassword };
   },
   methods: {
     async save(): Promise<void> {

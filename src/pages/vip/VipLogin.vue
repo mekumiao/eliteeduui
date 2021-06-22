@@ -33,8 +33,8 @@
             autocomplete="off"
             v-model="phoneInput.Code"
           ></el-input>
-          <el-button :disabled="timer.Total > 0" @click="sendCode">
-            发送验证码{{ timer.Total > 0 ? timer.Total.toString() : "" }}
+          <el-button :disabled="timerTotal > 0" @click="sendCode">
+            发送验证码{{ timerTotal > 0 ? timerTotal.toString() : "" }}
           </el-button>
         </el-space>
       </el-form-item>
@@ -123,6 +123,7 @@ export default defineComponent({
   setup() {
     const passwordLogin = ref(true);
     const timer = new Timer();
+    const timerTotal = timer.Total;
     const phoneInput = reactive<NamePhoneCodeInput>({} as NamePhoneCodeInput);
     const loginInput = reactive<LoginInput>({} as LoginInput);
     const account = useRoute().query.account as string;
@@ -133,6 +134,7 @@ export default defineComponent({
     const isLoging = ref(false);
     return {
       timer,
+      timerTotal,
       passwordLogin,
       phoneInput,
       loginInput,

@@ -8,7 +8,7 @@ async function logout(
 ): Promise<void> {
   try {
     this.$loading();
-    await sleep(500);
+    await sleep();
     this.$store.commit("resetState");
     const re = path ?? "/login";
     this.$router.push(re);
