@@ -49,7 +49,6 @@
 </template>
 
 <script lang="ts">
-import { sleep } from "@/utils/my-thread";
 import { reactive } from "vue";
 import { defineComponent } from "vue";
 import AppHeadPortrait from "./AppHeadPortrait.vue";
@@ -69,23 +68,9 @@ export default defineComponent({
     return { dialogUserInfo };
   },
   methods: {
-    async logout(): Promise<void> {
-      try {
-        this.$loading();
-        await sleep(500);
-        this.$store.commit("resetState");
-        this.$router.push("/login");
-      } finally {
-        this.$closeLoading();
-      }
-    },
     async select(tag: string) {
-      if (tag === "adminlogin") {
-        this.$router.push("/login");
-      } else if (tag === "logout") {
+      if (tag === "logout") {
         this.$logoutConfirm("/vipLogin");
-      } else if (tag === "password") {
-        this.$router.push("/vipUpdPassword");
       } else if (tag === "updPassword") {
         this.$router.push("/vipUpdPassword");
       } else if (tag === "resetPassword") {

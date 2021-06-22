@@ -63,7 +63,7 @@ export default defineComponent({
           this.updPassword
         );
         this.$message.showSuccess(msg);
-        this.$emit("success");
+        this.$emit("success", this.updPassword.Account);
       } finally {
         this.$closeLoading();
         this.isLoging = false;

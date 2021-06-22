@@ -33,8 +33,8 @@
             autocomplete="off"
             v-model="phoneInput.Code"
           ></el-input>
-          <el-button :disabled="timmerTotal > 0" @click="sendCode">
-            发送验证码{{ timmerTotal > 0 ? timmerTotal.toString() : "" }}
+          <el-button :disabled="timer.Total > 0" @click="sendCode">
+            发送验证码{{ timer.Total > 0 ? timer.Total.toString() : "" }}
           </el-button>
         </el-space>
       </el-form-item>
@@ -89,16 +89,17 @@
 <script lang="ts">
 import { LoginInput, NamePhoneCodeInput } from "@/apis/adminAuthApi";
 import { defineComponent, reactive, ref } from "vue";
-import useTimer from "@/hooks/useTimer";
+import { Timer } from "@/hooks/useTimer";
 import { apiAuth } from "@/apis/adminAuthApi";
 import AppTopMenu from "@/components/VipTopMenu.vue";
 import { FormRule } from "@/types/el-rules";
 import { decodeAccessToken } from "@/utils/my-token";
+import { useRoute } from "vue-router";
 
 const rulesCode = reactive({
   Phone: [
     { required: true, message: "手机号不能为空", trigger: "blur" },
-    { max: 40, message: "长度不能大于 40", trigger: "blur" }
+    { max: 11, message: "长度不能大于 11", trigger: "blur" }
   ] as FormRule[],
   Code: [
     { required: true, message: "验证码不能为空", trigger: "blur" }
@@ -121,15 +122,20 @@ export default defineComponent({
   components: { AppTopMenu },
   setup() {
     const passwordLogin = ref(true);
-    const timmerTotal = useTimer.Total;
+    const timer = new Timer();
     const phoneInput = reactive<NamePhoneCodeInput>({} as NamePhoneCodeInput);
     const loginInput = reactive<LoginInput>({} as LoginInput);
+    const account = useRoute().query.account as string;
+    if (account) {
+      phoneInput.Phone = account;
+      loginInput.Account = account;
+    }
     const isLoging = ref(false);
     return {
+      timer,
       passwordLogin,
       phoneInput,
       loginInput,
-      timmerTotal,
       isLoging,
       rulesCode,
       rolesPassword
@@ -164,7 +170,7 @@ export default defineComponent({
         "Phone",
         async (error) => {
           if (!error) {
-            useTimer.Start(60);
+            this.timer.Start(60);
             await apiAuth.SendVerificationCode(this.phoneInput.Phone);
           }
         }

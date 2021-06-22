@@ -17,10 +17,9 @@ const router = createRouter({
 });
 /**忽略的路由 */
 const ignorePath = (path: string): boolean => {
-  const paths = ["/login", "/vipLogin", "/vipUpdPassword"];
-  return (
-    paths.filter((item) => item.toLowerCase() === path.toLowerCase()).length > 0
-  );
+  const paths = ["/login", "/vipLogin", "/vipUpdPassword", "/vipResetPassword"];
+  path = path.toLowerCase();
+  return paths.filter((item) => item.toLowerCase() == path).length > 0;
 };
 /**重定向到登陆页 */
 const redirectLogin = (path: string, next: NavigationGuardNext): void => {

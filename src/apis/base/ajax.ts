@@ -97,8 +97,6 @@ export function handleRequest(instance: AxiosInstance): void {
       const token = store.state.accessToken;
       if (token) {
         config.headers["Authorization"] = `Bearer ${token}`;
-      } else {
-        console.warn("未获取到token");
       }
       return config;
     },

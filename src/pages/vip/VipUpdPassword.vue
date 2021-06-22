@@ -16,8 +16,8 @@ export default defineComponent({
     return {};
   },
   methods: {
-    success() {
-      this.$router.push("/vipLogin");
+    success(account: string) {
+      this.$router.push(`/vipLogin?account=${account}`);
     }
   }
 });

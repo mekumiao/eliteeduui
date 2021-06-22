@@ -18,8 +18,8 @@
           v-model="resetPassword.Code"
           autocomplete="off"
         ></el-input>
-        <el-button :disabled="timmerTotal > 0" @click="sendCode">
-          发送验证码{{ timmerTotal > 0 ? timmerTotal.toString() : "" }}
+        <el-button :disabled="timer.Total > 0" @click="sendCode">
+          发送验证码{{ timer.Total > 0 ? timer.Total.toString() : "" }}
         </el-button>
       </el-space>
     </el-form-item>
@@ -33,7 +33,7 @@
 
 <script lang="ts">
 import { apiAuth, ResetPasswordByPhoneCodeInput } from "@/apis/adminAuthApi";
-import useTimer from "@/hooks/useTimer";
+import { Timer } from "@/hooks/useTimer";
 import { sleep } from "@/utils/my-thread";
 import { defineComponent, reactive, ref } from "vue";
 
@@ -42,9 +42,9 @@ export default defineComponent({
   emits: ["success"],
   setup() {
     const isLoging = ref(false);
-    const timmerTotal = useTimer.Total;
+    const timer = new Timer();
     const resetPassword = reactive({} as ResetPasswordByPhoneCodeInput);
-    return { isLoging, timmerTotal, resetPassword };
+    return { isLoging, timer, resetPassword };
   },
   methods: {
     async save(): Promise<void> {
@@ -57,7 +57,7 @@ export default defineComponent({
           this.resetPassword
         );
         this.$message.showSuccess(msg);
-        this.$emit("success");
+        this.$emit("success", this.resetPassword.Phone);
       } finally {
         this.$closeLoading();
         this.isLoging = false;
@@ -66,7 +66,7 @@ export default defineComponent({
     async sendCode(): Promise<void> {
       this.$useRules("form").validateField("Phone", async (error) => {
         if (!error) {
-          useTimer.Start(60);
+          this.timer.Start(60);
           await apiAuth.SendVerificationCodeByResetPassword(
             this.resetPassword.Phone
           );

@@ -1,7 +1,7 @@
 ﻿<template>
   <vip-top-menu title="重置密码"></vip-top-menu>
   <el-card class="vip-reset-password">
-    <my-reset-password></my-reset-password>
+    <my-reset-password @success="success"></my-reset-password>
   </el-card>
 </template>
 
@@ -15,6 +15,11 @@ export default defineComponent({
   components: { VipTopMenu, MyResetPassword },
   setup() {
     return {};
+  },
+  methods: {
+    success(account: string) {
+      this.$router.push(`/vipLogin?account=${account}`);
+    }
   }
 });
 </script>

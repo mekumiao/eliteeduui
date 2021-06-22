@@ -10,7 +10,8 @@ async function logout(
     this.$loading();
     await sleep(500);
     this.$store.commit("resetState");
-    this.$router.push(path ?? "/login");
+    const re = path ?? "/login";
+    this.$router.push(re);
   } finally {
     this.$closeLoading();
   }
@@ -18,14 +19,10 @@ async function logout(
 
 function logoutConfirm(this: ComponentPublicInstance, path?: string): void {
   if (this.$store.state.accessToken) {
-    layer.confirm(
-      "确定要重新登录吗?",
-      { btn: ["确定", "取消"] },
-      async (idx) => {
-        layer.close(idx);
-        this.$logout(path);
-      }
-    );
+    layer.confirm("确定要重新登录吗?", { btn: ["确定", "取消"] }, (idx) => {
+      layer.close(idx);
+      this.$logout(path);
+    });
   } else {
     this.$logout(path);
   }
