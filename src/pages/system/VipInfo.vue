@@ -55,7 +55,6 @@
 
     <app-edit-dialog
       title="新增VIP用户"
-      width="60%"
       v-model="dialogCreate.show"
       @save="createSave"
     >
@@ -76,7 +75,6 @@
 
     <app-edit-dialog
       title="修改VIP用户"
-      width="60%"
       v-model="dialogUpdate.show"
       @save="updateSave"
     >
