@@ -106,8 +106,6 @@ export default defineComponent({
         } else {
           this.$message.showError("您没有权限登录后台系统");
         }
-      } catch (error) {
-        this.$message.showError(error);
       } finally {
         this.loginLoading = false;
         this.$nprogress.done();
