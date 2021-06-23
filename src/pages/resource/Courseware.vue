@@ -56,7 +56,6 @@
 
     <app-edit-dialog
       title="新增课件资源"
-      width="60%"
       v-model="dialogCreate.show"
       @save="createSave"
     >
@@ -110,7 +109,6 @@
 
     <app-edit-dialog
       title="修改课件资源"
-      width="60%"
       v-model="dialogUpdate.show"
       @save="updateSave"
     >

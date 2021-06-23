@@ -28,7 +28,7 @@ export default defineComponent({
     title: { type: String as PropType<string>, default: "标题" },
     width: {
       type: [String, Number] as PropType<string | number>,
-      default: "30%"
+      default: "40%"
     },
     modelValue: { type: Boolean as PropType<boolean>, default: false },
     formData: { type: Object as PropType<unknown>, default: () => new Object() }

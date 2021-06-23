@@ -22,7 +22,6 @@
 
     <app-edit-dialog
       title="新增系统配置"
-      width="60%"
       v-model="dialogCreate.show"
       @save="createSave"
     >

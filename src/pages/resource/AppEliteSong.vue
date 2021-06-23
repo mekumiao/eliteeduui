@@ -43,7 +43,6 @@
 
     <app-edit-dialog
       title="新增爱利特儿歌"
-      width="60%"
       v-model="dialogCreate.show"
       @save="createSave"
     >
@@ -88,7 +87,6 @@
 
     <app-edit-dialog
       title="修改爱利特儿歌"
-      width="60%"
       v-model="dialogUpdate.show"
       @save="editSave"
     >
