@@ -32,7 +32,7 @@ const redirectLogin = (path: string, next: NavigationGuardNext): void => {
 /**开始进度条 */
 router.beforeEach((_to, _from, next): void => {
   nprogress.start();
-  next();
+  return next();
 });
 /**处理未登录 */
 router.beforeEach((to, _from, next): void => {
@@ -46,10 +46,11 @@ router.beforeEach((to, _from, next): void => {
   return redirectLogin(to.path, next);
 });
 /**处理Token失效后依然能访问首页的问题 */
-router.beforeEach((to, _from, next) => {
+router.beforeEach((to, _from, next): void => {
   if (ignorePath(to.path)) {
-    return next();
+    next();
   }
+  //token过期后
   if (IsExpire(store.state.user)) {
     const accessToken = store.state.accessToken;
     if (accessToken) {
@@ -62,7 +63,6 @@ router.beforeEach((to, _from, next) => {
         .catch(() => {
           redirectLogin(to.path, next);
         });
-      return next();
     } else {
       return redirectLogin(to.path, next);
     }
