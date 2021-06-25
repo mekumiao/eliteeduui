@@ -43,7 +43,6 @@
 
     <app-edit-dialog
       title="修改系统配置"
-      width="60%"
       v-model="dialogUpdate.show"
       @save="updateSave"
     >
