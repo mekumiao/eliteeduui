@@ -10,6 +10,7 @@ async function logout(
     this.$loading();
     await sleep();
     this.$store.commit("resetState");
+    window.localStorage.clear();
     const re = path ?? "/login";
     this.$router.push(re);
   } finally {
