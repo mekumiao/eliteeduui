@@ -66,7 +66,7 @@ import AppButtonPopover from "./AppButtonPopover.vue";
 export default defineComponent({
   components: { MyPageTableColumnSearch, AppButtonPopover },
   name: "MyPageTable",
-  emits: ["update:modelValue", "edit", "deleteSave"],
+  emits: ["update:modelValue", "edit", "deleteSave", "selectionChange"],
   props: {
     searchWidth: { type: [String, Number], default: 190 },
     maxHeight: {

@@ -4,7 +4,7 @@
     :title="title"
     :model-value="modelValue"
     :width="width"
-    @opened="$refs.ipt.focus()"
+    @opened="focus"
     @closed="close"
   >
     <el-form :model="dialogData" label-width="80px" @submit.prevent>
@@ -71,6 +71,9 @@ export default defineComponent({
     close(): void {
       this.iptValue = undefined;
       this.$emit("update:modelValue", false);
+    },
+    focus() {
+      (this.$refs.ipt as HTMLElement).focus();
     }
   }
 });

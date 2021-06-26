@@ -37,7 +37,7 @@
 <script lang="ts">
 import { defineComponent, onBeforeMount } from "vue";
 import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from "vue-router";
-import { TabInfo, useStore } from "@/store/index";
+import { TabInfo, TabItem, useStore } from "@/store/index";
 import { getRoutePath } from "@/plugins/my-routeMap";
 import _ from "lodash";
 
@@ -75,7 +75,7 @@ export default defineComponent({
     }
   },
   methods: {
-    handleClose(_tab: TabInfo, index: number): void {
+    handleClose(_tab: TabItem, index: number): void {
       // layer.confirm(
       //   "确认移除标签?",
       //   { btn: ["确认", "取消"], shadeClose: true },

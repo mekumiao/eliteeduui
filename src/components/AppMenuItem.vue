@@ -33,9 +33,9 @@ export default defineComponent({
     menuData: { type: Array as PropType<MenuItem[]>, required: true }
   },
   methods: {
-    isNotEmpty(children: MenuItem[]): boolean {
+    isNotEmpty(children: MenuItem[] | undefined): boolean {
       return (
-        children &&
+        !!children &&
         children.length > 0 &&
         children.filter((x) => x.show === undefined || x.show === true).length >
           0

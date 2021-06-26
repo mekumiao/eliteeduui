@@ -24,13 +24,14 @@
 
 <script lang="ts">
 import { useStore } from "@/store";
+import { TokenInfo } from "@/utils/my-token";
 import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "MyInformation",
   setup() {
-    const formData = ref({});
-    formData.value = useStore().state.user ?? {};
+    const formData = ref<TokenInfo>({} as TokenInfo);
+    formData.value = useStore().state.user ?? ({} as TokenInfo);
     return { formData };
   }
 });

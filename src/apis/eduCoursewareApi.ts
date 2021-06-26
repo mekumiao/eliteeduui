@@ -24,6 +24,8 @@ export interface CoursewareOutput extends PublicWithKeyOutput {
 export interface CoursewareInput {
   Name: string;
   Remark: string;
+  Group: string;
+  Sort: number;
   SourcePath: string;
   ResourceType: number;
   PreviewPhoto: string;
@@ -32,6 +34,8 @@ export interface CoursewareInput {
 export interface CoursewareUpdInput {
   Name?: string;
   Remark?: string;
+  Group?: string;
+  Sort: number;
   SourcePath?: string;
   ResourceType?: number;
   PreviewPhoto?: string;
