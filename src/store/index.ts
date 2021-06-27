@@ -13,6 +13,12 @@ import setting from "@/config/app-setting";
 import createPersistedState from "vuex-persistedstate";
 import { decodeAccessToken, TokenInfo } from "@/utils/my-token";
 
+declare global {
+  interface Window {
+    store: Store<State>;
+  }
+}
+
 export interface TabInfo {
   active: number;
   max: number;
@@ -68,7 +74,7 @@ const createState = (): State => {
   };
 };
 
-export default createStore<State>({
+Window.prototype.store = createStore<State>({
   state: createState(),
   mutations: {
     setAccessToken(state: State, token: string): void {
@@ -130,3 +136,5 @@ export default createStore<State>({
   strict: debug,
   plugins: debug ? [createLogger(), createPersisted()] : [createPersisted()]
 });
+
+export default window.store;

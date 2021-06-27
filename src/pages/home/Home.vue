@@ -38,14 +38,9 @@
 import { sleep } from "@/utils/my-thread";
 import { defineComponent, provide, ref, watch } from "vue";
 import appsetting from "@/config/app-setting";
-import AppBreadcrumb from "@/components/AppBreadcrumb.vue";
-import HomeTopMenu from "@/components/HomeTopMenu.vue";
-import HomeLeftMenu from "@/components/HomeLeftMenu.vue";
-import AppWorkTab from "@/components/AppWorkTab.vue";
 
 export default defineComponent({
   name: "Home",
-  components: { AppBreadcrumb, HomeTopMenu, HomeLeftMenu, AppWorkTab },
   setup() {
     const isCollapse = ref(false);
     const currentActive = ref("");

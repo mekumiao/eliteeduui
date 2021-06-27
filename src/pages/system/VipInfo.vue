@@ -96,18 +96,7 @@
 </template>
 
 <script lang="ts">
-import {
-  ObjFilterInput,
-  PageInput,
-  PageOutput
-} from "@/apis/base/publicEntity";
-import MyPageTable from "@/components/MyPageTable.vue";
 import { defineComponent, reactive, ref } from "vue";
-import MyPageTableColumnBase from "@/components/MyPageTableColumnBase.vue";
-import AppButtonPopover from "@/components/AppButtonPopover.vue";
-import AppEditDialog from "@/components/AppEditDialog.vue";
-import { FormRule } from "@/types/el-rules";
-import { DialogData, DialogEditData } from "@/types/el-dialog";
 import {
   apiVipInfo,
   VipInfoInput,
@@ -126,12 +115,6 @@ const rulesUpdate = reactive({
 
 export default defineComponent({
   name: "VipUserInfo",
-  components: {
-    MyPageTable,
-    MyPageTableColumnBase,
-    AppButtonPopover,
-    AppEditDialog
-  },
   setup() {
     const isLoad = ref(true);
     const dialogCreate = reactive<DialogData<VipInfoInput>>({
@@ -149,10 +132,7 @@ export default defineComponent({
   },
   methods: {
     /**获取数据 */
-    async getData(
-      match: string,
-      page: PageInput<UserInfoOutput>
-    ): Promise<PageOutput<VipInfoOutput>> {
+    async getData(match: string, page: PageInput<UserInfoOutput>) {
       const filter: ObjFilterInput<UserInfoOutput> = {
         Page: page,
         Condition: {

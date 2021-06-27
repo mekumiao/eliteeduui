@@ -1,13 +1,4 @@
-﻿import { ApiBase } from "./base/apiBase";
-import {
-  PageOutput,
-  ObjFilterInput,
-  PidKeyItem,
-  MsgOutput,
-  OptionFilterInput,
-  OptionOutput,
-  PublicWithKeyOutput
-} from "./base/publicEntity";
+﻿import { ApiBase } from "./apiBase";
 
 /**爱利特儿歌输出模型 */
 export interface EliteSongOutput extends PublicWithKeyOutput {

@@ -1,6 +1,6 @@
 ﻿import { message } from "@/plugins/el-message";
 import { AxiosInstance } from "axios";
-import ajax from "./ajax";
+import ajax from "@/utils/my-ajax";
 
 /**基础API */
 export abstract class ApiBase {

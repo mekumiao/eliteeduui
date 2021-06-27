@@ -84,7 +84,7 @@ export default defineComponent({
     const dialogUserInfo = reactive({ show: false, formData: {} });
     const portrait = ref(useStore().state.user?.picture);
     const isFull = ref(isFullScreen());
-    const routeMap = getRouteMap(["/home/welcome"]);
+    const routeMap = getRouteMap();
     return { isCollapse, reload, dialogUserInfo, portrait, isFull, routeMap };
   },
   computed: {

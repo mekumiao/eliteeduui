@@ -2,7 +2,7 @@
   <div class="login">
     <div class="login_box">
       <div class="avatar_box">
-        <app-head-portrait :img-url="imgUrl" :size="180"></app-head-portrait>
+        <app-portrait :img-url="imgUrl" :size="180"></app-portrait>
       </div>
       <el-form
         class="login_form"
@@ -47,8 +47,6 @@
 <script lang="ts">
 import { defineComponent, reactive, ref } from "vue";
 import { apiAuth, LoginInput } from "@/apis/adminAuthApi";
-import { FormRule } from "@/types/el-rules";
-import AppHeadPortrait from "@/components/AppPortrait.vue";
 import { apiUserInfo } from "@/apis/adminUserInfoApi";
 import { sleep } from "@/utils/my-thread";
 import setting from "@/config/app-setting";
@@ -70,8 +68,7 @@ const rules = reactive<DataRules>({
 });
 
 export default defineComponent({
-  components: { AppHeadPortrait },
-  name: "Login",
+  name: "OldLogin",
   setup() {
     const imgUrl = ref("");
     const loginLoading = ref(false);

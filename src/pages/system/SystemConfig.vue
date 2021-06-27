@@ -71,17 +71,7 @@ import {
   SystemConfigOutput,
   SystemConfigUpdInput
 } from "@/apis/adminSystemConfigApi";
-import MyPageTable from "@/components/MyPageTable.vue";
-import MyPageTableColumnBase from "@/components/MyPageTableColumnBase.vue";
-import AppEditDialog from "@/components/AppEditDialog.vue";
-import { DialogData, DialogEditData } from "@/types/el-dialog";
 import { defineComponent, reactive, ref } from "vue";
-import { FormRule } from "@/types/el-rules";
-import {
-  ObjFilterInput,
-  PageInput,
-  PageOutput
-} from "@/apis/base/publicEntity";
 
 const rules = reactive({
   Name: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
@@ -92,7 +82,6 @@ const rules = reactive({
 
 export default defineComponent({
   name: "SystemConfig",
-  components: { MyPageTable, MyPageTableColumnBase, AppEditDialog },
   setup() {
     const isLoad = ref(true);
     const dialogCreate = reactive<DialogData<SystemConfigInput>>({
@@ -110,10 +99,7 @@ export default defineComponent({
   },
   methods: {
     /**查询 */
-    async getData(
-      match: string,
-      page: PageInput<SystemConfigOutput>
-    ): Promise<PageOutput<SystemConfigOutput>> {
+    async getData(match: string, page: PageInput<SystemConfigOutput>) {
       page.TryAddSort("CreateTime", true);
       const filter: ObjFilterInput<SystemConfigOutput> = {
         Page: page,

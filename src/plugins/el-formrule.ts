@@ -1,12 +1,14 @@
 ﻿import type { App, ComponentPublicInstance } from "vue";
 import type { Plugin } from "@vue/runtime-core/dist/runtime-core";
-import type { Rules } from "@/types/el-rules";
 
-function useRules(this: ComponentPublicInstance, ref: string | unknown): Rules {
+function useRules(
+  this: ComponentPublicInstance,
+  ref: string | unknown
+): RulesValidate {
   if (typeof ref === "string") {
-    return this.$refs[ref as string] as Rules;
+    return this.$refs[ref as string] as RulesValidate;
   } else {
-    return ref as Rules;
+    return ref as RulesValidate;
   }
 }
 

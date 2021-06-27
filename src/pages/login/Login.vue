@@ -39,7 +39,6 @@
 import { apiAuth, LoginInput } from "@/apis/adminAuthApi";
 import { defineComponent, reactive, ref } from "vue";
 import setting from "@/config/app-setting";
-import { FormRule } from "@/types/el-rules";
 import { sleep } from "@/utils/my-thread";
 import { decodeAccessToken } from "@/utils/my-token";
 

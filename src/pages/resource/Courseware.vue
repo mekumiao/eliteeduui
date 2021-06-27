@@ -164,28 +164,14 @@
 
 <script lang="ts">
 import {
-  ObjFilterInput,
-  OptionFilterInput,
-  OptionItem,
-  PageInput,
-  PageOutput
-} from "@/apis/base/publicEntity";
-import {
   apiEduCourseware,
   CoursewareInput,
   CoursewareOutput,
   CoursewareUpdInput
 } from "@/apis/eduCoursewareApi";
-import AppEditDialog from "@/components/AppEditDialog.vue";
-import MyPageTable from "@/components/MyPageTable.vue";
-import MyPageTableColumnBase from "@/components/MyPageTableColumnBase.vue";
-import MyFileUpload from "@/components/MyFileUpload.vue";
-import MyImageUpload from "@/components/MyImageUpload.vue";
-import MyResourcePreview from "@/components/MyResourcePreview.vue";
-import { DialogData, DialogEditData } from "@/types/el-dialog";
 import { defineComponent, reactive, ref } from "vue";
 import { UploadFile } from "node_modules/element-plus/lib/el-upload/src/upload.type";
-import { FormRule } from "@/types/el-rules";
+import { MyPageOutput, MyOptionFilterInput } from "@/utils/my-apiClass";
 
 const rules = reactive({
   Name: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
@@ -206,17 +192,9 @@ const rules = reactive({
 /**课件管理 */
 export default defineComponent({
   name: "Courseware",
-  components: {
-    MyPageTable,
-    MyPageTableColumnBase,
-    AppEditDialog,
-    MyFileUpload,
-    MyImageUpload,
-    MyResourcePreview
-  },
   setup() {
     const isLoad = ref(true);
-    const resourceType = reactive(new PageOutput<OptionItem>());
+    const resourceType = reactive(new MyPageOutput<OptionItem>());
     const dialogCreate = reactive<DialogData<CoursewareInput>>({
       show: false,
       formData: {} as CoursewareInput
@@ -231,10 +209,7 @@ export default defineComponent({
     return { isLoad, resourceType, dialogCreate, dialogUpdate, rules };
   },
   methods: {
-    async getData(
-      match: string,
-      page: PageInput<CoursewareOutput>
-    ): Promise<PageOutput<CoursewareOutput>> {
+    async getData(match: string, page: PageInput<CoursewareOutput>) {
       page.TryAddSort("Group");
       page.TryAddSort("Sort");
       page.TryAddSort("Name");
@@ -257,7 +232,7 @@ export default defineComponent({
       try {
         this.$loading();
         if (flag || this.resourceType.DataList.length === 0) {
-          const input = new OptionFilterInput("courseware");
+          const input = new MyOptionFilterInput("courseware");
           this.resourceType = await apiEduCourseware.QueryOption(input);
         }
       } finally {

@@ -1,9 +1,4 @@
-﻿import { ApiBase } from "./base/apiBase";
-import {
-  ObjFilterInput,
-  PageOutput,
-  PublicWithKeyOutput
-} from "./base/publicEntity";
+﻿import { ApiBase } from "./apiBase";
 
 /**课件输出模型 */
 export interface CoursewareOutput extends PublicWithKeyOutput {

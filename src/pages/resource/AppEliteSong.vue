@@ -7,8 +7,8 @@
         </el-button-group>
       </el-card>
       <my-page-table
-        :get-data="getData"
         v-model="isLoad"
+        :get-data="getData"
         @edit="edit"
         @deleteSave="deleteSave"
       >
@@ -42,8 +42,8 @@
     </el-card>
 
     <app-edit-dialog
-      title="新增爱利特儿歌"
       v-model="dialogCreate.show"
+      title="新增爱利特儿歌"
       @save="createSave"
     >
       <el-form
@@ -86,8 +86,8 @@
     </app-edit-dialog>
 
     <app-edit-dialog
-      title="修改爱利特儿歌"
       v-model="dialogUpdate.show"
+      title="修改爱利特儿歌"
       @save="editSave"
     >
       <el-form
@@ -132,14 +132,6 @@
 </template>
 
 <script lang="ts">
-import {
-  ObjFilterInput,
-  OptionFilterInput,
-  OptionOutput,
-  PageInput,
-  PageOutput
-} from "@/apis/base/publicEntity";
-import MyPageTable from "@/components/MyPageTable.vue";
 import { defineComponent, reactive, ref } from "vue";
 import {
   apiAppResource,
@@ -147,12 +139,7 @@ import {
   EliteSongOutput,
   EliteSongUpdInput
 } from "@/apis/eduAppResourceApi";
-import MyPageTableColumnBase from "@/components/MyPageTableColumnBase.vue";
-import AppEditDialog from "@/components/AppEditDialog.vue";
-import { DialogData, DialogEditData } from "@/types/el-dialog";
-import MyImageUpload from "@/components/MyImageUpload.vue";
-import MyFileUpload from "@/components/MyFileUpload.vue";
-import { FormRule } from "@/types/el-rules";
+import { MyOptionFilterInput, MyPageOutput } from "@/utils/my-apiClass";
 
 const rules = reactive({
   Name: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
@@ -170,16 +157,9 @@ const rules = reactive({
 
 export default defineComponent({
   name: "AppEliteSong",
-  components: {
-    MyPageTable,
-    MyPageTableColumnBase,
-    AppEditDialog,
-    MyImageUpload,
-    MyFileUpload
-  },
   setup() {
     const isLoad = ref(true);
-    const eliteSongClassify = reactive(new PageOutput<OptionOutput>());
+    const eliteSongClassify = reactive(new MyPageOutput<OptionOutput>());
 
     const dialogCreate = reactive<DialogData<EliteSongInput>>({
       show: false,
@@ -201,10 +181,7 @@ export default defineComponent({
     };
   },
   methods: {
-    async getData(
-      match: string,
-      page: PageInput<EliteSongOutput>
-    ): Promise<PageOutput<EliteSongOutput>> {
+    async getData(match: string, page: PageInput<EliteSongOutput>) {
       page.TryAddSort("CreateTime", true);
       const filter: ObjFilterInput<EliteSongOutput> = {
         Page: page,
@@ -223,7 +200,7 @@ export default defineComponent({
       try {
         this.$loading();
         if (flag || this.eliteSongClassify.DataList.length === 0) {
-          const input = new OptionFilterInput("eliteSongClassify");
+          const input = new MyOptionFilterInput("eliteSongClassify");
           this.eliteSongClassify = await apiAppResource.QueryOption(input);
         }
       } finally {

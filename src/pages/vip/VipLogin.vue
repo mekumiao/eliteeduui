@@ -91,8 +91,6 @@ import { LoginInput, NamePhoneCodeInput } from "@/apis/adminAuthApi";
 import { defineComponent, reactive, ref } from "vue";
 import { Timer } from "@/hooks/useTimer";
 import { apiAuth } from "@/apis/adminAuthApi";
-import AppTopMenu from "@/components/VipTopMenu.vue";
-import { FormRule } from "@/types/el-rules";
 import { decodeAccessToken } from "@/utils/my-token";
 import { useRoute } from "vue-router";
 
@@ -119,7 +117,6 @@ const rolesPassword = reactive({
 
 export default defineComponent({
   name: "VipLogin",
-  components: { AppTopMenu },
   setup() {
     const passwordLogin = ref(true);
     const timer = new Timer();

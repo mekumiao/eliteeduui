@@ -6,12 +6,9 @@
 </template>
 
 <script lang="ts">
-import MyUpdPassword from "@/components/MyUpdPassword.vue";
-import AppTopMenu from "@/components/VipTopMenu.vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  components: { AppTopMenu, MyUpdPassword },
   setup() {
     return {};
   },

@@ -29,7 +29,7 @@ import axios from "axios";
 export const number = ref(0);
 
 export default defineComponent({
-  name: "MyFileUpload",
+  name: "MyCustomerFileUpload",
   emits: {
     "update:modelValue"(value: string) {
       return value !== undefined;

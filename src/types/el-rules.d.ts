@@ -1,4 +1,4 @@
-﻿export declare interface TabPane {
+﻿declare interface TabPane {
   index: string;
   loaded: string;
   isClosable: boolean;
@@ -7,32 +7,32 @@
   shouldBeRender: boolean;
 }
 
-export declare interface SortTableColumn {
+declare interface SortTableColumn {
   prop: string;
   order: "ascending" | "descending";
 }
 
-export declare interface RequiredRole {
+declare interface RequiredRole {
   required: boolean;
   message: string;
   trigger: "blur" | "change";
 }
 
-export declare interface EmptyRule {
+declare interface EmptyRule {
   required: boolean;
   message: string;
   type?: "date" | "array" | null;
   trigger: "blur" | "change";
 }
 
-export declare interface LengthRule {
+declare interface LengthRule {
   min: number;
   max: number;
   message: string;
   trigger: "blur" | "change";
 }
 
-export declare interface FuncFormRule {
+declare interface FuncFormRule {
   validator: (
     rule: unknown,
     value: unknown,
@@ -41,19 +41,15 @@ export declare interface FuncFormRule {
   trigger: "blur" | "change";
 }
 
-export declare interface ErrorRuleMsg {
+declare interface ErrorRuleMsg {
   field: string;
   message: string;
 }
 
-export declare type FormRule =
-  | RequiredRole
-  | EmptyRule
-  | LengthRule
-  | FuncFormRule;
+declare type FormRule = RequiredRole | EmptyRule | LengthRule | FuncFormRule;
 
 /**表单验证 */
-export declare interface Rules {
+declare interface RulesValidate {
   validate: (
     callback?: (
       valid: boolean,

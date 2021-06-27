@@ -30,7 +30,7 @@ import VipLogin from "@/pages/vip/VipLogin.vue";
 import VipUpdPassword from "@/pages/vip/VipUpdPassword.vue";
 import VipResetPassword from "@/pages/vip/VipResetPassword.vue";
 
-export const routes: Array<RouteRecordRaw> = [
+const routes: Array<RouteRecordRaw> = [
   { path: "/", redirect: "/home/welcome" },
   { path: "/login", component: Login },
   {
@@ -95,4 +95,4 @@ export const routes: Array<RouteRecordRaw> = [
   }
 ];
 
-export default {};
+export default routes;

@@ -5,8 +5,6 @@
   AxiosResponse
 } from "axios";
 import { getMessage, mapStatus } from "@/utils/my-statusCode";
-import { InputError, MsgOutput } from "./publicEntity";
-import store from "@/store/index";
 
 export let rootURL = "http://localhost:8080";
 export let timeout: number | undefined = undefined;
@@ -94,7 +92,7 @@ function ResponseErrorHandle(error: unknown): Promise<MsgOutput> {
 export function handleRequest(instance: AxiosInstance): void {
   instance.interceptors.request.use(
     (config: AxiosRequestConfig): AxiosRequestConfig => {
-      const token = store.state.accessToken;
+      const token = window.store.state.accessToken;
       if (token) {
         config.headers["Authorization"] = `Bearer ${token}`;
       }

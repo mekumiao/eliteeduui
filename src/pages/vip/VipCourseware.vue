@@ -45,29 +45,17 @@
 
 <script lang="ts">
 import { apiVipCourseware, CoursewareOutput } from "@/apis/vipCoursewareApi";
-import AppTopMenu from "@/components/VipTopMenu.vue";
-import MyPageTable from "@/components/MyPageTable.vue";
-import MyResourcePreview from "@/components/MyResourcePreview.vue";
 import { defineComponent, ref } from "vue";
-import {
-  ObjFilterInput,
-  PageInput,
-  PageOutput
-} from "@/apis/base/publicEntity";
 
 export default defineComponent({
   name: "VipCourseware",
-  components: { MyPageTable, AppTopMenu, MyResourcePreview },
   setup() {
     const eliteSongs = ref<CoursewareOutput[]>();
     const isLoad = ref(true);
     return { eliteSongs, isLoad };
   },
   methods: {
-    async getData(
-      match: string,
-      page: PageInput<CoursewareOutput>
-    ): Promise<PageOutput<CoursewareOutput>> {
+    async getData(match: string, page: PageInput<CoursewareOutput>) {
       page.TryAddSort("Group");
       page.TryAddSort("Sort");
       page.TryAddSort("Name");

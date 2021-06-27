@@ -4,16 +4,15 @@
   NavigationGuardNext
 } from "vue-router";
 import { nprogress } from "@/plugins/my-nprogress";
-import { routes } from "./pages"; //+
-import { apiAuth } from "@/apis/adminAuthApi"; //+ 发现一个很神奇的东西,试着把带+的这两项调换,就会报错
+import { apiAuth } from "@/apis/adminAuthApi";
+import pages from "@/router/pages";
 import { IsExpire } from "@/utils/my-token";
-import store from "@/store";
 
-routes.push({ path: "/:notFind(.*)", redirect: { name: "page404" } });
+pages.push({ path: "/:notFind(.*)", redirect: { name: "page404" } });
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes
+  routes: pages
 });
 /**忽略的路由 */
 const ignorePath = (path: string): boolean => {
@@ -24,9 +23,9 @@ const ignorePath = (path: string): boolean => {
 /**重定向到登陆页 */
 const redirectLogin = (path: string, next: NavigationGuardNext): void => {
   if (path.startsWith("/vip")) {
-    next("vipLogin");
+    return next("vipLogin");
   } else {
-    next("login");
+    return next("login");
   }
 };
 /**开始进度条 */
@@ -48,7 +47,7 @@ router.beforeEach((to, _from, next): void => {
 /**处理Token失效后依然能访问首页的问题 */
 router.beforeEach((to, _from, next): void => {
   if (ignorePath(to.path)) {
-    next();
+    return next();
   }
   //token过期后
   if (IsExpire(store.state.user)) {
@@ -58,10 +57,10 @@ router.beforeEach((to, _from, next): void => {
         .RefreshToken({ Token: accessToken ?? "" })
         .then((res) => {
           store.commit("setAccessToken", res.Token);
-          next();
+          return next();
         })
         .catch(() => {
-          redirectLogin(to.path, next);
+          return redirectLogin(to.path, next);
         });
     } else {
       return redirectLogin(to.path, next);

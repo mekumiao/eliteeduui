@@ -1,12 +1,5 @@
 ﻿import { UserInfoOutput } from "./adminUserInfoApi";
-import { ApiBase } from "./base/apiBase";
-import {
-  MsgOutput,
-  ObjFilterInput,
-  PageOutput,
-  PidKeyItem,
-  PublicWithKeyOutput
-} from "./base/publicEntity";
+import { ApiBase } from "./apiBase";
 
 /**VIP输出实体 */
 export interface VipInfoOutput extends PublicWithKeyOutput {

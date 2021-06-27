@@ -55,16 +55,11 @@
 </template>
 
 <script lang="ts">
-import { PageInput, PageOutput, SortInput } from "@/apis/base/publicEntity";
 import { sleep } from "@/utils/my-thread";
-import { PropType, reactive, ref, watch } from "vue";
-import { SortTableColumn } from "@/types/el-rules";
-import { defineComponent } from "vue";
-import MyPageTableColumnSearch from "./MyPageTableColumnSearch.vue";
-import AppButtonPopover from "./AppButtonPopover.vue";
+import { MyPageInput, MyPageOutput } from "@/utils/my-apiClass";
+import { defineComponent, PropType, reactive, ref, watch } from "vue";
 
 export default defineComponent({
-  components: { MyPageTableColumnSearch, AppButtonPopover },
   name: "MyPageTable",
   emits: ["update:modelValue", "edit", "deleteSave", "selectionChange"],
   props: {
@@ -93,8 +88,8 @@ export default defineComponent({
   setup(props, context) {
     const loading = ref(false);
     const search = ref("");
-    const page = reactive(new PageInput<unknown>());
-    let pageData = ref(new PageOutput<unknown>());
+    const page = reactive(new MyPageInput());
+    let pageData = ref(new MyPageOutput());
     watch(
       () => props.modelValue,
       async (newValue: boolean) => {
@@ -104,7 +99,7 @@ export default defineComponent({
             if (props.getData) {
               pageData.value = await props.getData(
                 search.value,
-                new PageInput(page.Index, page.Size, page.Sorts)
+                new MyPageInput(page.Index, page.Size, page.Sorts)
               );
             }
           } finally {
@@ -129,7 +124,7 @@ export default defineComponent({
         if (this.getData) {
           this.pageData = await this.getData(
             this.search,
-            new PageInput(this.page.Index, this.page.Size, this.page.Sorts)
+            new MyPageInput(this.page.Index, this.page.Size, this.page.Sorts)
           );
         }
       } finally {

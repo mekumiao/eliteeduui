@@ -20,7 +20,8 @@
     ecmaVersion: 2020
   },
   globals: {
-    layer: true
+    layer: true,
+    store: true
   },
   rules: {
     "no-console": "off",
@@ -28,6 +29,7 @@
     "vue/no-multiple-template-root": "off",
     "comma-dangle": "off",
     "vue/no-v-model-argument": "off",
-    "@typescript-eslint/no-explicit-any": "warn"
+    "@typescript-eslint/no-explicit-any": "warn",
+    "no-undef": "off"
   }
 };

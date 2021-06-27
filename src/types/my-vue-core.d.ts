@@ -1,10 +1,8 @@
-﻿import { IMessage } from "element-plus/lib/el-message/src/types";
-import { ShowMessage } from "@/plugins/el-message";
-import { NProgress } from "nprogress";
-import { INotification } from "element-plus/lib/el-notification/src/notification.type";
-import { Store } from "vuex";
-import { Rules } from "@/types/el-rules";
-import { Layer } from "@/types/my-layer";
+﻿import type { IMessage } from "element-plus/lib/el-message/src/types";
+import type { ShowMessage } from "@/plugins/el-message";
+import type { NProgress } from "nprogress";
+import type { INotification } from "element-plus/lib/el-notification/src/notification.type";
+import type { Store } from "vuex";
 import type { State } from "@/store/index";
 
 declare module "@vue/runtime-core" {
@@ -17,7 +15,7 @@ declare module "@vue/runtime-core" {
     $nprogress: NProgress;
     $notify: INotification;
     $layer: Layer;
-    $useRules(ref: string | Record<string, unknown>): Rules;
+    $useRules(ref: string | Record<string, unknown>): RulesValidate;
     $logout(path?: string): Promise<void>;
     $logoutConfirm(path?: string): void;
   }

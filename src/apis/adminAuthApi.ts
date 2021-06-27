@@ -1,5 +1,4 @@
-﻿import { ApiBase } from "./base/apiBase";
-import { MsgOutput } from "./base/publicEntity";
+﻿import { ApiBase } from "./apiBase";
 
 /**账号密码模型 */
 export interface LoginInput {

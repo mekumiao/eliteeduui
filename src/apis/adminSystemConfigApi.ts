@@ -1,12 +1,5 @@
-﻿import { ApiBase } from "./base/apiBase";
-import {
-  MsgOutput,
-  ObjFilterInput,
-  PageOutput,
-  PidKeyItem,
-  PublicWithKeyOutput,
-  ValueItem
-} from "./base/publicEntity";
+﻿import { ApiBase } from "./apiBase";
+
 /**系统配置输出模型 */
 export interface SystemConfigOutput extends PublicWithKeyOutput {
   Group: string;

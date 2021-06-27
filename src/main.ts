@@ -1,7 +1,7 @@
 ﻿import { createApp } from "vue";
-import App from "./App.vue";
-import router from "./router";
-import store, { key } from "./store";
+import App from "@/App.vue";
+import router from "@/router/index";
+import store, { key } from "@/store/index";
 import ElementPlus from "element-plus";
 import MyNprogress from "@/plugins/my-nprogress";
 import VueErrorHander from "@/plugins/vue-errorhandler";

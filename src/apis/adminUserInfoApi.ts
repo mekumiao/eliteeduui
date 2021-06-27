@@ -1,5 +1,4 @@
-﻿import { ApiBase } from "./base/apiBase";
-import { PublicWithKeyOutput } from "./base/publicEntity";
+﻿import { ApiBase } from "./apiBase";
 
 export interface RoleItem {
   RoleId: string;

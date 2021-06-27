@@ -29,11 +29,9 @@ import menulist from "@/config/menu-data";
 import { inject, reactive, ref } from "@vue/runtime-core";
 import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from "vue-router";
 import { onBeforeMount, defineComponent } from "vue";
-import AppMenuItem from "./AppMenuItem.vue";
 import AppSetting from "@/config/app-setting";
 
 export default defineComponent({
-  components: { AppMenuItem },
   name: "HomeLeftMenu",
   setup() {
     const menuData = reactive(menulist);

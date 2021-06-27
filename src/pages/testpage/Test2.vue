@@ -9,15 +9,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import MyCustomerFileUpload, {
-  number
-} from "@/components/MyCustomerFileUpload.vue";
+import { number } from "@/components/MyCustomerFileUpload.vue";
 
 export default defineComponent({
   name: "Test2",
-  components: {
-    MyCustomerFileUpload
-  },
   setup() {
     return { number };
   }

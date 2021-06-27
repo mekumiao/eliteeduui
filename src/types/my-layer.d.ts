@@ -9,7 +9,7 @@ declare type YesCallBack = (index: number) => void;
 declare type CancelCallBack = (index: number, layero: HTMLElement) => void;
 declare type EndCallBack = () => void;
 
-export declare interface Options {
+declare interface Options {
   type?: number;
   title?: string | string[] | boolean;
   content?: Content;
@@ -24,7 +24,7 @@ export declare interface Options {
   shade?: string | boolean | Array<number, string>;
 }
 
-export declare interface Layer {
+declare interface Layer {
   ready(callback: () => void): void;
   open(options: Options): number;
   alert(
