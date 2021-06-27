@@ -51,7 +51,7 @@
 <script lang="ts">
 import { reactive } from "vue";
 import { defineComponent } from "vue";
-import AppHeadPortrait from "./AppHeadPortrait.vue";
+import AppHeadPortrait from "./AppPortrait.vue";
 
 export default defineComponent({
   components: { AppHeadPortrait },

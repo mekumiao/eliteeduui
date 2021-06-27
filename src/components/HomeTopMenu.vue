@@ -42,10 +42,7 @@
             trigger="hover"
             placement="bottom-start"
           >
-            <app-head-portrait
-              :size="40"
-              :img-url="portrait"
-            ></app-head-portrait>
+            <app-portrait :size="40" :img-url="portrait"></app-portrait>
             <template #dropdown>
               <el-dropdown-menu class="dropdown-menu">
                 <el-dropdown-item command="userinfo" icon="el-icon-user">
@@ -75,13 +72,11 @@
 
 <script lang="ts">
 import { inject, reactive, ref, defineComponent } from "vue";
-import AppHeadPortrait from "./AppHeadPortrait.vue";
 import fullScreen, { isFullScreen } from "@/utils/my-fullScreen";
 import { getRouteMap } from "@/plugins/my-routeMap";
 import { useStore } from "@/store";
 
 export default defineComponent({
-  components: { AppHeadPortrait },
   name: "HomeTopMenu",
   setup() {
     const isCollapse = inject("isCollapse", ref(false));

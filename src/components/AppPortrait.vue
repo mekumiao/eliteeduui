@@ -28,7 +28,7 @@ interface DataImgSize {
 }
 
 export default defineComponent({
-  name: "AppHeadPortrait",
+  name: "AppPortrait",
   props: {
     imgUrl: { type: String, default: "" },
     size: { type: Number, default: 100 }

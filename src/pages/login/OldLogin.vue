@@ -48,7 +48,7 @@
 import { defineComponent, reactive, ref } from "vue";
 import { apiAuth, LoginInput } from "@/apis/adminAuthApi";
 import { FormRule } from "@/types/el-rules";
-import AppHeadPortrait from "@/components/AppHeadPortrait.vue";
+import AppHeadPortrait from "@/components/AppPortrait.vue";
 import { apiUserInfo } from "@/apis/adminUserInfoApi";
 import { sleep } from "@/utils/my-thread";
 import setting from "@/config/app-setting";
