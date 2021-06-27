@@ -5,7 +5,6 @@ export class Timer {
   protected intervalNumber: NodeJS.Timeout | undefined;
 
   public Start(total: number): Timer {
-    debugger;
     this.Total.value = total;
     this.intervalNumber = setInterval(() => {
       this.Total.value--;

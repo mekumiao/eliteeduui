@@ -1,5 +1,5 @@
 ﻿<template>
-  <app-top-menu title="浏览课件"></app-top-menu>
+  <vip-top-menu title="浏览课件"></vip-top-menu>
   <el-card>
     <my-page-table :get-data="getData" v-model="isLoad">
       <el-table-column label="名称" prop="Name"></el-table-column>

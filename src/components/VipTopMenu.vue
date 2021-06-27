@@ -13,7 +13,7 @@
               placement="bottom-start"
               size="small"
             >
-              <app-head-portrait :size="40"></app-head-portrait>
+              <app-portrait :size="40"></app-portrait>
               <template #dropdown>
                 <el-dropdown-menu class="dropdown-menu">
                   <el-dropdown-item
@@ -53,7 +53,7 @@ import { reactive } from "vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "AppTopMenu",
+  name: "VipTopMenu",
   props: {
     title: { type: String, default: "" },
     showMenu: {

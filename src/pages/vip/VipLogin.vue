@@ -1,89 +1,95 @@
 ﻿<template>
-  <app-top-menu title="VIP登录" :show-menu="false"></app-top-menu>
-  <el-card class="login-card" v-if="!passwordLogin">
-    <el-form
-      ref="formLoginByCode"
-      label-width="0"
-      :rules="rulesCode"
-      :model="phoneInput"
-    >
-      <el-form-item prop="Name">
-        <el-input
-          size="medium"
-          placeholder="请输入名称"
-          prefix-icon="el-icon-user"
-          type="text"
-          v-model="phoneInput.Name"
-        ></el-input>
-      </el-form-item>
-      <el-form-item prop="Phone">
-        <el-input
-          size="medium"
-          placeholder="请输入手机号"
-          prefix-icon="el-icon-mobile"
-          type="text"
-          v-model="phoneInput.Phone"
-        ></el-input>
-      </el-form-item>
-      <el-form-item prop="Code">
-        <el-space>
-          <el-input
-            placeholder="验证码"
-            type="text"
-            autocomplete="off"
-            v-model="phoneInput.Code"
-          ></el-input>
-          <el-button :disabled="timerTotal > 0" @click="sendCode">
-            发送验证码{{ timerTotal > 0 ? timerTotal.toString() : "" }}
-          </el-button>
-        </el-space>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="Login" :loading="isLoging">
-          注册或登录
-        </el-button>
-        <el-button @click="passwordLogin = true" type="text">
-          密码登录
-        </el-button>
-      </el-form-item>
-    </el-form>
-  </el-card>
-  <el-card class="login-card" v-else>
-    <el-form
-      ref="formLoginByPassword"
-      label-width="0"
-      :rules="rolesPassword"
-      :model="loginInput"
-    >
-      <el-form-item prop="Account">
-        <el-input
-          size="medium"
-          prefix-icon="iconfont iconuser-line"
-          type="text"
-          placeholder="请输入手机号"
-          v-model="loginInput.Account"
-        ></el-input>
-      </el-form-item>
-      <el-form-item prop="PassWord">
-        <el-input
-          size="medium"
-          prefix-icon="iconfont iconsuo2"
-          type="password"
-          autocomplete="off"
-          placeholder="请输入密码"
-          v-model="loginInput.PassWord"
-        ></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="Login" :loading="isLoging">
-          立即登录
-        </el-button>
-        <el-button @click="passwordLogin = false" type="text">
-          验证码登录
-        </el-button>
-      </el-form-item>
-    </el-form>
-  </el-card>
+  <div class="vip-login">
+    <vip-top-menu title="VIP登录" :show-menu="false"></vip-top-menu>
+    <div class="my-box">
+      <div class="my-card">
+        <el-card v-show="!passwordLogin">
+          <el-form
+            ref="formLoginByCode"
+            label-width="0"
+            :rules="rulesCode"
+            :model="phoneInput"
+          >
+            <el-form-item prop="Name">
+              <el-input
+                size="medium"
+                placeholder="请输入名称"
+                prefix-icon="el-icon-user"
+                type="text"
+                v-model="phoneInput.Name"
+              ></el-input>
+            </el-form-item>
+            <el-form-item prop="Phone">
+              <el-input
+                size="medium"
+                placeholder="请输入手机号"
+                prefix-icon="el-icon-mobile"
+                type="text"
+                v-model="phoneInput.Phone"
+              ></el-input>
+            </el-form-item>
+            <el-form-item prop="Code">
+              <el-space>
+                <el-input
+                  placeholder="验证码"
+                  type="text"
+                  autocomplete="off"
+                  v-model="phoneInput.Code"
+                ></el-input>
+                <el-button :disabled="timerTotal > 0" @click="sendCode">
+                  发送验证码{{ timerTotal > 0 ? timerTotal.toString() : "" }}
+                </el-button>
+              </el-space>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="Login" :loading="isLoging">
+                注册或登录
+              </el-button>
+              <el-button @click="passwordLogin = true" type="text">
+                密码登录
+              </el-button>
+            </el-form-item>
+          </el-form>
+        </el-card>
+        <el-card v-show="passwordLogin">
+          <el-form
+            ref="formLoginByPassword"
+            label-width="0"
+            :rules="rolesPassword"
+            :model="loginInput"
+          >
+            <el-form-item prop="Account">
+              <el-input
+                size="medium"
+                prefix-icon="iconfont iconuser-line"
+                type="text"
+                placeholder="请输入手机号"
+                v-model="loginInput.Account"
+              ></el-input>
+            </el-form-item>
+            <el-form-item prop="PassWord">
+              <el-input
+                size="medium"
+                prefix-icon="iconfont iconsuo2"
+                type="password"
+                autocomplete="off"
+                placeholder="请输入密码"
+                v-model="loginInput.PassWord"
+              ></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="Login" :loading="isLoging">
+                立即登录
+              </el-button>
+              <el-button @click="passwordLogin = false" type="text">
+                验证码登录
+              </el-button>
+            </el-form-item>
+          </el-form>
+        </el-card>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -169,8 +175,12 @@ export default defineComponent({
         "Phone",
         async (error) => {
           if (!error) {
-            this.timer.Start(60);
-            await apiAuth.SendVerificationCode(this.phoneInput.Phone);
+            try {
+              this.timer.Start(60);
+              await apiAuth.SendVerificationCode(this.phoneInput.Phone);
+            } catch (error) {
+              console.error(error);
+            }
           }
         }
       );
@@ -191,12 +201,21 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.login-card {
-  width: 400px;
-  padding: 30px;
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.vip-login {
+  width: 100%;
+  height: 100%;
+
+  .my-box {
+    position: relative;
+
+    .my-card {
+      width: 400px;
+      position: absolute;
+      padding: 30px;
+      top: 50px;
+      left: 50%;
+      transform: translate(-50%, 0);
+    }
+  }
 }
 </style>

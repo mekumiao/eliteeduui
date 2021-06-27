@@ -1,5 +1,5 @@
 ﻿<template>
-  <div class="app-head-portrait" :style="imgSize">
+  <div class="app-portrait" :style="imgSize">
     <el-image :src="'http://file.linshengweb.com/files/' + imgUrl" fit="cover">
       <template #placeholder>
         <div class="image-slot">
@@ -44,7 +44,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.app-head-portrait {
+.app-portrait {
   display: flex;
   overflow: hidden;
   border-radius: 50%;
