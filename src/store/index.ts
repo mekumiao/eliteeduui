@@ -85,7 +85,7 @@ Window.prototype.store = createStore<State>({
       state.isRouterActive = value;
     },
     setSourceHost(state: State, host: string): void {
-      state.sourceHost = host;
+      state.sourceHost = host || setting.defaultSourceHost;
     },
     changeOpendRouterPaths(state: State, value: TabItem): void {
       const index = _.findIndex(

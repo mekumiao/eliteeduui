@@ -1,6 +1,7 @@
 ﻿/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require("path");
 const webpack = require("webpack");
+const setting = require("./src/config/app-setting");
 
 const resolve = (dir) => {
   return path.join(__dirname, dir);
@@ -78,6 +79,8 @@ module.exports = {
         /**sass前置数据(内容必须是变量) */
         prependData: `
         $env: ${process.env.NODE_ENV};
+        $home-left-open-width: ${setting.homeMenuOpenWidth}px;
+        $home-left-shrink-width: ${setting.homeMenuShrinkWidth}px;
         @import "@/assets/scss/variable.scss";
         `
       }

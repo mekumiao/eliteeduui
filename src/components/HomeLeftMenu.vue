@@ -29,7 +29,7 @@ import menulist from "@/config/menu-data";
 import { inject, reactive, ref } from "@vue/runtime-core";
 import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from "vue-router";
 import { onBeforeMount, defineComponent } from "vue";
-import AppSetting from "@/config/app-setting";
+import setting from "@/config/app-setting";
 
 export default defineComponent({
   name: "HomeLeftMenu",
@@ -37,7 +37,7 @@ export default defineComponent({
     const menuData = reactive(menulist);
     const isCollapse = inject("isCollapse", ref(false));
     const currentActive = inject("currentActive", ref(""));
-    const systemName = ref(AppSetting.systemName);
+    const systemName = ref(setting.systemName);
 
     onBeforeMount(() => {
       const route = useRoute();
@@ -58,7 +58,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .home-left-menu {
-  width: $menu-left-open-width;
+  width: $home-left-open-width;
   background-color: $left-menu-color;
   min-height: 100%;
 

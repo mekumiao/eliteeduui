@@ -1,12 +1,13 @@
-﻿const setting = {
+"use strict";
+exports.__esModule = true;
+var setting = {
   systemName: "爱利特教务系统",
   authData: {
     account: "admin",
     passWord: "123123"
   },
-  homeMenuOpenWidth: 250, //菜单展开的宽度
-  homeMenuShrinkWidth: 70, //菜单收缩的宽度
+  homeMenuOpenWidth: 250,
+  homeMenuShrinkWidth: 70,
   defaultSourceHost: "http://file.linshengweb.com/files/"
 };
-
-export default setting;
+exports["default"] = setting;

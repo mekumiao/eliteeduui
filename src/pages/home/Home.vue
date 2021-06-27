@@ -1,7 +1,7 @@
 ﻿<template>
   <el-container class="home">
     <!-- 左侧菜单 -->
-    <el-aside :width="leftWidth">
+    <el-aside :width="leftWidth + 'px'">
       <home-left-menu></home-left-menu>
     </el-aside>
 
