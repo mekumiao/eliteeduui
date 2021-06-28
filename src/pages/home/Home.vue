@@ -36,31 +36,20 @@
 
 <script lang="ts">
 import { sleep } from "@/utils/my-thread";
-import { defineComponent, provide, ref, watch } from "vue";
-import appsetting from "@/config/app-setting";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "Home",
-  setup() {
-    const isCollapse = ref(false);
-    const currentActive = ref("");
-    const leftWidth = ref(appsetting.homeMenuOpenWidth);
-
-    provide("currentActive", currentActive);
-    provide("isCollapse", isCollapse);
-
-    watch(isCollapse, (newvalue) => {
-      leftWidth.value = newvalue
-        ? appsetting.homeMenuShrinkWidth
-        : appsetting.homeMenuOpenWidth;
-    });
-
-    return { leftWidth };
-  },
   async beforeMount() {
     await this.$store.dispatch("LoadSourceHost");
   },
   computed: {
+    isCollapse() {
+      return this.$store.state.leftMenu.isCollapse;
+    },
+    leftWidth() {
+      return this.$store.state.leftMenu.width;
+    },
     isRouterActive: {
       get(): boolean {
         return this.$store.state.isRouterActive;

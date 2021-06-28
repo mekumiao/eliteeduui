@@ -118,4 +118,4 @@ class AuthApi extends ApiBase {
   }
 }
 
-export const apiAuth = new AuthApi();
+export const apiAdminAuth = new AuthApi();

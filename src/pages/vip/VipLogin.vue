@@ -96,7 +96,7 @@
 import { LoginInput, NamePhoneCodeInput } from "@/apis/adminAuthApi";
 import { defineComponent, reactive, ref } from "vue";
 import { Timer } from "@/hooks/useTimer";
-import { apiAuth } from "@/apis/adminAuthApi";
+import { apiAdminAuth } from "@/apis/adminAuthApi";
 import { decodeAccessToken } from "@/utils/my-token";
 import { useRoute } from "vue-router";
 
@@ -154,13 +154,13 @@ export default defineComponent({
           await this.$useRules("formLoginByPassword").validate();
           this.$nprogress.start();
           this.isLoging = true;
-          const token = await apiAuth.GetToken(this.loginInput);
+          const token = await apiAdminAuth.GetToken(this.loginInput);
           this.setToken(token.Token);
         } else {
           await this.$useRules("formLoginByCode").validate();
           this.$nprogress.start();
           this.isLoging = true;
-          const token = await apiAuth.VipLoginOrRegisterByPhoneCode(
+          const token = await apiAdminAuth.VipLoginOrRegisterByPhoneCode(
             this.phoneInput
           );
           this.setToken(token.Token);
@@ -177,7 +177,7 @@ export default defineComponent({
           if (!error) {
             try {
               this.timer.Start(60);
-              await apiAuth.SendVerificationCode(this.phoneInput.Phone);
+              await apiAdminAuth.SendVerificationCode(this.phoneInput.Phone);
             } catch (error) {
               console.error(error);
             }

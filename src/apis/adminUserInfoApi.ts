@@ -29,4 +29,4 @@ class UserInfoApi extends ApiBase {
   }
 }
 
-export const apiUserInfo = new UserInfoApi();
+export const apiAdminUserInfo = new UserInfoApi();

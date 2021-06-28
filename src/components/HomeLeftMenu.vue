@@ -35,7 +35,6 @@ export default defineComponent({
   name: "HomeLeftMenu",
   setup() {
     const menuData = reactive(menulist);
-    const isCollapse = inject("isCollapse", ref(false));
     const currentActive = inject("currentActive", ref(""));
     const systemName = ref(setting.systemName);
 
@@ -51,7 +50,17 @@ export default defineComponent({
     onBeforeRouteLeave((to) => {
       currentActive.value = to.path;
     });
-    return { isCollapse, currentActive, menuData, systemName };
+    return { currentActive, menuData, systemName };
+  },
+  computed: {
+    isCollapse: {
+      get(): boolean {
+        return this.$store.state.leftMenu.isCollapse;
+      },
+      set(newValue: boolean): void {
+        this.$store.commit("setIsCollapse", newValue);
+      }
+    }
   }
 });
 </script>

@@ -32,7 +32,10 @@
 </template>
 
 <script lang="ts">
-import { apiAuth, ResetPasswordByPhoneCodeInput } from "@/apis/adminAuthApi";
+import {
+  apiAdminAuth,
+  ResetPasswordByPhoneCodeInput
+} from "@/apis/adminAuthApi";
 import { Timer } from "@/hooks/useTimer";
 import { sleep } from "@/utils/my-thread";
 import { defineComponent, reactive, ref } from "vue";
@@ -54,7 +57,7 @@ export default defineComponent({
         await this.$useRules("form").validate();
         await sleep();
         this.$loading();
-        const msg = await apiAuth.UserResetPasswordByVerificationCode(
+        const msg = await apiAdminAuth.UserResetPasswordByVerificationCode(
           this.resetPassword
         );
         this.$message.showSuccess(msg);
@@ -68,7 +71,7 @@ export default defineComponent({
       this.$useRules("form").validateField("Phone", async (error) => {
         if (!error) {
           this.timer.Start(60);
-          await apiAuth.SendVerificationCodeByResetPassword(
+          await apiAdminAuth.SendVerificationCodeByResetPassword(
             this.resetPassword.Phone
           );
         }

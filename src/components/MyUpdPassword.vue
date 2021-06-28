@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { apiAuth, PasswordUpdInput } from "@/apis/adminAuthApi";
+import { apiAdminAuth, PasswordUpdInput } from "@/apis/adminAuthApi";
 import { sleep } from "@/utils/my-thread";
 import { defineComponent, reactive, ref } from "vue";
 
@@ -59,7 +59,7 @@ export default defineComponent({
         await this.$useRules("form").validate();
         await sleep();
         this.$loading();
-        const msg = await apiAuth.UserUpdatePasswordByOldPassword(
+        const msg = await apiAdminAuth.UserUpdatePasswordByOldPassword(
           this.updPassword
         );
         this.$message.showSuccess(msg);

@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts">
-import { apiAuth, LoginInput } from "@/apis/adminAuthApi";
+import { apiAdminAuth, LoginInput } from "@/apis/adminAuthApi";
 import { defineComponent, reactive, ref } from "vue";
 import setting from "@/config/app-setting";
 import { sleep } from "@/utils/my-thread";
@@ -87,7 +87,7 @@ export default defineComponent({
         await this.$useRules("loginForm").validate();
         this.$nprogress.start();
         this.loginLoading = true;
-        const token = await apiAuth.GetToken({
+        const token = await apiAdminAuth.GetToken({
           Account: this.authData.Account,
           PassWord: this.authData.PassWord
         });

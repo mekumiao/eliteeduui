@@ -92,4 +92,4 @@ class SystemConfigApi extends ApiBase {
   }
 }
 
-export const apiSystemConfig = new SystemConfigApi();
+export const apiAdminSystemConfig = new SystemConfigApi();

@@ -66,7 +66,7 @@
 
 <script lang="ts">
 import {
-  apiSystemConfig,
+  apiAdminSystemConfig,
   SystemConfigInput,
   SystemConfigOutput,
   SystemConfigUpdInput
@@ -113,7 +113,7 @@ export default defineComponent({
           ]
         }
       };
-      return apiSystemConfig.QueryPage(filter);
+      return apiAdminSystemConfig.QueryPage(filter);
     },
     /**打开编辑 */
     async update(_index: number, row: SystemConfigOutput): Promise<void> {
@@ -127,7 +127,7 @@ export default defineComponent({
       try {
         this.$loading();
         await this.$useRules("formUpdate").validate();
-        await apiSystemConfig.Update(
+        await apiAdminSystemConfig.Update(
           this.dialogUpdate.oldData.Pid,
           this.dialogUpdate.oldData.Timestamp,
           this.dialogUpdate.formData
@@ -149,7 +149,7 @@ export default defineComponent({
       try {
         this.$loading();
         await this.$useRules("formCreate").validate();
-        await apiSystemConfig.Create(this.dialogCreate.formData);
+        await apiAdminSystemConfig.Create(this.dialogCreate.formData);
         close();
         this.isLoad = true;
       } finally {
@@ -160,7 +160,7 @@ export default defineComponent({
     async deleteSave(_index: number, row: SystemConfigOutput): Promise<void> {
       try {
         this.$loading();
-        await apiSystemConfig.Delete(row.Pid, row.Timestamp);
+        await apiAdminSystemConfig.Delete(row.Pid, row.Timestamp);
         this.isLoad = true;
       } finally {
         this.$closeLoading();

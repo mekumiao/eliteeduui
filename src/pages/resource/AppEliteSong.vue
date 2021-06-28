@@ -134,7 +134,7 @@
 <script lang="ts">
 import { defineComponent, reactive, ref } from "vue";
 import {
-  apiAppResource,
+  apiEduAppResource,
   EliteSongInput,
   EliteSongOutput,
   EliteSongUpdInput
@@ -193,7 +193,7 @@ export default defineComponent({
           ]
         }
       };
-      return apiAppResource.QueryPageEliteSong(filter);
+      return apiEduAppResource.QueryPageEliteSong(filter);
     },
     /**加载爱利特儿歌分类 */
     async loadEliteSongClassify(flag?: boolean): Promise<void> {
@@ -201,7 +201,7 @@ export default defineComponent({
         this.$loading();
         if (flag || this.eliteSongClassify.DataList.length === 0) {
           const input = new MyOptionFilterInput("eliteSongClassify");
-          this.eliteSongClassify = await apiAppResource.QueryOption(input);
+          this.eliteSongClassify = await apiEduAppResource.QueryOption(input);
         }
       } finally {
         this.$closeLoading();
@@ -218,7 +218,7 @@ export default defineComponent({
     async editSave(close: () => void): Promise<void> {
       try {
         this.$loading();
-        await apiAppResource.UpdateEliteSong(
+        await apiEduAppResource.UpdateEliteSong(
           this.dialogUpdate.oldData.Pid,
           this.dialogUpdate.oldData.Timestamp,
           this.dialogUpdate.formData
@@ -240,7 +240,7 @@ export default defineComponent({
       try {
         await this.$useRules("formCreate").validate();
         this.$loading();
-        await apiAppResource.CreateEliteSong(this.dialogCreate.formData);
+        await apiEduAppResource.CreateEliteSong(this.dialogCreate.formData);
         close();
         this.isLoad = true;
       } finally {
@@ -249,7 +249,7 @@ export default defineComponent({
     },
     /**删除并保存 */
     async deleteSave(_index: number, row: EliteSongOutput): Promise<void> {
-      await apiAppResource.DeleteEliteSong(row.Pid, row.Timestamp);
+      await apiEduAppResource.DeleteEliteSong(row.Pid, row.Timestamp);
       this.isLoad = true;
     }
   }

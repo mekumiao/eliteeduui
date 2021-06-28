@@ -4,7 +4,7 @@
   NavigationGuardNext
 } from "vue-router";
 import { nprogress } from "@/plugins/my-nprogress";
-import { apiAuth } from "@/apis/adminAuthApi";
+import { apiAdminAuth } from "@/apis/adminAuthApi";
 import pages from "@/router/pages";
 import { IsExpire } from "@/utils/my-token";
 
@@ -53,7 +53,7 @@ router.beforeEach((to, _from, next): void => {
   if (IsExpire(store.state.user)) {
     const accessToken = store.state.accessToken;
     if (accessToken) {
-      apiAuth
+      apiAdminAuth
         .RefreshToken({ Token: accessToken ?? "" })
         .then((res) => {
           store.commit("setAccessToken", res.Token);

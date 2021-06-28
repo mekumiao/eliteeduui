@@ -46,8 +46,8 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from "vue";
-import { apiAuth, LoginInput } from "@/apis/adminAuthApi";
-import { apiUserInfo } from "@/apis/adminUserInfoApi";
+import { apiAdminAuth, LoginInput } from "@/apis/adminAuthApi";
+import { apiAdminUserInfo } from "@/apis/adminUserInfoApi";
 import { sleep } from "@/utils/my-thread";
 import setting from "@/config/app-setting";
 
@@ -87,13 +87,13 @@ export default defineComponent({
         await this.$useRules("loginForm").validate();
         this.loginLoading = true;
         this.$nprogress.start();
-        const token = await apiAuth.GetToken({
+        const token = await apiAdminAuth.GetToken({
           Account: this.authData.Account,
           PassWord: this.authData.PassWord
         });
         window.localStorage.setItem("token", token.Token);
         window.sessionStorage.setItem("state", "5200");
-        const user = await apiUserInfo.GetCurrentUserInfo();
+        const user = await apiAdminUserInfo.GetCurrentUserInfo();
         window.localStorage.setItem("user", JSON.stringify(user));
         this.imgUrl = user.Portrait;
         await sleep();

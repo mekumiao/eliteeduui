@@ -7,7 +7,7 @@ import {
   ActionContext
 } from "vuex";
 import _ from "lodash";
-import { apiSystemConfig } from "@/apis/adminSystemConfigApi";
+import { apiAdminSystemConfig } from "@/apis/adminSystemConfigApi";
 import menuList from "@/config/menu-data";
 import setting from "@/config/app-setting";
 import createPersistedState from "vuex-persistedstate";
@@ -40,6 +40,13 @@ export interface State {
   sourceHost: string | undefined;
   /**打开的路由路径 */
   opendRouter: TabInfo;
+  /**左侧菜单 */
+  leftMenu: {
+    /**是否收起 */
+    isCollapse: boolean;
+    /**菜单宽度 */
+    width: number;
+  };
 }
 
 export const key: InjectionKey<Store<State>> = Symbol();
@@ -70,6 +77,10 @@ const createState = (): State => {
       max: 10,
       tabs: [defaultTab]
     },
+    leftMenu: {
+      isCollapse: false,
+      width: setting.homeMenuOpenWidth
+    },
     sourceHost: setting.defaultSourceHost
   };
 };
@@ -83,6 +94,14 @@ Window.prototype.store = createStore<State>({
     },
     setIsRouterActive(state: State, value: boolean): void {
       state.isRouterActive = value;
+    },
+    setIsCollapse(state: State, value: boolean): void {
+      if (value) {
+        state.leftMenu.width = setting.homeMenuShrinkWidth;
+      } else {
+        state.leftMenu.width = setting.homeMenuOpenWidth;
+      }
+      state.leftMenu.isCollapse = value;
     },
     setSourceHost(state: State, host: string): void {
       state.sourceHost = host || setting.defaultSourceHost;
@@ -118,9 +137,8 @@ Window.prototype.store = createStore<State>({
   },
   actions: {
     async LoadSourceHost(context: ActionContext<State, State>): Promise<void> {
-      const sourceHost = await apiSystemConfig.GetSystemConfigByNameAtStore(
-        "sourcehost"
-      );
+      const sourceHost =
+        await apiAdminSystemConfig.GetSystemConfigByNameAtStore("sourcehost");
       context.commit("setSourceHost", sourceHost?.Value?.Value);
     }
   },

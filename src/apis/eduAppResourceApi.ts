@@ -65,4 +65,4 @@ class AppResourceApi extends ApiBase {
   }
 }
 /**app资源管理api */
-export const apiAppResource = new AppResourceApi();
+export const apiEduAppResource = new AppResourceApi();

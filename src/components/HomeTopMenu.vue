@@ -80,7 +80,6 @@ import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from "vue-router";
 export default defineComponent({
   name: "HomeTopMenu",
   setup() {
-    const isCollapse = inject("isCollapse", ref(false));
     const reload = inject<() => Promise<void>>("reload");
     const dialogUserInfo = reactive({ show: false, formData: {} });
     const portrait = ref(useStore().state.user?.picture);
@@ -99,9 +98,17 @@ export default defineComponent({
       routeMap.value = getRoutePath(to.path) || [];
     });
 
-    return { isCollapse, reload, dialogUserInfo, portrait, isFull, routeMap };
+    return { reload, dialogUserInfo, portrait, isFull, routeMap };
   },
   computed: {
+    isCollapse: {
+      get(): boolean {
+        return this.$store.state.leftMenu.isCollapse;
+      },
+      set(newValue: boolean): void {
+        this.$store.commit("setIsCollapse", newValue);
+      }
+    },
     isRouterActive(): boolean {
       return this.$store.state.isRouterActive;
     }
