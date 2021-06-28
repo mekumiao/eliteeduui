@@ -4,6 +4,7 @@
     :title="title"
     :model-value="modelValue"
     :width="width"
+    :close-on-click-modal="false"
     @opened="focus"
     @closed="close"
   >

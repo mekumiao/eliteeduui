@@ -1,12 +1,9 @@
-﻿import { onBeforeMount, Ref, ref } from "vue";
-import menuList, { MenuItem } from "@/config/menu-data";
-import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from "vue-router";
+﻿import menuList, { MenuItem } from "@/config/menu-data";
 
 export interface RouteMapInfo {
   title: string;
   to?: string;
 }
-
 /**
  * 递归遍历菜单,搜索路径描述信息
  * @param path 路径
@@ -44,24 +41,4 @@ export function getRoutePath(
   return undefined;
 }
 
-/**
- * 获取路由映射信息
- * @param exclude 排除的路径
- */
-export function getRouteMap(exclude?: string[]): Ref<RouteMapInfo[]> {
-  const routerMap = ref<RouteMapInfo[]>([]);
-
-  onBeforeMount(() => {
-    const path = useRoute().path;
-    routerMap.value = getRoutePath(path, exclude) || [];
-  });
-
-  onBeforeRouteUpdate((to) => {
-    routerMap.value = getRoutePath(to.path, exclude) || [];
-  });
-
-  onBeforeRouteLeave((to) => {
-    routerMap.value = getRoutePath(to.path, exclude) || [];
-  });
-  return routerMap;
-}
+export default {};

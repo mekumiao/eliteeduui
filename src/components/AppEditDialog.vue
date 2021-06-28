@@ -4,6 +4,7 @@
     :title="title"
     :model-value="modelValue"
     :width="width"
+    :close-on-click-modal="false"
     @close="$emit('update:modelValue', false)"
   >
     <slot :data="formData"></slot>

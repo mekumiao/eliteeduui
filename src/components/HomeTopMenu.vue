@@ -71,10 +71,11 @@
 </template>
 
 <script lang="ts">
-import { inject, reactive, ref, defineComponent } from "vue";
+import { inject, reactive, ref, defineComponent, onBeforeMount } from "vue";
 import fullScreen, { isFullScreen } from "@/utils/my-fullScreen";
-import { getRouteMap } from "@/plugins/my-routeMap";
+import { getRoutePath, RouteMapInfo } from "@/plugins/my-routeMap";
 import { useStore } from "@/store";
+import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from "vue-router";
 
 export default defineComponent({
   name: "HomeTopMenu",
@@ -84,7 +85,20 @@ export default defineComponent({
     const dialogUserInfo = reactive({ show: false, formData: {} });
     const portrait = ref(useStore().state.user?.picture);
     const isFull = ref(isFullScreen());
-    const routeMap = getRouteMap();
+    const routeMap = ref<RouteMapInfo[]>([]);
+    onBeforeMount(() => {
+      const path = useRoute().path;
+      routeMap.value = getRoutePath(path) || [];
+    });
+
+    onBeforeRouteUpdate((to) => {
+      routeMap.value = getRoutePath(to.path) || [];
+    });
+
+    onBeforeRouteLeave((to) => {
+      routeMap.value = getRoutePath(to.path) || [];
+    });
+
     return { isCollapse, reload, dialogUserInfo, portrait, isFull, routeMap };
   },
   computed: {
