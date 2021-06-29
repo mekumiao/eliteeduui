@@ -1,4 +1,5 @@
-﻿import {
+﻿import { message } from "@/plugins/el-message";
+import {
   createRouter,
   createWebHashHistory,
   NavigationGuardNext
@@ -69,22 +70,24 @@ router.beforeEach((to, _from, next): void => {
     return next();
   }
 });
-/**处理vip */
-router.beforeEach((to, _form, next): void => {
+/**权限处理 */
+router.beforeEach((to, form, next): void => {
   if (ignorePath(to.path)) {
     return next();
   }
-  if (
-    store.state.user &&
-    store.state.user.role.filter((x) => x === "vip").length > 0
-  ) {
-    if (to.path.startsWith("/vip")) {
+  if (store.state.user) {
+    if (store.state.user.role.filter((x) => x === "admin").length > 0) {
       return next();
-    } else {
-      return next(false);
+    } else if (store.state.user.role.filter((x) => x === "vip").length > 0) {
+      if (to.path.startsWith("/vip")) {
+        return next();
+      } else {
+        message.showInfo("您不是管理员用户");
+        return redirectLogin(to.path, next);
+      }
     }
   } else {
-    return next();
+    return redirectLogin(to.path, next);
   }
 });
 /**完成进度条 */

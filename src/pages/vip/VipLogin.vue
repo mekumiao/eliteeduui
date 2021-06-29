@@ -193,7 +193,7 @@ export default defineComponent({
         this.$storeMutations.setAccessToken(token);
         this.$router.push("/vipCourseware");
       } else {
-        this.$message.showError("您不是vip用户,不能通过该方式登录");
+        this.$message.showInfo("您不是vip用户,不能通过该方式登录");
       }
     }
   }
