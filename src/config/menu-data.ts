@@ -60,11 +60,6 @@ const menuList: MenuItem[] = [
         index: "/resource/appResource",
         children: [
           {
-            title: "爱利特儿歌",
-            icon: "el-icon-document",
-            index: "/resource/appResource/appEliteSong"
-          },
-          {
             title: "绘本资源",
             icon: "el-icon-document",
             index: "/resource/appResource/appPaintingInfo"
@@ -73,6 +68,11 @@ const menuList: MenuItem[] = [
             title: "课程资源",
             icon: "el-icon-document",
             index: "/resource/appResource/appCourseInfo"
+          },
+          {
+            title: "爱利特儿歌",
+            icon: "el-icon-document",
+            index: "/resource/appResource/appEliteSong"
           }
         ]
       },

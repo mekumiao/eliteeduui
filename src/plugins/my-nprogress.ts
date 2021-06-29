@@ -1,7 +1,6 @@
 ﻿import Np from "nprogress";
 import type { Plugin } from "@vue/runtime-core/dist/runtime-core";
 import type { App } from "vue";
-import "nprogress/nprogress.css";
 
 export const nprogress = Np.configure({
   showSpinner: false,

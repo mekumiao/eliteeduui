@@ -11,10 +11,7 @@ import ElMessage from "@/plugins/el-message";
 import VueDirectives from "@/plugins/vue-directives";
 import MyLogout from "@/plugins/my-logout";
 import MyComponent from "@/plugins/my-component";
-import "animate.css/animate.css";
-import "nprogress/nprogress.css";
 import "@/utils/my-extension";
-import "element-plus/lib/theme-chalk/index.css";
 import "@/assets/fonts/iconfont.css";
 import "@/assets/scss/helper.scss";
 import "@/assets/scss/global.scss";
@@ -25,6 +22,7 @@ createApp(App)
   .use(store)
   .use(router)
   .use(ElementPlus, { size: "mini", zIndex: 3000, locale })
+  .use(ElementPlus, { size: "mini", zIndex: 3000 })
   .use(MyNprogress)
   .use(MyLoading)
   .use(ElFormrule)

@@ -1,9 +1,9 @@
-﻿import {
+﻿import type {
   IMessage,
   IMessageHandle
 } from "element-plus/lib/el-message/src/types";
 import { App, h } from "vue";
-import { Plugin, VNode } from "@vue/runtime-core/dist/runtime-core";
+import type { Plugin, VNode } from "@vue/runtime-core/dist/runtime-core";
 import { ElMessage } from "element-plus";
 
 type MsgInfo = MsgOutput | string | string[] | number | unknown;

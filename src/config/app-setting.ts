@@ -15,6 +15,7 @@
       : "http://localhost:8080/"
 };
 
-//setting.apiBaseURL = "http://an.linshengweb.com:8188/";
+// setting.apiBaseURL = "http://an.linshengweb.com:8188/";
+// setting.apiBaseURL = "http://localhost:8080/";
 
 export default setting;

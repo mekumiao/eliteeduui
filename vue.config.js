@@ -38,19 +38,19 @@ module.exports = {
     config.resolve.alias.set("@", resolve("src"));
     /**生产环境入口点 */
     config.when(process.env.NODE_ENV === "production", (config) => {
+      // config.entry("app").clear().add("./src/main-cdn.ts");
       config.entry("app").clear().add("./src/main.ts");
-
       //CDN优化
-      config.set("externals", {
-        // vue: "Vue",
-        // vuex: "Vuex",
-        // "vue-router": "VueRouter",
-        // lodash: "_",
-        // axios: "axios",
-        // echarts: "echarts",
-        // nprogress: "NProgress"
-        // "element-plus": "ElementPlus"
-      });
+      // config.set("externals", {
+      //   vue: "Vue",
+      //   vuex: "Vuex",
+      //   "vue-router": "VueRouter",
+      //   lodash: "_",
+      //   axios: "axios",
+      //   echarts: "echarts",
+      //   nprogress: "NProgress",
+      //   "element-plus": "ElementPlus"
+      // });
     });
     config.when(process.env.NODE_ENV === "development", (config) => {
       config.entry("app").clear().add("./src/main.ts");
@@ -59,7 +59,8 @@ module.exports = {
     config.when(process.env.NODE_ENV === "production", (config) => {
       config.plugin("html").tap((args) => {
         args[0].title = "爱利特教务系统";
-        args[0].isProduction = true;
+        //args[0].isProduction = true;
+        args[0].isProduction = false;
         return args;
       });
     });

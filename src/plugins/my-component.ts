@@ -1,5 +1,5 @@
-﻿import { App } from "vue";
-import { Plugin } from "@vue/runtime-core/dist/runtime-core";
+﻿import type { App } from "vue";
+import type { Plugin } from "@vue/runtime-core/dist/runtime-core";
 import AppBreadcrumb from "@/components/AppBreadcrumb.vue";
 import AppPortrait from "@/components/AppPortrait.vue";
 import AppMenuItem from "@/components/AppMenuItem.vue";
