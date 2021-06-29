@@ -29,8 +29,9 @@
             style="width: 100px"
             fit="contain"
             :src="
-              'http://file.linshengweb.com/files/' +
-              encodeURI(scope.row.PreviewPhoto)
+              $storeGetters.mergeSourceHost(
+                encodeURIComponent(scope.row.PreviewPhoto)
+              )
             "
           ></el-image>
           <div v-else>暂无图片</div>

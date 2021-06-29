@@ -38,9 +38,9 @@ export interface State {
   /**路由是否激活 */
   isRouterActive: boolean;
   /**资源路径 */
-  sourceHost: string | undefined;
+  sourceHost: string;
   /**上传路径 */
-  uploadHost: string | undefined;
+  uploadHost: string;
   /**打开的路由路径 */
   opendRouter: TabInfo;
   /**左侧菜单 */
@@ -84,8 +84,8 @@ const createState = (): State => {
       isCollapse: false,
       width: setting.homeMenuOpenWidth
     },
-    sourceHost: undefined,
-    uploadHost: undefined
+    sourceHost: setting.defaultSourceHost,
+    uploadHost: setting.defaultUploadHost
   };
 };
 
@@ -108,10 +108,14 @@ const store = createStore<State>({
       state.leftMenu.isCollapse = value;
     },
     setSourceHost(state: State, host: string): void {
-      state.sourceHost = host || setting.defaultSourceHost;
+      if (host) {
+        state.sourceHost = host;
+      }
     },
     setUploadHost(state: State, host: string) {
-      state.uploadHost = host || setting.defaultUploadHost;
+      if (host) {
+        state.uploadHost = host;
+      }
     },
     changeOpendRouterPaths(state: State, value: TabItem): void {
       const index = _.findIndex(
@@ -172,7 +176,7 @@ const store = createStore<State>({
 });
 
 export interface MyStoreGetters {
-  mergeSourceHost(url: string): void;
+  mergeSourceHost(url: string): string;
 }
 
 export interface MyStoreActions {

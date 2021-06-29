@@ -1,6 +1,6 @@
 ﻿<template>
   <div class="app-portrait" :style="imgSize">
-    <el-image :src="'http://file.linshengweb.com/files/' + imgUrl" fit="cover">
+    <el-image :src="imageUrl" fit="cover">
       <template #placeholder>
         <div class="image-slot">
           <i class="el-icon-picture-outline"></i>
@@ -39,6 +39,11 @@ export default defineComponent({
       width: `${props.size}px`
     });
     return { imgSize };
+  },
+  computed: {
+    imageUrl(): string {
+      return this.$storeGetters.mergeSourceHost(this.imgUrl);
+    }
   }
 });
 </script>
