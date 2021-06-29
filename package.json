@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve --mode development --dashboard",
     "build": "vue-cli-service build --mode production --target app --dashboard --no-clean",
-    "lint": "vue-cli-service lint --no-fix"
+    "lint": "vue-cli-service lint --no-fix",
+    "config": "tsc ./src/config/app-setting.ts"
   },
   "dependencies": {
     "animate.css": "^4.1.1",
