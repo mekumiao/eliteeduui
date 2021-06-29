@@ -63,6 +63,16 @@ const menuList: MenuItem[] = [
             title: "爱利特儿歌",
             icon: "el-icon-document",
             index: "/resource/appResource/appEliteSong"
+          },
+          {
+            title: "绘本资源",
+            icon: "el-icon-document",
+            index: "/resource/appResource/appPaintingInfo"
+          },
+          {
+            title: "课程资源",
+            icon: "el-icon-document",
+            index: "/resource/appResource/appCourseInfo"
           }
         ]
       },

@@ -5,6 +5,7 @@
     :model-value="modelValue"
     :width="width"
     :close-on-click-modal="false"
+    :fullscreen="fullscreen"
     @close="$emit('update:modelValue', false)"
   >
     <slot :data="formData"></slot>
@@ -31,6 +32,7 @@ export default defineComponent({
       type: [String, Number] as PropType<string | number>,
       default: "40%"
     },
+    fullscreen: { type: Boolean as PropType<boolean>, default: false },
     modelValue: { type: Boolean as PropType<boolean>, default: false },
     formData: { type: Object as PropType<unknown>, default: () => new Object() }
   },

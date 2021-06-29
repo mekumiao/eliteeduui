@@ -40,9 +40,7 @@ export default defineComponent({
   },
   computed: {
     previewUrl(): string {
-      return this.$storeGetters.mergeSourceHost(
-        encodeURIComponent(this.sourcePath)
-      );
+      return this.$storeGetters.mergeSourceHost(this.sourcePath);
     }
   }
 });

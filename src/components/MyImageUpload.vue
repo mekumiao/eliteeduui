@@ -34,7 +34,7 @@ export default defineComponent({
     const dialogImageUrl = ref<string | undefined>("");
     if (props.modelValue) {
       const store = useStore();
-      dialogImageUrl.value = `${store.state.sourceHost}${props.modelValue}`;
+      dialogImageUrl.value = store.getters.mergeSourceHost(props.modelValue);
     }
     return { dialogImageUrl };
   },

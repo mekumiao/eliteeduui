@@ -39,11 +39,7 @@
               v-if="scope.row.PreviewPhoto"
               style="width: 100px"
               fit="contain"
-              :src="
-                $storeGetters.mergeSourceHost(
-                  encodeURIComponent(scope.row.PreviewPhoto)
-                )
-              "
+              :src="$storeGetters.mergeSourceHost(scope.row.PreviewPhoto)"
             ></el-image>
             <div v-else>暂无图片</div>
           </template>

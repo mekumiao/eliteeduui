@@ -168,7 +168,7 @@ const store = createStore<State>({
       (url: string): string => {
         const sourceHostTrim = state.sourceHost?.replace(/(\/)*$/gi, "");
         const urlTrim = url?.replace(/^(\/)*/gi, "");
-        return `${sourceHostTrim}/${urlTrim}`;
+        return `${sourceHostTrim}/${encodeURI(urlTrim)}`;
       }
   },
   strict: debug,

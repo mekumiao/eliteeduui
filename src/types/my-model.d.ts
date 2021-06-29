@@ -116,6 +116,10 @@ declare interface PublicWithKeyOutput extends PublicOutput {
 declare interface WithKeyOutput {
   Pid: string;
 }
+/**右键输入模型 */
+declare interface WithKeyInput {
+  Pid: string;
+}
 /**值模型 */
 declare interface ValueItem<T> {
   Value?: T;

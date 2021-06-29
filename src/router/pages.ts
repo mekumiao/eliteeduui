@@ -22,6 +22,8 @@ import SystemConfig from "@/pages/system/SystemConfig.vue";
 
 /**资源管理 */
 import AppEliteSong from "@/pages/resource/AppEliteSong.vue";
+import AppPaintingInfo from "@/pages/resource/AppPaintingInfo.vue";
+import AppCourseInfo from "@/pages/resource/AppCourseInfo.vue";
 import Courseware from "@/pages/resource/Courseware.vue";
 
 /**VIP页面 */
@@ -62,7 +64,11 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/resource/appResource",
     component: Home,
-    children: [{ path: "appEliteSong", component: AppEliteSong }]
+    children: [
+      { path: "appEliteSong", component: AppEliteSong },
+      { path: "appPaintingInfo", component: AppPaintingInfo },
+      { path: "appCourseInfo", component: AppCourseInfo }
+    ]
   },
   {
     path: "/resource",
