@@ -90,7 +90,7 @@ export default defineComponent({
       this.$router.push(path);
     },
     removeTab(index: number) {
-      this.$store.commit("removeOpendRouterPaths", index);
+      this.$storeMutations.removeOpendRouterPaths(index);
       const tab =
         this.$store.state.opendRouter.tabs[
           this.$store.state.opendRouter.active

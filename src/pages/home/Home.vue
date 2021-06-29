@@ -41,7 +41,7 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "Home",
   async beforeMount() {
-    await this.$store.dispatch("LoadSourceHost");
+    await this.$storeActions.initConfig();
   },
   computed: {
     isCollapse() {
@@ -55,7 +55,7 @@ export default defineComponent({
         return this.$store.state.isRouterActive;
       },
       set(newValue: boolean): void {
-        this.$store.commit("setIsRouterActive", newValue);
+        this.$storeMutations.setIsRouterActive(newValue);
       }
     },
     cacheMaxViewNumber(): number {

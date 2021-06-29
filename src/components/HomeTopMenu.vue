@@ -106,7 +106,7 @@ export default defineComponent({
         return this.$store.state.leftMenu.isCollapse;
       },
       set(newValue: boolean): void {
-        this.$store.commit("setIsCollapse", newValue);
+        this.$storeMutations.setIsCollapse(newValue);
       }
     },
     isRouterActive(): boolean {
@@ -118,7 +118,6 @@ export default defineComponent({
       this.reload && (await this.reload());
     },
     async selectHeader(msg: string): Promise<void> {
-      console.log(msg);
       switch (msg) {
         case "logout":
           this.$logoutConfirm();

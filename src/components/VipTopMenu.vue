@@ -13,7 +13,7 @@
               placement="bottom-start"
               size="small"
             >
-              <app-portrait :size="40"></app-portrait>
+              <app-portrait :size="40" :img-url="portrait"></app-portrait>
               <template #dropdown>
                 <el-dropdown-menu class="dropdown-menu">
                   <el-dropdown-item
@@ -49,7 +49,8 @@
 </template>
 
 <script lang="ts">
-import { reactive } from "vue";
+import { useStore } from "@/store";
+import { reactive, ref } from "vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -62,8 +63,9 @@ export default defineComponent({
     }
   },
   setup() {
+    const portrait = ref(useStore().state.user?.picture);
     const dialogUserInfo = reactive({ show: false, formData: {} });
-    return { dialogUserInfo };
+    return { portrait, dialogUserInfo };
   },
   methods: {
     async select(tag: string) {

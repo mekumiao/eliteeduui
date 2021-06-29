@@ -84,7 +84,7 @@ class SystemConfigApi extends ApiBase {
    * @param name 配置名称
    * @returns 配置信息
    */
-  public GetSystemConfigByNameAtStore(
+  public GetSystemConfigByNameNoThrow(
     name: string
   ): Promise<ValueItem<SystemConfigOutput>> {
     const url = this.mergeUrlParame("GetSystemConfigByName", name);

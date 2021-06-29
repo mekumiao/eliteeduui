@@ -58,7 +58,7 @@ export default defineComponent({
         return this.$store.state.leftMenu.isCollapse;
       },
       set(newValue: boolean): void {
-        this.$store.commit("setIsCollapse", newValue);
+        this.$storeMutations.setIsCollapse(newValue);
       }
     }
   }

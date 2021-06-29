@@ -5,17 +5,7 @@
   AxiosResponse
 } from "axios";
 import { getMessage, mapStatus } from "@/utils/my-statusCode";
-
-export let rootURL = "http://localhost:8080";
-export let timeout: number | undefined = undefined;
-
-if (process.env.NODE_ENV === "production") {
-  rootURL = "http://an.linshengweb.com:8188";
-  timeout = 20000;
-}
-
-rootURL = "http://an.linshengweb.com:8188";
-//rootURL = "http://localhost:8080";
+import setting from "@/config/app-setting";
 
 /**检查是否是InputError类型 */
 function isInputError(error: unknown): error is InputError {
@@ -122,8 +112,8 @@ export function handleResponse(instance: AxiosInstance): void {
  */
 export function createAjax(): AxiosInstance {
   const ajax: AxiosInstance = axios.create({
-    baseURL: rootURL,
-    timeout: timeout
+    baseURL: setting.apiBaseURL,
+    timeout: setting.apiTimeout
   });
   handleRequest(ajax);
   handleResponse(ajax);

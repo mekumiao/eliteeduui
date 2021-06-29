@@ -97,8 +97,8 @@ export default defineComponent({
             (x) => x === "system" || x === "admin" || x === "teacher"
           ) ?? [];
         if (isSuccess.length > 0) {
-          this.$store.commit("resetState");
-          this.$store.commit("setAccessToken", token.Token);
+          this.$storeMutations.resetState();
+          this.$storeMutations.setAccessToken(token.Token);
           await sleep();
           this.$router.push("/");
           this.$message.closeAll();

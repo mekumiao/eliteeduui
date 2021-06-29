@@ -3,11 +3,19 @@ import type { ShowMessage } from "@/plugins/el-message";
 import type { NProgress } from "nprogress";
 import type { INotification } from "element-plus/lib/el-notification/src/notification.type";
 import type { Store } from "vuex";
-import type { State } from "@/store/index";
+import type {
+  State,
+  MyStoreGetters,
+  MyStoreActions,
+  MyStoreMutations
+} from "@/store/index";
 
 declare module "@vue/runtime-core" {
   declare interface ComponentCustomProperties {
     $store: Store<State>;
+    $storeGetters: MyStoreGetters;
+    $storeActions: MyStoreActions;
+    $storeMutations: MyStoreMutations;
     $elMessage: IMessage;
     $message: ShowMessage;
     $loading(): number;

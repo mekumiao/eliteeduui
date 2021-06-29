@@ -1,7 +1,7 @@
 ﻿import { createApp } from "vue";
 import App from "@/App.vue";
 import router from "@/router/index";
-import store, { key } from "@/store/index";
+import store from "@/store/index";
 import ElementPlus from "element-plus";
 import MyNprogress from "@/plugins/my-nprogress";
 import VueErrorHander from "@/plugins/vue-errorhandler";
@@ -21,7 +21,7 @@ import "dayjs/locale/zh-cn";
 import locale from "element-plus/lib/locale/lang/zh-cn";
 
 createApp(App)
-  .use(store, key)
+  .use(store)
   .use(router)
   .use(ElementPlus, { size: "mini", zIndex: 3000, locale })
   .use(MyNprogress)

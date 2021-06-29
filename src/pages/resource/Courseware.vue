@@ -294,7 +294,6 @@ export default defineComponent({
         const myVideo = ".mp4";
         const myAudio = ".mp3";
         const name = file.name.substring(start).toLowerCase();
-        console.log(name);
         if (myDocument.indexOf(name) >= 0) {
           this.dialogCreate.formData.ResourceType = 1;
           this.dialogUpdate.formData.ResourceType = 1;

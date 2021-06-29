@@ -1,9 +1,9 @@
 ﻿<template>
   <el-upload
     ref="upload"
-    action="http://file.linshengweb.com/upload/"
     list-type="picture-card"
     accept="image/*"
+    :action="uploadHost"
     :auto-upload="true"
     :multiple="false"
     :show-file-list="false"
@@ -20,6 +20,7 @@
 </template>
 
 <script lang="ts">
+import { useStore } from "@/store";
 import { UploadFile } from "node_modules/element-plus/lib/el-upload/src/upload.type";
 import { defineComponent, ref } from "vue";
 
@@ -32,9 +33,15 @@ export default defineComponent({
   setup(props) {
     const dialogImageUrl = ref<string | undefined>("");
     if (props.modelValue) {
-      dialogImageUrl.value = `http://file.linshengweb.com/files/${props.modelValue}`;
+      const store = useStore();
+      dialogImageUrl.value = `${store.state.sourceHost}${props.modelValue}`;
     }
     return { dialogImageUrl };
+  },
+  computed: {
+    uploadHost(): string {
+      return this.$store.state.uploadHost ?? "";
+    }
   },
   methods: {
     handleChange(file: UploadFile, fileList: UploadFile[]) {

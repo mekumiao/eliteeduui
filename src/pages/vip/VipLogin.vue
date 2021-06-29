@@ -189,8 +189,8 @@ export default defineComponent({
       const user = decodeAccessToken(token);
       const superRoles = user?.role.filter((x) => x === "vip") ?? [];
       if (superRoles.length > 0) {
-        this.$store.commit("resetState");
-        this.$store.commit("setAccessToken", token);
+        this.$storeMutations.resetState();
+        this.$storeMutations.setAccessToken(token);
         this.$router.push("/vipCourseware");
       } else {
         this.$message.showError("您不是vip用户,不能通过该方式登录");

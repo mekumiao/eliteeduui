@@ -1,6 +1,6 @@
 ﻿<template>
   <el-upload
-    action="http://file.linshengweb.com/upload/"
+    :action="uploadHost"
     :accept="accept"
     :auto-upload="true"
     :file-list="fileList"
@@ -44,6 +44,11 @@ export default defineComponent({
       fileList.value.push({ name: props.modelValue });
     }
     return { upload, fileList };
+  },
+  computed: {
+    uploadHost(): string {
+      return this.$store.state.uploadHost ?? "";
+    }
   },
   methods: {
     handleChange(file: UploadFile, fileList: UploadFile[]) {

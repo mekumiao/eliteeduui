@@ -27,9 +27,9 @@ export function decodeAccessToken(token: string): TokenInfo | undefined {
     const decoded = jwt_decode<TokenInfo>(token);
     if (decoded) {
       decoded.birthdate = new Date(decoded.birthdate);
-      decoded.gender = new Number(decoded.gender) as GenderEnum;
-      decoded.nbf = new Number(decoded.nbf) as number;
-      decoded.exp = new Number(decoded.exp) as number;
+      decoded.gender = parseInt(decoded.gender as unknown as string);
+      decoded.nbf = parseInt(decoded.nbf as unknown as string);
+      decoded.exp = parseInt(decoded.exp as unknown as string);
       if (typeof decoded.role === "string") {
         decoded.role = [decoded.role as unknown as string];
       }

@@ -32,6 +32,7 @@ export default defineComponent({
   setup() {
     const formData = ref<TokenInfo>({} as TokenInfo);
     formData.value = useStore().state.user ?? ({} as TokenInfo);
+    console.log(formData.value);
     return { formData };
   }
 });
