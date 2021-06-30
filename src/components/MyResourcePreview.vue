@@ -1,8 +1,13 @@
 ﻿<template>
   <el-space>
-    <a v-if="resourceType === 1" target="_blank" :href="previewUrl">
-      点击预览 </a
-    ><audio
+    <a
+      v-if="resourceType === 1"
+      target="_blank"
+      :href="'http://ow365.cn/?i=24932&furl=' + previewUrl"
+    >
+      点击预览
+    </a>
+    <audio
       v-else-if="resourceType === 3"
       style="width: 80%"
       controls
