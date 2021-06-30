@@ -115,7 +115,7 @@
 
     <app-edit-dialog
       v-model="dialogUpdate.show"
-      title="修改绘本资源"
+      title="修改课程"
       fullscreen
       @save="editSave"
     >
