@@ -1,43 +1,45 @@
 ﻿<template>
-  <vip-top-menu title="浏览课件"></vip-top-menu>
-  <el-card>
-    <my-page-table :get-data="getData" v-model="isLoad">
-      <el-table-column label="名称" prop="Name"></el-table-column>
-      <el-table-column label="描述" prop="Remark"></el-table-column>
-      <el-table-column
-        label="课件类型"
-        prop="ResourceTypeName"
-      ></el-table-column>
-      <el-table-column label="课件预览" prop="SourcePath" align="center">
-        <template #default="scope">
-          <my-resource-preview
-            :source-name="scope.row.Name"
-            :resource-type="scope.row.ResourceType"
-            :source-path="scope.row.SourcePath"
-          ></my-resource-preview>
+  <div class="vip-courseware">
+    <vip-top-menu title="浏览课件"></vip-top-menu>
+    <el-card>
+      <my-page-table :get-data="getData" v-model="isLoad">
+        <el-table-column label="名称" prop="Name"></el-table-column>
+        <el-table-column label="描述" prop="Remark"></el-table-column>
+        <el-table-column
+          label="课件类型"
+          prop="ResourceTypeName"
+        ></el-table-column>
+        <el-table-column label="课件预览" prop="SourcePath" align="center">
+          <template #default="scope">
+            <my-resource-preview
+              :source-name="scope.row.Name"
+              :resource-type="scope.row.ResourceType"
+              :source-path="scope.row.SourcePath"
+            ></my-resource-preview>
+          </template>
+        </el-table-column>
+        <el-table-column
+          label="预览图"
+          prop="PreviewPhoto"
+          min-width="150"
+          align="center"
+        >
+          <template #default="scope">
+            <el-image
+              v-if="scope.row.PreviewPhoto"
+              style="width: 100px"
+              fit="contain"
+              :src="$storeGetters.mergeSourceHost(scope.row.PreviewPhoto)"
+            ></el-image>
+            <div v-else>暂无图片</div>
+          </template>
+        </el-table-column>
+        <template #button>
+          <span></span>
         </template>
-      </el-table-column>
-      <el-table-column
-        label="预览图"
-        prop="PreviewPhoto"
-        min-width="150"
-        align="center"
-      >
-        <template #default="scope">
-          <el-image
-            v-if="scope.row.PreviewPhoto"
-            style="width: 100px"
-            fit="contain"
-            :src="$storeGetters.mergeSourceHost(scope.row.PreviewPhoto)"
-          ></el-image>
-          <div v-else>暂无图片</div>
-        </template>
-      </el-table-column>
-      <template #button>
-        <span></span>
-      </template>
-    </my-page-table>
-  </el-card>
+      </my-page-table>
+    </el-card>
+  </div>
 </template>
 
 <script lang="ts">
@@ -74,8 +76,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.el-col {
-  margin-top: 10px;
-  margin-bottom: 10px;
+.vip-courseware {
+  width: 100%;
+
+  .el-col {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 }
 </style>

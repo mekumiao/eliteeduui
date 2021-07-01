@@ -14,7 +14,9 @@
       <!-- 内容区域 -->
       <el-main>
         <!-- 标签切换组件 -->
-        <app-work-tab></app-work-tab>
+        <section class="work-tab">
+          <app-work-tab></app-work-tab>
+        </section>
 
         <!-- 路由视图 -->
         <router-view v-slot="{ Component }" v-if="isRouterActive">
@@ -102,6 +104,11 @@ export default defineComponent({
   padding: 0;
   padding-left: 15px;
   padding-right: 15px;
+
+  .work-tab {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
 }
 
 aside {
@@ -110,6 +117,10 @@ aside {
 }
 
 aside::-webkit-scrollbar {
+  display: none;
+}
+
+aside::scrollbar {
   display: none;
 }
 </style>

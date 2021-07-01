@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import menulist from "@/config/menu-data";
-import { inject, reactive, ref } from "@vue/runtime-core";
+import { reactive, ref } from "@vue/runtime-core";
 import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from "vue-router";
 import { onBeforeMount, defineComponent } from "vue";
 import setting from "@/config/app-setting";
@@ -35,7 +35,7 @@ export default defineComponent({
   name: "HomeLeftMenu",
   setup() {
     const menuData = reactive(menulist);
-    const currentActive = inject("currentActive", ref(""));
+    const currentActive = ref("");
     const systemName = ref(setting.systemName);
 
     onBeforeMount(() => {

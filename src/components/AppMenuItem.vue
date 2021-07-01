@@ -1,4 +1,5 @@
 ﻿<template>
+  <!-- eslint-disable vue/no-multiple-template-root -->
   <template v-for="(item, index) in menuData">
     <el-submenu
       v-if="isNotEmpty(item.children)"

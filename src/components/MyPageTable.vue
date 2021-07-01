@@ -1,56 +1,58 @@
 ﻿<template>
-  <el-table
-    ref="pageTable"
-    v-loading="loading"
-    :data="pageData.DataList"
-    :max-height="maxHeight"
-    @sort-change="sortChange"
-    @selection-change="$emit('selectionChange', $event)"
-  >
-    <el-table-column v-if="showCheckBox" type="selection"></el-table-column>
-    <el-table-column
-      v-if="showIndex"
-      label="序号"
-      type="index"
-    ></el-table-column>
-    <slot></slot>
-    <my-page-table-column-search
-      v-if="showSearch"
-      v-model="search"
-      @search="loadData"
-      :width="searchWidth"
+  <div class="my-page-table">
+    <el-table
+      ref="pageTable"
+      v-loading="loading"
+      :data="pageData.DataList"
+      :max-height="maxHeight"
+      @sort-change="sortChange"
+      @selection-change="$emit('selectionChange', $event)"
     >
-      <template #default="scope">
-        <slot name="button" v-bind="{ row: scope.row, $index: scope.$index }">
-          <el-button-group>
-            <el-button
-              plain
-              size="mini"
-              type="primary"
-              @click="$emit('edit', scope.$index, scope.row)"
-            >
-              编辑
-            </el-button>
-            <app-button-popover
-              @confirm="$emit('deleteSave', scope.$index, scope.row)"
-            ></app-button-popover>
-          </el-button-group>
-        </slot>
-      </template>
-    </my-page-table-column-search>
-  </el-table>
-  <div style="margin-top: 20px">
-    <el-pagination
-      @size-change="sizeChange"
-      @current-change="currentChange"
-      :current-page="page.Index"
-      :page-sizes="[10, 20, 50]"
-      :page-size="page.Size"
-      :pager-count="5"
-      :layout="'total, sizes, prev, pager, next, jumper'"
-      :total="pageData.Total"
-      background
-    />
+      <el-table-column v-if="showCheckBox" type="selection"></el-table-column>
+      <el-table-column
+        v-if="showIndex"
+        label="序号"
+        type="index"
+      ></el-table-column>
+      <slot></slot>
+      <my-page-table-column-search
+        v-if="showSearch"
+        v-model="search"
+        @search="loadData"
+        :width="searchWidth"
+      >
+        <template #default="scope">
+          <slot name="button" v-bind="{ row: scope.row, $index: scope.$index }">
+            <el-button-group>
+              <el-button
+                plain
+                size="mini"
+                type="primary"
+                @click="$emit('edit', scope.$index, scope.row)"
+              >
+                编辑
+              </el-button>
+              <app-button-popover
+                @confirm="$emit('deleteSave', scope.$index, scope.row)"
+              ></app-button-popover>
+            </el-button-group>
+          </slot>
+        </template>
+      </my-page-table-column-search>
+    </el-table>
+    <div style="margin-top: 20px">
+      <el-pagination
+        @size-change="sizeChange"
+        @current-change="currentChange"
+        :current-page="page.Index"
+        :page-sizes="[10, 20, 50]"
+        :page-size="page.Size"
+        :pager-count="5"
+        :layout="'total, sizes, prev, pager, next, jumper'"
+        :total="pageData.Total"
+        background
+      />
+    </div>
   </div>
 </template>
 
@@ -155,3 +157,9 @@ export default defineComponent({
   }
 });
 </script>
+
+<style lang="scss" scoped>
+.my-page-table {
+  width: 100%;
+}
+</style>

@@ -1,5 +1,5 @@
 ﻿<template>
-  <div class="app-top-meun">
+  <div class="vip-top-meun">
     <div class="menu">
       <div class="left">
         <span>{{ title }}</span>
@@ -82,7 +82,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.app-top-meun {
+.vip-top-meun {
   background-color: #14151c;
   display: flex;
   justify-content: space-between;

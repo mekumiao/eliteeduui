@@ -108,8 +108,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .app-work-tab {
-  margin: 10px auto;
-
   .el-tag {
     margin-right: 5px;
     border-radius: 3px;

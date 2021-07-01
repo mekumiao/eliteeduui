@@ -26,7 +26,7 @@
   rules: {
     "no-console": "off",
     "no-debugger": "off",
-    "vue/no-multiple-template-root": "off",
+    // "vue/no-multiple-template-root": "off",
     "comma-dangle": "off",
     "vue/no-v-model-argument": "off",
     "@typescript-eslint/no-explicit-any": "warn",

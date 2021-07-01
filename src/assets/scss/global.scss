@@ -1,4 +1,5 @@
 ﻿/* 全局样式 */
+@charset "UTF-8";
 html,
 body,
 #app {
@@ -18,45 +19,7 @@ body,
   font-weight: 200;
 }
 
-/* 自定义进度条 */
-#nprogress .bar {
-  background: #409eff !important;
-}
-
-.el-card {
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15) !important;
-}
-
-.message_cust_success {
-  max-width: 300px;
-}
-
-.message_cust_error {
-  max-width: 95%;
-}
-
-.message_cust_info {
-  max-width: 95%;
-}
-
-/* 隐藏滚动条,同时能够滚动*/
-// .hidden_scroll::-webkit-scrollbar {
-//   display: none;
-// }
-
-::-webkit-scrollbar {
-  // display: none;
-  width: 10px;
-  height: 10px;
-  // border-radius: 50px;
-  border-radius: 25px;
-}
-/*滚动条的滑块 */
-::-webkit-scrollbar-thumb {
-  background-color: #a1a3a9;
-  border-radius: 5px;
-}
-
+// 重置标题标签样式
 h1,
 h2,
 h3,
@@ -67,6 +30,7 @@ h6 {
   padding: 2px auto;
 }
 
+// 重置animate动画特效
 :root {
   --animate-duration: 400ms;
   --animate-delay: 0ms;
@@ -78,4 +42,39 @@ h6 {
 
 .animate__animated.animate__fadeOut {
   --animate-duration: 50ms;
+}
+
+// 进度条样式
+#nprogress .bar {
+  background: #409eff !important;
+}
+
+// Chrome浏览器滚动条样式
+::-webkit-scrollbar {
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 25px;
+}
+
+// 滚动条的滑块按钮
+::-webkit-scrollbar-thumb {
+  background-color: #a1a3a9 !important;
+  border-radius: 5px;
+  transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #848586 !important;
+}
+
+// 滚动条的轨道
+::-webkit-scrollbar-track {
+  background-color: #f6f6f6;
+}
+
+// 滚动条的上下两端的按钮
+::-webkit-scrollbar-button {
+  height: 0px;
+  width: 0;
 }
