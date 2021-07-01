@@ -1,14 +1,21 @@
-﻿import { ref } from "vue";
+﻿import { Ref, ref } from "vue";
 
-export class Timer {
-  public Total = ref<number>(0);
+export class TimerDown {
+  protected total: Ref<number> | undefined;
   protected intervalNumber: NodeJS.Timeout | undefined;
+  public get Total(): Ref<number> {
+    return this.total || ref(60);
+  }
 
-  public Start(total: number): Timer {
-    this.Total.value = total;
+  public Start(total: number): TimerDown {
+    this.total = ref(total);
     this.intervalNumber = setInterval(() => {
-      this.Total.value--;
-      if (this.Total.value <= 0) {
+      if (this.total) {
+        this.total.value--;
+        if (this.Total.value <= 0) {
+          this.Stop();
+        }
+      } else {
         this.Stop();
       }
     }, 1000);

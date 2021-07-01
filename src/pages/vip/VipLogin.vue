@@ -95,7 +95,7 @@
 <script lang="ts">
 import { LoginInput, NamePhoneCodeInput } from "@/apis/adminAuthApi";
 import { defineComponent, reactive, ref } from "vue";
-import { Timer } from "@/hooks/useTimer";
+import { TimerDown } from "@/hooks/useTimer";
 import { apiAdminAuth } from "@/apis/adminAuthApi";
 import { decodeAccessToken } from "@/utils/my-token";
 import { useRoute } from "vue-router";
@@ -125,8 +125,8 @@ export default defineComponent({
   name: "VipLogin",
   setup() {
     const passwordLogin = ref(true);
-    const timer = new Timer();
-    const timerTotal = timer.Total;
+    const timerDown = new TimerDown();
+    const timerTotal = timerDown.Total;
     const phoneInput = reactive<NamePhoneCodeInput>({} as NamePhoneCodeInput);
     const loginInput = reactive<LoginInput>({} as LoginInput);
     const account = useRoute().query.account as string;
@@ -136,7 +136,7 @@ export default defineComponent({
     }
     const isLoging = ref(false);
     return {
-      timer,
+      timerDown,
       timerTotal,
       passwordLogin,
       phoneInput,
@@ -176,7 +176,7 @@ export default defineComponent({
         async (error) => {
           if (!error) {
             try {
-              this.timer.Start(60);
+              this.timerDown.Start(60);
               await apiAdminAuth.SendVerificationCode(this.phoneInput.Phone);
             } catch (error) {
               console.error(error);
