@@ -120,7 +120,8 @@ aside::-webkit-scrollbar {
   display: none;
 }
 
-aside::scrollbar {
-  display: none;
+aside {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 </style>
