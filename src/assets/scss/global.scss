@@ -41,7 +41,7 @@ h6 {
 }
 
 .animate__animated.animate__fadeOut {
-  --animate-duration: 50ms;
+  --animate-duration: 10ms;
 }
 
 // 进度条样式
@@ -60,8 +60,8 @@ h6 {
 ::-webkit-scrollbar-thumb {
   background-color: #a1a3a9 !important;
   border-radius: 5px;
-  transition: all 0.2s;
-  -webkit-transition: all 0.2s;
+  transition: all 200ms;
+  -webkit-transition: all 200ms;
 }
 
 ::-webkit-scrollbar-thumb:hover {

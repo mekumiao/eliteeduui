@@ -112,8 +112,8 @@ export default defineComponent({
 }
 
 aside {
-  transition: width 0.3s ease-in-out;
-  -webkit-transition: width 0.3s ease-in-out;
+  transition: width 300ms ease-in-out;
+  -webkit-transition: width 300ms ease-in-out;
 }
 
 aside::-webkit-scrollbar {
