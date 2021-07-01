@@ -1,5 +1,5 @@
-﻿import { message } from "@/plugins/el-message";
-import { AxiosInstance } from "axios";
+﻿import type { AxiosInstance } from "axios";
+import { message } from "@/plugins/el-message";
 import ajax from "@/utils/my-ajax";
 
 /**基础API */

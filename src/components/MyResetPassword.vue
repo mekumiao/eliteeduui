@@ -36,7 +36,7 @@ import {
   apiAdminAuth,
   ResetPasswordByPhoneCodeInput
 } from "@/apis/adminAuthApi";
-import { Timer } from "@/hooks/useTimer";
+import { TimerDown } from "@/hooks/useTimer";
 import { sleep } from "@/utils/my-thread";
 import { defineComponent, reactive, ref } from "vue";
 
@@ -45,10 +45,10 @@ export default defineComponent({
   emits: ["success"],
   setup() {
     const isLoging = ref(false);
-    const timer = new Timer();
-    const timerTotal = timer.Total;
+    const timerDown = new TimerDown();
+    const timerTotal = timerDown.Total;
     const resetPassword = reactive({} as ResetPasswordByPhoneCodeInput);
-    return { isLoging, timer, timerTotal, resetPassword };
+    return { isLoging, timerDown, timerTotal, resetPassword };
   },
   methods: {
     async save(): Promise<void> {
@@ -70,7 +70,7 @@ export default defineComponent({
     async sendCode(): Promise<void> {
       this.$useRules("form").validateField("Phone", async (error) => {
         if (!error) {
-          this.timer.Start(60);
+          this.timerDown.Start(60);
           await apiAdminAuth.SendVerificationCodeByResetPassword(
             this.resetPassword.Phone
           );

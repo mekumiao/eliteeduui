@@ -1,10 +1,10 @@
 ﻿import { ref } from "vue";
 
-export class Timer {
+export class TimerDown {
   public Total = ref<number>(0);
   protected intervalNumber: NodeJS.Timeout | undefined;
 
-  public Start(total: number): Timer {
+  public Start(total: number): TimerDown {
     this.Total.value = total;
     this.intervalNumber = setInterval(() => {
       this.Total.value--;
