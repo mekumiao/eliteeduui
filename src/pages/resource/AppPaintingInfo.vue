@@ -71,6 +71,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="资源路径" prop="SourcePath">
+          <el-input v-model="dialogCreate.formData.SourcePath"></el-input>
           <my-file-upload
             v-model="dialogCreate.formData.SourcePath"
             accept=".zip"
@@ -116,6 +117,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="资源路径" prop="SourcePath">
+          <el-input v-model="dialogUpdate.formData.SourcePath"></el-input>
           <my-file-upload
             v-model="dialogUpdate.formData.SourcePath"
             accept=".zip"
