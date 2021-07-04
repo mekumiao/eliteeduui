@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --mode development --dashboard",
-    "build": "vue-cli-service build --mode production --target app --dashboard --no-clean",
+    "build": "vue-cli-service build --mode production --target app --dashboard",
     "lint": "vue-cli-service lint --no-fix",
     "config": "tsc ./src/config/app-setting.ts"
   },
@@ -13,14 +13,16 @@
     "axios": "^0.21.1",
     "core-js": "^3.15.2",
     "echarts": "^5.1.2",
-    "element-plus": "^1.0.2-beta.53",
+    "element-plus": "^1.0.2-beta.54",
     "jwt-decode": "^3.1.2",
     "lodash": "^4.17.21",
     "nprogress": "^0.2.0",
-    "vue": "^3.1.2",
+    "vue": "^3.1.4",
     "vue-router": "^4.0.10",
     "vuex": "^4.0.2",
-    "vuex-persistedstate": "^4.0.0-beta.3"
+    "vuex-persistedstate": "^4.0.0-beta.3",
+    "vxe-table": "^4.0.23",
+    "xe-utils": "^3.3.0"
   },
   "devDependencies": {
     "@types/nprogress": "^0.2.0",
@@ -32,7 +34,7 @@
     "@vue/cli-plugin-typescript": "^4.5.13",
     "@vue/cli-plugin-vuex": "^4.5.13",
     "@vue/cli-service": "^4.5.13",
-    "@vue/compiler-sfc": "^3.1.2",
+    "@vue/compiler-sfc": "^3.1.4",
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^7.0.0",
     "eslint": "^6.8.0",
