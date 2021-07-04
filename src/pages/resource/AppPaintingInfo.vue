@@ -72,10 +72,10 @@
         </el-form-item>
         <el-form-item label="资源路径" prop="SourcePath">
           <el-input v-model="dialogCreate.formData.SourcePath"></el-input>
-          <my-file-upload
+          <!-- <my-file-upload
             v-model="dialogCreate.formData.SourcePath"
             accept=".zip"
-          ></my-file-upload>
+          ></my-file-upload> -->
         </el-form-item>
         <el-form-item label="预览图" prop="PreviewPhoto">
           <my-image-upload
@@ -118,10 +118,10 @@
         </el-form-item>
         <el-form-item label="资源路径" prop="SourcePath">
           <el-input v-model="dialogUpdate.formData.SourcePath"></el-input>
-          <my-file-upload
+          <!-- <my-file-upload
             v-model="dialogUpdate.formData.SourcePath"
             accept=".zip"
-          ></my-file-upload>
+          ></my-file-upload> -->
         </el-form-item>
         <el-form-item label="预览图" prop="PreviewPhoto">
           <my-image-upload
