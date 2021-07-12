@@ -30,7 +30,7 @@ const menuList: MenuItem[] = [
       {
         title: "角色管理",
         icon: "el-icon-document",
-        index: "/system/role"
+        index: "/system/roleinfo"
       },
       {
         title: "教师管理",
