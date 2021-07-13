@@ -4,7 +4,7 @@
       <el-card>
         <el-button-group>
           <el-button type="success" @click="create" size="mini">
-            添加VIP
+            添加
           </el-button>
         </el-button-group>
       </el-card>
@@ -54,7 +54,7 @@
     </el-card>
 
     <app-edit-dialog
-      title="新增VIP用户"
+      title="新增会员"
       v-model="dialogCreate.show"
       @save="createSave"
     >
@@ -74,7 +74,7 @@
     </app-edit-dialog>
 
     <app-edit-dialog
-      title="修改VIP用户"
+      title="修改会员"
       v-model="dialogUpdate.show"
       @save="updateSave"
     >

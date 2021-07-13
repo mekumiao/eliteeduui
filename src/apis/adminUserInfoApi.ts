@@ -1,4 +1,32 @@
-﻿import { ApiBase } from "./apiBase";
+﻿import { ApiBillBase } from "./apiBase";
+
+export interface UserInfoInput {
+  FullName: string;
+  NickName: string;
+  Gender: number;
+  Age: number;
+  Portrait: string;
+  Birthday?: Date;
+  PassWord: string;
+  RoleIds?: string[];
+  Phone: string;
+  Email: string;
+  Identity?: string;
+}
+
+export interface UserInfoUpdInput {
+  FullName?: string;
+  NickName?: string;
+  Gender?: number;
+  Age?: number;
+  Portrait?: string;
+  Birthday?: Date;
+  PassWord?: string;
+  RoleIds?: string[];
+  Phone?: string;
+  Email?: string;
+  Identity?: string;
+}
 
 export interface RoleItem {
   RoleId: string;
@@ -20,7 +48,11 @@ export interface UserInfoOutput extends PublicWithKeyOutput {
 }
 
 /**用户信息接口 */
-class UserInfoApi extends ApiBase {
+class UserInfoApi extends ApiBillBase<
+  UserInfoInput,
+  UserInfoUpdInput,
+  UserInfoOutput
+> {
   public baseUrl = "/api/admin/UserInfo/";
   /**获取当前用户信息 */
   public GetCurrentUserInfo(): Promise<UserInfoOutput> {

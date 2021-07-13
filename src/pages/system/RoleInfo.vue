@@ -40,7 +40,7 @@
         <el-form-item label="描述" prop="Describe">
           <el-input v-model="dialogCreate.formData.Describe"></el-input>
         </el-form-item>
-        <el-form-item label="是否管理员" prop="IsAdmin">
+        <el-form-item label="管理员" prop="IsAdmin">
           <el-radio-group v-model="dialogCreate.formData.IsAdmin">
             <el-radio :label="true">是</el-radio>
             <el-radio :label="false">否</el-radio>
@@ -64,7 +64,7 @@
         <el-form-item label="描述" prop="Describe">
           <el-input v-model="dialogUpdate.formData.Describe"></el-input>
         </el-form-item>
-        <el-form-item label="是否管理员" prop="IsAdmin">
+        <el-form-item label="管理员" prop="IsAdmin">
           <el-radio-group v-model="dialogUpdate.formData.IsAdmin">
             <el-radio :label="true">是</el-radio>
             <el-radio :label="false">否</el-radio>
@@ -85,13 +85,19 @@ import {
 } from "@/apis/adminRoleInfoApi";
 
 const rules = reactive({
-  Name: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
-  Remark: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
-  Value: [{ required: true, message: "必填", trigger: "change" }] as FormRule[],
-  Group: [{ required: true, message: "必填", trigger: "change" }] as FormRule[]
+  RoleName: [
+    { required: true, message: "必填", trigger: "blur" }
+  ] as FormRule[],
+  AnotherName: [
+    { required: true, message: "必填", trigger: "blur" }
+  ] as FormRule[],
+  IsAdmin: [
+    { required: true, message: "必填", trigger: "change" }
+  ] as FormRule[]
 });
 
 export default defineComponent({
+  name: "RoleInfo",
   setup() {
     const isLoad = ref(true);
     const dialogCreate = reactive<DialogData<RoleInfoInput>>({

@@ -38,12 +38,12 @@ const menuList: MenuItem[] = [
         index: "/system/teacher"
       },
       {
-        title: "机构人员",
+        title: "用户管理",
         icon: "el-icon-document",
-        index: "/system/employee"
+        index: "/system/userinfo"
       },
       {
-        title: "VIP管理",
+        title: "会员管理",
         icon: "el-icon-document",
         index: "/system/vipInfo"
       }

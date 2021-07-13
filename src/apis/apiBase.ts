@@ -81,5 +81,62 @@ export abstract class ApiBase {
     }
   }
 }
+/**提供基础增删改业务逻辑的抽象类 */
+export abstract class ApiBillBase<TInput, TUpdInput, TOutput> extends ApiBase {
+  /**
+   *创建
+   * @param input 输入模型
+   * @returns 主键模型
+   */
+  public Create(input: TInput): Promise<PidKeyItem> {
+    const url = this.mergeUrl("Create");
+    return this.tryCatchCall(() => this.ajax.post(url, input));
+  }
+  /**
+   * 修改
+   * @param id ID
+   * @param timestamp 时间按错
+   * @param input 输入模型
+   * @returns 消息码
+   */
+  public Update(
+    id: string,
+    timestamp: string,
+    input: TUpdInput
+  ): Promise<MsgOutput> {
+    const url = this.mergeUrlParame("Update", id, timestamp);
+    return this.tryCatchCall(() => this.ajax.put(url, input));
+  }
+  /**
+   * 删除
+   * @param id ID
+   * @param timestamp 时间戳
+   * @returns 消息码
+   */
+  public Delete(id: string, timestamp: string): Promise<MsgOutput> {
+    const url = this.mergeUrlParame("Delete", id, timestamp);
+    return this.tryCatchCall(() => this.ajax.delete(url));
+  }
+  /**
+   * 条件查询
+   * @param input 输入模型
+   * @returns 结果
+   */
+  public QueryPage(
+    input: ObjFilterInput<TOutput>
+  ): Promise<PageOutput<TOutput>> {
+    const url = this.mergeUrlParame("QueryPage");
+    return this.tryCatchCall(() => this.ajax.post(url, input));
+  }
+  /**
+   * 根据主键获取数据
+   * @param id ID
+   * @returns 结果
+   */
+  public Single(id: string): Promise<TOutput> {
+    const url = this.mergeUrlParame("Single", id);
+    return this.tryCatchCall(() => this.ajax.get(url));
+  }
+}
 
 export default {};
