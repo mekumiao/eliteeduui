@@ -14,7 +14,6 @@
       >
         <el-table-column label="名称" prop="Name"></el-table-column>
         <el-table-column label="描述" prop="Remark"></el-table-column>
-        <el-table-column label="资源路径" prop="SourcePath"></el-table-column>
         <el-table-column label="封面图片" min-width="150" align="center">
           <template #default="scope">
             <el-image
