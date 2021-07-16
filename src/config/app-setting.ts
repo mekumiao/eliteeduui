@@ -15,7 +15,7 @@
       : "http://localhost:8080/"
 };
 
-// setting.apiBaseURL = "https://an.elitereadinglibrary.com/";
+// setting.apiBaseURL = "http://an.elitereadinglibrary.com/";
 // setting.apiBaseURL = "http://localhost:8080/";
 
 export default setting;
