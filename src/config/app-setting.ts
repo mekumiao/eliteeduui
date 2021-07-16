@@ -11,11 +11,11 @@
   apiTimeout: process.env.NODE_ENV === "production" ? 20000 : undefined,
   apiBaseURL:
     process.env.NODE_ENV === "production"
-      ? "http://www.elitereadinglibrary.com/"
+      ? "http://an.elitereadinglibrary.com/"
       : "http://localhost:8080/"
 };
 
-// setting.apiBaseURL = "http://http://www.elitereadinglibrary.com/";
+// setting.apiBaseURL = "http://an.elitereadinglibrary.com/";
 // setting.apiBaseURL = "http://localhost:8080/";
 
 export default setting;
