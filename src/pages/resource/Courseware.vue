@@ -223,7 +223,7 @@ export default defineComponent({
           ]
         }
       };
-      return apiEduCourseware.QueryPageCourseware(filter);
+      return apiEduCourseware.QueryPage(filter);
     },
     /**加载资源分类 */
     async loadResourceType(flag?: boolean): Promise<void> {
@@ -248,7 +248,7 @@ export default defineComponent({
       try {
         await this.$useRules("formCreate").validate();
         this.$loading();
-        await apiEduCourseware.CreateCourseware(this.dialogCreate.formData);
+        await apiEduCourseware.Create(this.dialogCreate.formData);
         close();
         this.isLoad = true;
       } finally {
@@ -267,7 +267,7 @@ export default defineComponent({
       try {
         await this.$useRules("formUpdate").validate();
         this.$loading();
-        await apiEduCourseware.UpdateCourseware(
+        await apiEduCourseware.Update(
           this.dialogUpdate.oldData.Pid,
           this.dialogUpdate.oldData.Timestamp,
           this.dialogUpdate.formData
@@ -280,7 +280,7 @@ export default defineComponent({
     },
     /**保存删除 */
     async deleteSave(_index: number, row: CoursewareOutput): Promise<void> {
-      await apiEduCourseware.DeleteCourseware(row.Pid, row.Timestamp);
+      await apiEduCourseware.Delete(row.Pid, row.Timestamp);
       this.isLoad = true;
     },
     /**文件上传成功后设置文档的类型 */

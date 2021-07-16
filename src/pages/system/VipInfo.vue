@@ -144,7 +144,7 @@ export default defineComponent({
           ]
         }
       };
-      return apiVipInfo.QueryPageVipInfo(filter);
+      return apiVipInfo.QueryPage(filter);
     },
     /**审核通过 */
     async Auth(_index: number, row: VipInfoOutput) {
@@ -170,7 +170,7 @@ export default defineComponent({
     async deleteSave(_index: number, row: VipInfoOutput) {
       try {
         this.$loading();
-        await apiVipInfo.DeleteVipInfoById(row.Pid);
+        await apiVipInfo.Delete(row.Pid);
       } finally {
         this.$closeLoading();
         this.isLoad = true;
@@ -187,7 +187,7 @@ export default defineComponent({
       try {
         await this.$useRules("formCreate").validate();
         this.$loading();
-        await apiVipInfo.CreateVipInfo(this.dialogCreate.formData);
+        await apiVipInfo.Create(this.dialogCreate.formData);
         close();
         this.isLoad = true;
       } finally {
@@ -206,7 +206,7 @@ export default defineComponent({
       try {
         this.$loading();
         await this.$useRules("formUpdate").validate();
-        await apiVipInfo.UpdateVipInfo(
+        await apiVipInfo.Update(
           this.dialogUpdate.oldData.Pid,
           this.dialogUpdate.oldData.Timestamp,
           this.dialogUpdate.formData

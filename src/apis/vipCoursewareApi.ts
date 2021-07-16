@@ -20,10 +20,10 @@ class CoursewareApi extends ApiBase {
    * @param input 查询模型
    * @returns 分页输出模型
    */
-  public QueryPageCourseware(
+  public QueryPage(
     input: ObjFilterInput<CoursewareOutput>
   ): Promise<PageOutput<CoursewareOutput>> {
-    const url = this.mergeUrl("QueryPageCourseware");
+    const url = this.mergeUrl("QueryPage");
     return this.tryCatchCall(() => this.ajax.post(url, input));
   }
 }

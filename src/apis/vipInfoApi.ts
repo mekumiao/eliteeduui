@@ -24,18 +24,18 @@ class VipInfo extends ApiBase {
    * 查询VIP信息
    * @param input 条件模型
    */
-  public QueryPageVipInfo(
+  public QueryPage(
     input: ObjFilterInput<UserInfoOutput>
   ): Promise<PageOutput<VipInfoOutput>> {
-    const url = this.mergeUrl("QueryPageVipInfo");
+    const url = this.mergeUrl("QueryPage");
     return this.tryCatchCall(() => this.ajax.post(url, input));
   }
   /**
    * 创建VIP
    * @param input VIP输入模型
    */
-  public CreateVipInfo(input: VipInfoInput): Promise<PidKeyItem> {
-    const url = this.mergeUrl("CreateVipInfo");
+  public Create(input: VipInfoInput): Promise<PidKeyItem> {
+    const url = this.mergeUrl("Create");
     return this.tryCatchCall(() => this.ajax.post(url, input));
   }
   /**
@@ -44,12 +44,12 @@ class VipInfo extends ApiBase {
    * @param timestamp 时间戳
    * @param input 输入模型
    */
-  public UpdateVipInfo(
+  public Update(
     id: string,
     timestamp: string,
     input: VipInfoUpdInput
   ): Promise<MsgOutput> {
-    const url = this.mergeUrlParame("UpdateVipInfo", id, timestamp);
+    const url = this.mergeUrlParame("Update", id, timestamp);
     return this.tryCatchCall(() => this.ajax.put(url, input));
   }
   /**
@@ -72,8 +72,8 @@ class VipInfo extends ApiBase {
    * 删除VIP
    * @param id ID
    */
-  public DeleteVipInfoById(id: string): Promise<MsgOutput> {
-    const url = this.mergeUrlParame("DeleteVipInfoById", id);
+  public Delete(id: string): Promise<MsgOutput> {
+    const url = this.mergeUrlParame("Delete", id);
     return this.tryCatchCall(() => this.ajax.delete(url));
   }
 }

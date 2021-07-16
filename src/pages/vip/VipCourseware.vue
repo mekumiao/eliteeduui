@@ -69,7 +69,7 @@ export default defineComponent({
         },
         Page: page
       };
-      return await apiVipCourseware.QueryPageCourseware(filter);
+      return await apiVipCourseware.QueryPage(filter);
     }
   }
 });
