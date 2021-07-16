@@ -8,7 +8,7 @@ const resolve = (dir) => {
 };
 
 module.exports = {
-  publicPath: process.env.NODE_ENV === "production" ? "/adminpage" : "/",
+  publicPath: process.env.NODE_ENV === "production" ? "/admin" : "/",
   outputDir: "dist", // 输出文件目录
   productionSourceMap: true, // 生产环境是否生成 sourceMap 文件
   assetsDir: "", //静态资源生成目录
