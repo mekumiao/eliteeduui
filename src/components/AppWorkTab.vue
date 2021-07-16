@@ -12,8 +12,8 @@
         :disable-transitions="false"
         :closable="idx !== 0"
         :class="idx === opendRouter.active ? 'tab-active' : ''"
-        @close="handleClose(tab, idx)"
-        @click.stop="handleClick(tab.path)"
+        @close="removeTab(idx)"
+        @click.stop="changeTab(tab.path)"
       >
         {{ tab.name }}
       </el-tag>
@@ -22,11 +22,11 @@
           <el-dropdown-item command="right" icon="el-icon-circle-plus">
             关闭右侧
           </el-dropdown-item>
-          <el-dropdown-item command="all" icon="el-icon-circle-plus">
-            全部关闭
-          </el-dropdown-item>
           <el-dropdown-item command="other" icon="el-icon-circle-plus">
             关闭其他
+          </el-dropdown-item>
+          <el-dropdown-item command="all" icon="el-icon-circle-plus">
+            全部关闭
           </el-dropdown-item>
         </el-dropdown-menu>
       </template>
@@ -37,35 +37,21 @@
 <script lang="ts">
 import { defineComponent, onBeforeMount } from "vue";
 import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from "vue-router";
-import { TabInfo, TabItem, useStore } from "@/store/index";
-import { getRoutePath } from "@/plugins/my-routeMap";
-import _ from "lodash";
+import { TabInfo, useStore } from "@/store/index";
 
 export default defineComponent({
   name: "AppWorkTab",
   setup() {
     const store = useStore();
-    const commitPath = (path: string): void => {
-      const route = getRoutePath(path);
-      const routeInfo = _.last(route);
-      if (routeInfo) {
-        store.commit("changeOpendRouterPaths", {
-          path: path,
-          name: routeInfo.title
-        });
-      }
-    };
     onBeforeMount(() => {
       const path = useRoute().path;
-      commitPath(path);
+      store.commit("onlyAddOpenRouterPaths", path);
     });
-
     onBeforeRouteUpdate((to) => {
-      commitPath(to.path);
+      store.commit("onlyAddOpenRouterPaths", to.path);
     });
-
     onBeforeRouteLeave((to) => {
-      commitPath(to.path);
+      store.commit("onlyAddOpenRouterPaths", to.path);
     });
     return {};
   },
@@ -75,32 +61,22 @@ export default defineComponent({
     }
   },
   methods: {
-    handleClose(_tab: TabItem, index: number): void {
-      // layer.confirm(
-      //   "确认移除标签?",
-      //   { btn: ["确认", "取消"], shadeClose: true },
-      //   (idx) => {
-      //     this.removeTab(index);
-      //     layer.close(idx);
-      //   }
-      // );
-      this.removeTab(index);
-    },
-    handleClick(path: string): void {
-      this.$router.push(path);
+    changeTab(path: string): void {
+      this.$storeMutations.changeOpendRouterPaths(path);
     },
     removeTab(index: number) {
       this.$storeMutations.removeOpendRouterPaths(index);
-      const tab =
-        this.$store.state.opendRouter.tabs[
-          this.$store.state.opendRouter.active
-        ];
-      if (this.$route.path !== tab.path) {
-        this.$router.push(tab.path);
-      }
     },
     handleCommand(command: string, idx: number) {
-      layer.msg(`关闭${command}:当前位置:${idx}`);
+      if (command === "right") {
+        this.$storeMutations.removeRightOpendRouterPaths(idx);
+      } else if (command === "other") {
+        this.$storeMutations.removeOtherOpendRouterPaths(idx);
+      } else if (command === "all") {
+        this.$storeMutations.resetOpendRouterPaths();
+      } else {
+        layer.msg(`操作:${command}.索引:${idx}`);
+      }
     }
   }
 });
