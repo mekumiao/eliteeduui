@@ -6,16 +6,16 @@
   },
   homeMenuOpenWidth: 250,
   homeMenuShrinkWidth: 70,
-  defaultSourceHost: "http://file.elitereadinglibrary.com/files/",
-  defaultUploadHost: "http://file.elitereadinglibrary.com/upload/",
+  defaultSourceHost: "https://file.elitereadinglibrary.com/files/",
+  defaultUploadHost: "https://file.elitereadinglibrary.com/upload/",
   apiTimeout: process.env.NODE_ENV === "production" ? 20000 : undefined,
   apiBaseURL:
     process.env.NODE_ENV === "production"
-      ? "http://an.elitereadinglibrary.com/"
+      ? "https://an.elitereadinglibrary.com/"
       : "http://localhost:8080/"
 };
 
-// setting.apiBaseURL = "http://an.elitereadinglibrary.com/";
+// setting.apiBaseURL = "https://an.elitereadinglibrary.com/";
 // setting.apiBaseURL = "http://localhost:8080/";
 
 export default setting;
