@@ -6,16 +6,16 @@
   },
   homeMenuOpenWidth: 250,
   homeMenuShrinkWidth: 70,
-  defaultSourceHost: "http://file.linshengweb.com/files/",
-  defaultUploadHost: "http://file.linshengweb.com/upload/",
+  defaultSourceHost: "http://file.elitereadinglibrary.com/files/",
+  defaultUploadHost: "http://file.elitereadinglibrary.com/upload/",
   apiTimeout: process.env.NODE_ENV === "production" ? 20000 : undefined,
   apiBaseURL:
     process.env.NODE_ENV === "production"
-      ? "http://an.linshengweb.com:8188/"
+      ? "http://http://www.elitereadinglibrary.com/"
       : "http://localhost:8080/"
 };
 
-// setting.apiBaseURL = "http://an.linshengweb.com:8188/";
+// setting.apiBaseURL = "http://http://www.elitereadinglibrary.com/";
 // setting.apiBaseURL = "http://localhost:8080/";
 
 export default setting;
