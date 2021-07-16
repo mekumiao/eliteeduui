@@ -11,7 +11,7 @@
   apiTimeout: process.env.NODE_ENV === "production" ? 20000 : undefined,
   apiBaseURL:
     process.env.NODE_ENV === "production"
-      ? "http://http://www.elitereadinglibrary.com/"
+      ? "http://www.elitereadinglibrary.com/"
       : "http://localhost:8080/"
 };
 
