@@ -225,11 +225,11 @@ const store = createStore<State>({
         await apiAdminSystemConfig.GetSystemConfigByNameNoThrow("uploadurl");
       context.commit(
         "setSourceHost",
-        sourceHost?.Value?.Value ?? setting.defaultSourceHost
+        sourceHost.Value ?? setting.defaultSourceHost
       );
       context.commit(
         "setUploadHost",
-        uploadHost?.Value?.Value ?? setting.defaultUploadHost
+        uploadHost.Value ?? setting.defaultUploadHost
       );
     }
   },

@@ -29,24 +29,22 @@ class SystemConfigApi extends ApiBillBase<
 > {
   public baseUrl = "api/admin/SystemConfig";
   /**
-   * 根据键获取配置
+   * 根据名称获取配置
    * @param name 配置名称
    * @returns 配置信息
    */
-  public GetSystemConfigByName(
-    name: string
-  ): Promise<ValueItem<SystemConfigOutput>> {
+  public GetSystemConfigByName(name: string): Promise<SystemConfigOutput> {
     const url = this.mergeUrlParame("GetSystemConfigByName", name);
     return this.tryCatchCall(() => this.ajax.get(url));
   }
   /**
-   * 根据键获取配置(再store中调用,不需要显示错误)
+   * 根据名称获取配置(再store中调用,不需要显示错误)
    * @param name 配置名称
    * @returns 配置信息
    */
   public GetSystemConfigByNameNoThrow(
     name: string
-  ): Promise<ValueItem<SystemConfigOutput>> {
+  ): Promise<SystemConfigOutput> {
     const url = this.mergeUrlParame("GetSystemConfigByName", name);
     return this.tryCatchCall(() => this.ajax.get(url), false);
   }
