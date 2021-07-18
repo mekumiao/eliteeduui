@@ -32,6 +32,13 @@
         </el-form-item>
       </el-form>
     </div>
+    <div class="beian">
+      <span>
+        粤ICP备
+        <a href="https://beian.miit.gov.cn/" target="_blank">2021099358</a>
+        号-1
+      </span>
+    </div>
   </div>
 </template>
 
@@ -127,6 +134,24 @@ export default defineComponent({
   -webkit-filter: brightness(0.9);
   -o-filter: brightness(0.9);
   -moz-filter: brightness(0.9);
+}
+
+.beian {
+  position: absolute;
+  width: 400px;
+  text-align: center;
+  left: 50%;
+  bottom: 20px;
+  transform: translate(-50%, 0);
+
+  span {
+    font-weight: 300;
+    font-size: 12px;
+
+    a {
+      color: black;
+    }
+  }
 }
 
 .box {
