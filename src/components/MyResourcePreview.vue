@@ -3,7 +3,7 @@
     <a
       v-if="resourceType === 1"
       target="_blank"
-      :href="'http://ow365.cn/?i=24932&furl=' + previewUrl"
+      :href="'http://ow365.cn/?i=25220&furl=' + previewUrl"
     >
       点击预览
     </a>
