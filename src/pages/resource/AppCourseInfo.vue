@@ -41,6 +41,18 @@
             <el-tag v-else type="warning">否</el-tag>
           </template>
         </el-table-column>
+        <el-table-column label="体验课程">
+          <template #default="scope">
+            <el-tag v-if="scope.row.IsTest" type="success">是</el-tag>
+            <el-tag v-else type="warning">否</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="推送到APP">
+          <template #default="scope">
+            <el-tag v-if="scope.row.IsPushApp" type="success">是</el-tag>
+            <el-tag v-else type="warning">否</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column label="发布时间" prop="LastPublish"></el-table-column>
         <my-page-table-column-base></my-page-table-column-base>
       </my-page-table>
@@ -58,31 +70,59 @@
         :model="dialogCreate.formData"
         :rules="rules"
       >
-        <el-form-item label="名称" prop="Name">
-          <el-input v-model="dialogCreate.formData.Name" />
-        </el-form-item>
-        <el-form-item label="描述" prop="Remark">
-          <el-input v-model="dialogCreate.formData.Remark" />
-        </el-form-item>
-        <el-form-item label="课程分类">
-          <el-select
-            v-model="dialogCreate.formData.CourseClassifyPid"
-            placeholder="请选择课程分类"
-          >
-            <el-option
-              v-for="(item, index) in classify.DataList"
-              :key="index"
-              :label="item.Label"
-              :value="item.Value"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="封面图片">
-          <my-image-upload
-            v-model="dialogCreate.formData.CoverPhoto"
-          ></my-image-upload>
-        </el-form-item>
+        <el-row :gutter="20">
+          <el-col :span="6">
+            <el-form-item label="名称" prop="Name">
+              <el-input v-model="dialogCreate.formData.Name" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="课程分类">
+              <el-select
+                v-model="dialogCreate.formData.CourseClassifyPid"
+                placeholder="请选择课程分类"
+              >
+                <el-option
+                  v-for="(item, index) in classify.DataList"
+                  :key="index"
+                  :label="item.Label"
+                  :value="item.Value"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="体验课程">
+              <el-switch v-model="dialogCreate.formData.IsTest"></el-switch>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="推送到APP" label-width="100px">
+              <el-switch v-model="dialogCreate.formData.IsPushApp"></el-switch>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="描述" prop="Remark">
+              <el-input
+                type="textarea"
+                v-model="dialogCreate.formData.Remark"
+                :autosize="{ minRows: 2, maxRows: 4 }"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-form-item label="封面图片">
+              <my-image-upload
+                v-model="dialogCreate.formData.CoverPhoto"
+              ></my-image-upload>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
       <el-button type="success" @click="addCreateDetail">添加</el-button>
       <el-table :data="dialogCreate.formData.CourseDetails">
@@ -124,31 +164,58 @@
         :model="dialogUpdate.formData"
         :rules="rules"
       >
-        <el-form-item label="名称" prop="Name">
-          <el-input v-model="dialogUpdate.formData.Name" />
-        </el-form-item>
-        <el-form-item label="描述" prop="Remark">
-          <el-input v-model="dialogUpdate.formData.Remark" />
-        </el-form-item>
-        <el-form-item label="课程分类">
-          <el-select
-            v-model="dialogUpdate.formData.CourseClassifyPid"
-            placeholder="请选择课程分类"
-          >
-            <el-option
-              v-for="(item, index) in classify.DataList"
-              :key="index"
-              :label="item.Label"
-              :value="item.Value"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="封面图片">
-          <my-image-upload
-            v-model="dialogUpdate.formData.CoverPhoto"
-          ></my-image-upload>
-        </el-form-item>
+        <el-row>
+          <el-col :span="6">
+            <el-form-item label="名称" prop="Name">
+              <el-input v-model="dialogUpdate.formData.Name" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="课程分类">
+              <el-select
+                v-model="dialogUpdate.formData.CourseClassifyPid"
+                placeholder="请选择课程分类"
+              >
+                <el-option
+                  v-for="(item, index) in classify.DataList"
+                  :key="index"
+                  :label="item.Label"
+                  :value="item.Value"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="体验课程">
+              <el-switch v-model="dialogUpdate.formData.IsTest"></el-switch>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="推送到APP" label-width="100px">
+              <el-switch v-model="dialogUpdate.formData.IsPushApp"></el-switch>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-form-item label="描述" prop="Remark">
+              <el-input
+                type="textarea"
+                v-model="dialogUpdate.formData.Remark"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-form-item label="封面图片">
+              <my-image-upload
+                v-model="dialogUpdate.formData.CoverPhoto"
+              ></my-image-upload>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
       <el-button type="success" @click="addUpdateDetail">添加</el-button>
       <el-table :data="dialogUpdate.formData.CourseDetails">

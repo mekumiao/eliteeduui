@@ -62,6 +62,8 @@ export interface CourseInfoOutput extends PublicWithKeyOutput {
   CourseClassifyName: string;
   IsPart: boolean;
   IsTheEnd: boolean;
+  IsTest: boolean;
+  IsPushApp: boolean;
   LastPublish: Date;
   CourseDetails: CourseDetailOutput[];
 }
@@ -82,6 +84,8 @@ export interface CourseInfoInput {
   CourseClassifyName: string;
   IsPart: boolean;
   IsTheEnd: boolean;
+  IsTest: boolean;
+  IsPushApp: boolean;
   LastPublish: Date;
   CourseDetails: CourseDetailInput[];
 }
@@ -101,6 +105,8 @@ export interface CourseInfoUpdInput {
   CourseClassifyName?: string;
   IsPart?: boolean;
   IsTheEnd?: boolean;
+  IsTest?: boolean;
+  IsPushApp?: boolean;
   LastPublish?: Date;
   CourseDetails?: CourseDetailUpdInput[];
 }
