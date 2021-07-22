@@ -12,12 +12,6 @@ declare interface InputError {
   traceId: string;
   errors: Record<string, unknown>;
 }
-/**选项输出模型 */
-declare interface OptionOutput {
-  Label: string;
-  Value: unknown;
-  Disabled?: boolean;
-}
 /**
  * 排序模型
  */
@@ -156,7 +150,7 @@ declare interface OptionFilterInput {
   Tag: string;
   Match?: string;
   Cascade?: string;
-  Page?: PageInput<OptionOutput> | undefined;
+  Page?: PageInput<OptionItem> | undefined;
 }
 /**
  * 对象形式的查询条件模型

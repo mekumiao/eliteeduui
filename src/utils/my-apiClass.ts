@@ -62,13 +62,13 @@ export class MyOptionFilterInput implements OptionFilterInput {
   public Tag: string;
   public Match?: string;
   public Cascade?: string;
-  public Page?: PageInput<OptionOutput>;
+  public Page?: PageInput<OptionItem>;
 
-  public constructor(tag: string) {
-    this.Tag = tag;
+  public constructor(tag?: string) {
+    this.Tag = tag ?? "";
     this.Match = "";
     this.Cascade = "";
-    this.Page = new MyPageInput<OptionOutput>(1, 50);
+    this.Page = new MyPageInput<OptionItem>(1, 50);
   }
 }
 /**

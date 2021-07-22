@@ -32,7 +32,7 @@ export interface CoursewareUpdInput {
   PreviewPhoto?: string;
 }
 /**课件接口 */
-class CoursewareApi extends ApiBillBase<
+class EduCoursewareApi extends ApiBillBase<
   CoursewareInput,
   CoursewareUpdInput,
   CoursewareOutput
@@ -51,4 +51,4 @@ class CoursewareApi extends ApiBillBase<
   }
 }
 
-export const apiEduCourseware = new CoursewareApi();
+export const apiEduCourseware = new EduCoursewareApi();

@@ -118,13 +118,13 @@ export interface CourseDetailUpdInput extends WithKeyInput {
   Sort?: number;
 }
 /**app资源管理api */
-class AppResourceApi extends ApiBase {
+class EduAppResourceApi extends ApiBase {
   /**基本url */
   public readonly baseUrl: string = "/api/edu/AppResource";
   /**查询下拉值选项 */
   public QueryOption(
     input: OptionFilterInput
-  ): Promise<PageOutput<OptionOutput>> {
+  ): Promise<PageOutput<OptionItem>> {
     const url = this.mergeUrl("QueryOption");
     return this.tryCatchCall(() => this.ajax.post(url, input));
   }
@@ -208,4 +208,4 @@ class AppResourceApi extends ApiBase {
   }
 }
 /**app资源管理api */
-export const apiEduAppResource = new AppResourceApi();
+export const apiEduAppResource = new EduAppResourceApi();

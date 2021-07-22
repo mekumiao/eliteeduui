@@ -277,7 +277,7 @@ export default defineComponent({
   name: "AppEliteSong",
   setup() {
     const isLoad = ref(true);
-    const classify = reactive(new MyPageOutput<OptionOutput>());
+    const classify = reactive(new MyPageOutput<OptionItem>());
     const dialogCreate = reactive<DialogData<CourseInfoInput>>({
       show: false,
       formData: {} as CourseInfoInput

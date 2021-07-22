@@ -1,4 +1,4 @@
-﻿interface ElCol {
+﻿export interface ElCol {
   property: string;
 }
 /**日期格式化 */

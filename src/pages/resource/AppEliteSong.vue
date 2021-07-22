@@ -157,7 +157,7 @@ export default defineComponent({
   name: "AppEliteSong",
   setup() {
     const isLoad = ref(true);
-    const eliteSongClassify = reactive(new MyPageOutput<OptionOutput>());
+    const eliteSongClassify = reactive(new MyPageOutput<OptionItem>());
 
     const dialogCreate = reactive<DialogData<EliteSongInput>>({
       show: false,

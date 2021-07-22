@@ -20,6 +20,11 @@ import MyResetPassword from "@/components/MyResetPassword.vue";
 import MyImageUpload from "@/components/MyImageUpload.vue";
 import MyFileUpload from "@/components/MyFileUpload.vue";
 import MyCustomerFileUpload from "@/components/MyCustomerFileUpload.vue";
+import MyGenderTableColumn from "@/components/MyGenderTableColumn.vue";
+import MyTagsTableColumn from "@/components/MyTagsTableColumn.vue";
+import MyPortraitTableColumn from "@/components/MyPortraitTableColumn.vue";
+import MyDateTableColumn from "@/components/MyDateTableColumn.vue";
+import MyUserInfoSearch from "@/components/MyUserInfoSearch.vue";
 
 export default {
   install: <T>(app: App<T>) => {
@@ -43,5 +48,10 @@ export default {
     app.component(MyImageUpload.name, MyImageUpload);
     app.component(MyFileUpload.name, MyFileUpload);
     app.component(MyCustomerFileUpload.name, MyCustomerFileUpload);
+    app.component(MyGenderTableColumn.name, MyGenderTableColumn);
+    app.component(MyTagsTableColumn.name, MyTagsTableColumn);
+    app.component(MyPortraitTableColumn.name, MyPortraitTableColumn);
+    app.component(MyDateTableColumn.name, MyDateTableColumn);
+    app.component(MyUserInfoSearch.name, MyUserInfoSearch);
   }
 } as Plugin;
