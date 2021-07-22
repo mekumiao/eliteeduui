@@ -35,7 +35,7 @@ const menuList: MenuItem[] = [
       {
         title: "教师管理",
         icon: "el-icon-document",
-        index: "/system/teacher"
+        index: "/system/teacherinfo"
       },
       {
         title: "用户管理",

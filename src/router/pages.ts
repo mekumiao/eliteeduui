@@ -21,6 +21,7 @@ import SystemVipInfo from "@/pages/system/VipInfo.vue";
 import SystemConfig from "@/pages/system/SystemConfig.vue";
 import RoleInfo from "@/pages/system/RoleInfo.vue";
 import UserInfo from "@/pages/system/UserInfo.vue";
+import TeacherInfo from "@/pages/system/TeacherInfo.vue";
 
 /**资源管理 */
 import AppEliteSong from "@/pages/resource/AppEliteSong.vue";
@@ -84,7 +85,8 @@ const routes: Array<RouteRecordRaw> = [
       { path: "vipInfo", component: SystemVipInfo },
       { path: "systemConfig", component: SystemConfig },
       { path: "roleinfo", component: RoleInfo },
-      { path: "userinfo", component: UserInfo }
+      { path: "userinfo", component: UserInfo },
+      { path: "teacherinfo", component: TeacherInfo }
     ]
   },
   {
