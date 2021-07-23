@@ -76,7 +76,11 @@ router.beforeEach((to, form, next): void => {
     return next();
   }
   if (store.state.user) {
-    if (store.state.user.role.filter((x) => x === "admin").length > 0) {
+    if (
+      store.state.user.role.filter(
+        (x) => x === "admin" || x === "teacher" || x === "priority"
+      ).length > 0
+    ) {
       return next();
     } else if (store.state.user.role.filter((x) => x === "vip").length > 0) {
       if (to.path.startsWith("/vip")) {
