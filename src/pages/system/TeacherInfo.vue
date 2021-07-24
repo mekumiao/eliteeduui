@@ -10,7 +10,7 @@
         @edit="update"
         @deleteSave="deleteSave"
       >
-        <el-table-column label="名称" prop="Name"></el-table-column>
+        <el-table-column label="姓名" prop="Name"></el-table-column>
         <el-table-column label="年龄" prop="Age"></el-table-column>
         <el-table-column label="账号" prop="Account"></el-table-column>
         <el-table-column label="学校" prop="SchoolInfoName"></el-table-column>
@@ -22,16 +22,21 @@
 
     <app-edit-dialog
       title="新增教师信息"
+      width="60%"
       v-model="dialogCreate.show"
       @save="createSave"
-      :fullscreen="true"
     >
       <el-form ref="formCreate" :model="dialogCreate.formData" :rules="rules">
         <el-row :gutter="12">
-          <el-col :span="12">
-            <el-form-item label="名称" prop="Name">
-              <el-input v-model="dialogCreate.formData.Name"></el-input>
+          <el-col :span="8">
+            <el-form-item label="用户" prop="UserInfoPid">
+              <my-user-info-search
+                v-model="dialogCreate.formData.UserInfoPid"
+                @change="userChange"
+              ></my-user-info-search>
             </el-form-item>
+          </el-col>
+          <el-col :span="8">
             <el-form-item label="学校" prop="SchoolInfoPid">
               <el-select v-model="dialogCreate.formData.SchoolInfoPid">
                 <el-option
@@ -43,14 +48,13 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="用户" prop="UserInfoPid">
-              <el-input
-                :model-value="dialogCreate.selectUser.FullName"
-                disabled
-              ></el-input>
+          <el-col :span="8">
+            <el-form-item label="班级" prop="ClassInfoPids">
+              <my-class-info-cascader
+                :school="dialogCreate.formData.SchoolInfoPid"
+                v-model="dialogCreate.formData.ClassInfoPids"
+              ></my-class-info-cascader>
             </el-form-item>
-            <my-user-info-search @selected="selectedUser"></my-user-info-search>
           </el-col>
         </el-row>
       </el-form>
@@ -62,19 +66,28 @@
       @save="updateSave"
     >
       <el-form ref="formUpdate" :model="dialogUpdate.formData" :rules="rules">
-        <el-form-item label="名称" prop="Name">
-          <el-input v-model="dialogUpdate.formData.Name"></el-input>
-        </el-form-item>
-        <el-form-item label="学校" prop="SchoolInfoPid">
-          <el-select v-model="dialogUpdate.formData.SchoolInfoPid">
-            <el-option
-              v-for="(item, idx) in schoolOption"
-              :key="idx"
-              :label="item.Label"
-              :value="item.Value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
+        <el-row :gutter="12">
+          <el-col :span="12">
+            <el-form-item label="学校" prop="SchoolInfoPid">
+              <el-select v-model="dialogUpdate.formData.SchoolInfoPid">
+                <el-option
+                  v-for="(item, idx) in schoolOption"
+                  :key="idx"
+                  :label="item.Label"
+                  :value="item.Value"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="负责班级" prop="ClassInfoPids">
+              <my-class-info-cascader
+                :school="dialogUpdate.formData.SchoolInfoPid"
+                v-model="dialogUpdate.formData.ClassInfoPids"
+              ></my-class-info-cascader>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
     </app-edit-dialog>
   </div>
@@ -92,31 +105,37 @@ import { apiEduSchoolInfo } from "@/apis/eduSchoolInfoApi";
 import MyGenderTableColumn from "@/components/MyGenderTableColumn.vue";
 import MyPortraitTableColumn from "@/components/MyPortraitTableColumn.vue";
 import { MyOptionFilterInput } from "@/utils/my-apiClass";
-import { UserInfoOutput } from "@/apis/adminUserInfoApi";
+import MyClassInfoCascader from "@/components/MyClassInfoCascader.vue";
 
 const rules = reactive({
-  Name: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
   UserInfoPid: [
-    { required: true, message: "必填", trigger: "blur" }
+    { required: true, message: "请选择用户", trigger: "change" }
   ] as FormRule[],
   SchoolInfoPid: [
-    { required: true, message: "必填", trigger: "blur" }
-  ] as FormRule[]
+    { required: true, message: "请选择学校", trigger: "change" }
+  ] as FormRule[],
+  ClassInfoPids: [
+    {
+      type: "array",
+      required: true,
+      message: "请至少选择一个班级",
+      trigger: "change"
+    }
+  ]
 });
-
-interface CreateDialogData extends DialogData<TeacherInfoInput> {
-  selectUser: UserInfoOutput;
-}
 
 export default defineComponent({
   name: "TeacherInfo",
-  components: { MyGenderTableColumn, MyPortraitTableColumn },
+  components: {
+    MyGenderTableColumn,
+    MyPortraitTableColumn,
+    MyClassInfoCascader
+  },
   setup() {
     const isLoad = ref(true);
     const schoolOption = ref<Array<OptionItem>>([]);
-    const dialogCreate = reactive<CreateDialogData>({
+    const dialogCreate = reactive<DialogData<TeacherInfoInput>>({
       show: false,
-      selectUser: {} as UserInfoOutput,
       formData: {} as TeacherInfoInput
     });
     const dialogUpdate = reactive<
@@ -139,6 +158,11 @@ export default defineComponent({
       };
       return apiEduTeacherInfo.QueryPage(filter);
     },
+    userChange() {
+      this.$useRules("formCreate").validateField("UserInfoPid", () => {
+        return {};
+      });
+    },
     /**加载学校选项 */
     async loadSchoolInfoOptions(flag?: boolean) {
       try {
@@ -155,7 +179,6 @@ export default defineComponent({
     /**打开新增 */
     async create(): Promise<void> {
       await this.loadSchoolInfoOptions();
-      this.dialogCreate.selectUser = {} as UserInfoOutput;
       this.dialogCreate.formData = {} as TeacherInfoInput;
       this.dialogCreate.show = true;
       return await Promise.resolve();
@@ -163,8 +186,6 @@ export default defineComponent({
     async createSave(close: () => void) {
       try {
         this.$loading();
-        this.dialogCreate.formData.UserInfoPid =
-          this.dialogCreate.selectUser.Pid;
         await this.$useRules("formCreate").validate();
         await apiEduTeacherInfo.Create(this.dialogCreate.formData);
         close();
@@ -176,8 +197,9 @@ export default defineComponent({
     /**打开编辑 */
     async update(_index: number, row: TeacherInfoOutput): Promise<void> {
       await this.loadSchoolInfoOptions();
+      const detailRow = await apiEduTeacherInfo.Single(row.Pid);
       this.dialogUpdate.oldData = row;
-      this.dialogUpdate.formData = reactive({ ...row });
+      this.dialogUpdate.formData = detailRow;
       this.dialogUpdate.show = true;
       return await Promise.resolve();
     },
@@ -205,10 +227,6 @@ export default defineComponent({
       } finally {
         this.$closeLoading();
       }
-    },
-    selectedUser(row: UserInfoOutput) {
-      this.dialogCreate.selectUser = row;
-      this.dialogCreate.formData.UserInfoPid = row.Pid;
     }
   }
 });

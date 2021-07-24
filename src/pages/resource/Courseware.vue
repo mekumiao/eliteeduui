@@ -56,6 +56,7 @@
       title="新增课件资源"
       v-model="dialogCreate.show"
       @save="createSave"
+      width="60%"
     >
       <el-form
         ref="formCreate"
@@ -63,45 +64,74 @@
         :model="dialogCreate.formData"
         :rules="rules"
       >
-        <el-form-item label="名称" prop="Name">
-          <el-input v-model="dialogCreate.formData.Name"></el-input>
-        </el-form-item>
-        <el-form-item label="描述" prop="Remark">
-          <el-input v-model="dialogCreate.formData.Remark"></el-input>
-        </el-form-item>
-        <el-form-item label="分组" prop="Group">
-          <el-input v-model="dialogCreate.formData.Group"></el-input>
-        </el-form-item>
-        <el-form-item label="排序" prop="Sort">
-          <el-input v-model.number="dialogCreate.formData.Sort"></el-input>
-        </el-form-item>
-        <el-form-item label="资源类型" prop="ResourceType">
-          <el-select
-            v-model="dialogCreate.formData.ResourceType"
-            placeholder="请选择资源类型"
-          >
-            <el-option
-              v-for="(item, index) in resourceType.DataList"
-              :key="index"
-              :label="item.Label"
-              :value="item.Value"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="资源路径" prop="SourcePath">
-          <el-input v-model="dialogCreate.formData.SourcePath"></el-input>
-          <my-file-upload
-            v-model="dialogCreate.formData.SourcePath"
-            @success="uploadSuccess"
-          ></my-file-upload>
-        </el-form-item>
-        <el-form-item label="预览图" prop="PreviewPhoto">
-          <el-input v-model="dialogCreate.formData.PreviewPhoto"></el-input>
-          <my-image-upload
-            v-model="dialogCreate.formData.PreviewPhoto"
-          ></my-image-upload>
-        </el-form-item>
+        <el-row :gutter="12">
+          <el-col :span="12">
+            <el-form-item label="名称" prop="Name">
+              <el-input v-model="dialogCreate.formData.Name"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="资源类型" prop="ResourceType">
+              <el-select
+                v-model="dialogCreate.formData.ResourceType"
+                placeholder="请选择资源类型"
+              >
+                <el-option
+                  v-for="(item, index) in resourceType.DataList"
+                  :key="index"
+                  :label="item.Label"
+                  :value="item.Value"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="12">
+          <el-col :span="12">
+            <el-form-item label="分组" prop="Group">
+              <el-input v-model="dialogCreate.formData.Group"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="排序" prop="Sort">
+              <el-input v-model.number="dialogCreate.formData.Sort"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="12">
+          <el-col :span="12">
+            <el-form-item label="预览图" prop="PreviewPhoto">
+              <el-input v-model="dialogCreate.formData.PreviewPhoto"></el-input>
+              <my-image-upload
+                v-model="dialogCreate.formData.PreviewPhoto"
+              ></my-image-upload>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="资源路径" prop="SourcePath">
+              <el-input v-model="dialogCreate.formData.SourcePath"></el-input>
+              <my-file-upload
+                v-model="dialogCreate.formData.SourcePath"
+                @success="uploadSuccess"
+              ></my-file-upload>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="12">
+          <el-col :span="24">
+            <el-form-item label="描述" prop="Remark">
+              <el-input
+                type="textarea"
+                placeholder="请输入内容"
+                show-word-limit
+                v-model="dialogCreate.formData.Remark"
+                :autosize="{ minRows: 4, maxRows: 8 }"
+                :maxlength="255"
+              ></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
     </app-edit-dialog>
 

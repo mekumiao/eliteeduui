@@ -52,7 +52,7 @@ declare interface OptionItem {
   Disabled: boolean;
 }
 /**级联下拉框选项 */
-declare interface CascaderOptionOutput extends OptionItem {
+declare interface CascaderOptionItem extends OptionItem {
   Children: OptionItem[];
 }
 /**

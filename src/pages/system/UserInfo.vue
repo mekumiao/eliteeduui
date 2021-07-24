@@ -65,6 +65,7 @@
                 v-model="dialogCreate.formData.Birthday"
                 type="date"
                 placeholder="选择日期"
+                :disabled-date="disabledDate"
               >
               </el-date-picker>
             </el-form-item>
@@ -136,7 +137,8 @@
               <el-date-picker
                 v-model="dialogUpdate.formData.Birthday"
                 type="date"
-                placeholder="选择日期"
+                placeholder="请选择日期"
+                :disabled-date="disabledDate"
               >
               </el-date-picker>
             </el-form-item>
@@ -238,6 +240,12 @@ export default defineComponent({
         }
       };
       return apiAdminUserInfo.QueryPage(filter);
+    },
+    disabledDate(time: Date): boolean {
+      return (
+        time.getTime() > Date.now() ||
+        time.getTime() < new Date("1940-1-1").getTime()
+      );
     },
     /**打开新增 */
     async create(): Promise<void> {

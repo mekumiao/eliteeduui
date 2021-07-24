@@ -25,6 +25,7 @@ import MyTagsTableColumn from "@/components/MyTagsTableColumn.vue";
 import MyPortraitTableColumn from "@/components/MyPortraitTableColumn.vue";
 import MyDateTableColumn from "@/components/MyDateTableColumn.vue";
 import MyUserInfoSearch from "@/components/MyUserInfoSearch.vue";
+import MyClassInfoCascader from "@/components/MyClassInfoCascader.vue";
 
 export default {
   install: <T>(app: App<T>) => {
@@ -53,5 +54,6 @@ export default {
     app.component(MyPortraitTableColumn.name, MyPortraitTableColumn);
     app.component(MyDateTableColumn.name, MyDateTableColumn);
     app.component(MyUserInfoSearch.name, MyUserInfoSearch);
+    app.component(MyClassInfoCascader.name, MyClassInfoCascader);
   }
 } as Plugin;

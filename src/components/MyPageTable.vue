@@ -9,6 +9,8 @@
       :max-height="maxHeight"
       highlight-current-row
       stripe
+      @row-click="$emit('rowClick', $event)"
+      @row-dblclick="$emit('rowdblClick', $event)"
       @sort-change="sortChange"
       @selection-change="$emit('selectionChange', $event)"
     >
@@ -24,7 +26,6 @@
         v-model="search"
         @search="loadData"
         :width="searchWidth"
-        :fixed="fixedSearch"
       >
         <template #default="scope">
           <slot name="button" v-bind="{ row: scope.row, $index: scope.$index }">
@@ -68,10 +69,16 @@ import { defineComponent, PropType, reactive, ref, watch } from "vue";
 
 export default defineComponent({
   name: "MyPageTable",
-  emits: ["update:modelValue", "edit", "deleteSave", "selectionChange"],
+  emits: [
+    "update:modelValue",
+    "edit",
+    "deleteSave",
+    "selectionChange",
+    "rowClick",
+    "rowdblClick"
+  ],
   props: {
     searchWidth: { type: [String, Number], default: 190 },
-    fixedSearch: { type: Boolean as PropType<boolean>, default: true },
     maxHeight: {
       type: [String, Number],
       default: () => {

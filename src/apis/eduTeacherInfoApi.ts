@@ -1,14 +1,14 @@
 ﻿import { ApiBillBase } from "./apiBase";
 
 export interface TeacherInfoInput {
-  Name: string;
   UserInfoPid: string;
   SchoolInfoPid: string;
+  ClassInfoPids: string[];
 }
 
 export interface TeacherInfoUpdInput {
-  Name?: string;
   SchoolInfoPid?: string;
+  ClassInfoPids?: string[];
 }
 
 export interface TeacherInfoOutput extends PublicWithKeyOutput {
