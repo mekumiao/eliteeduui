@@ -14,7 +14,7 @@ export interface CoursewareOutput extends PublicWithKeyOutput {
 /**VIP课件访问Api */
 class CoursewareApi extends ApiBase {
   /**基本路径 */
-  public baseUrl = "/api/vip/Courseware";
+  public readonly baseUrl = "/api/vip/Courseware";
   /**
    * 查询课件列表
    * @param input 查询模型

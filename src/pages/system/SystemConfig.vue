@@ -8,6 +8,7 @@
       </el-card>
       <my-page-table
         :get-data="getData"
+        :fixed-search="false"
         v-model="isLoad"
         @edit="update"
         @deleteSave="deleteSave"

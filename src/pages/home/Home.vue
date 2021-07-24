@@ -26,7 +26,7 @@
             leave-active-class="animate__animated animate__fadeOut"
             mode="out-in"
           >
-            <keep-alive :include="/.+/" :max="cacheMaxViewNumber">
+            <keep-alive :include="includeComponent" :max="cacheMaxViewNumber">
               <component :is="Component" />
             </keep-alive>
           </transition>
@@ -62,6 +62,9 @@ export default defineComponent({
     },
     cacheMaxViewNumber(): number {
       return this.$store.state.opendRouter.max;
+    },
+    includeComponent(): Array<string> {
+      return this.$store.state.opendRouter.tabs.map((x) => x.componentName);
     }
   },
   provide() {

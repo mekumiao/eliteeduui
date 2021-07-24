@@ -28,7 +28,7 @@ class EduTeacherInfoApi extends ApiBillBase<
   TeacherInfoUpdInput,
   TeacherInfoOutput
 > {
-  public baseUrl = "/api/edu/TeacherInfo";
+  public readonly baseUrl = "/api/edu/TeacherInfo";
 }
 
 export const apiEduTeacherInfo = new EduTeacherInfoApi();

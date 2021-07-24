@@ -27,7 +27,7 @@ class SystemConfigApi extends ApiBillBase<
   SystemConfigUpdInput,
   SystemConfigOutput
 > {
-  public baseUrl = "api/admin/SystemConfig";
+  public readonly baseUrl = "api/admin/SystemConfig";
   /**
    * 根据名称获取配置
    * @param name 配置名称

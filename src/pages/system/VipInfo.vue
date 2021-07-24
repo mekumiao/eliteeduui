@@ -114,7 +114,7 @@ const rulesUpdate = reactive({
 });
 
 export default defineComponent({
-  name: "VipUserInfo",
+  name: "VipInfo",
   setup() {
     const isLoad = ref(true);
     const dialogCreate = reactive<DialogData<VipInfoInput>>({

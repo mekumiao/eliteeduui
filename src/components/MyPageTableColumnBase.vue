@@ -11,8 +11,9 @@
     label="创建时间"
     sortable="custom"
     prop="CreateTime"
-    min-width="135"
+    min-width="110"
     align="center"
+    show-overflow-tooltip
     :formatter="dateTimeFormatter"
   />
   <el-table-column
@@ -26,8 +27,9 @@
     label="修改时间"
     sortable="custom"
     prop="UpdateTime"
-    min-width="135"
+    min-width="110"
     align="center"
+    show-overflow-tooltip
     :formatter="dateTimeFormatter"
   />
 </template>

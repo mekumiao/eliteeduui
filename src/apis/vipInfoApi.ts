@@ -19,7 +19,7 @@ export interface VipInfoUpdInput {
 }
 
 class VipInfo extends ApiBase {
-  public baseUrl = "/api/edu/VipInfo/";
+  public readonly baseUrl = "/api/edu/VipInfo/";
   /**
    * 查询VIP信息
    * @param input 条件模型

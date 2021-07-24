@@ -37,7 +37,7 @@ class AdminRoleInfoApi extends ApiBillBase<
   RoleInfoUpdInput,
   RoleInfoOutput
 > {
-  public baseUrl = "/api/admin/RoleInfo";
+  public readonly baseUrl = "/api/admin/RoleInfo";
 }
 
 export const apiAdminRoleInfo = new AdminRoleInfoApi();

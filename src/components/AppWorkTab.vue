@@ -13,7 +13,7 @@
         :closable="idx !== 0"
         :class="idx === opendRouter.active ? 'tab-active' : ''"
         @close="removeTab(idx)"
-        @click.stop="changeTab(tab.path)"
+        @click.stop="changeTab(idx)"
       >
         {{ tab.name }}
       </el-tag>
@@ -38,20 +38,27 @@
 import { defineComponent, onBeforeMount } from "vue";
 import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from "vue-router";
 import { TabInfo, useStore } from "@/store/index";
+import _ from "lodash";
 
 export default defineComponent({
   name: "AppWorkTab",
   setup() {
     const store = useStore();
     onBeforeMount(() => {
-      const path = useRoute().path;
-      store.commit("onlyAddOpenRouterPaths", path);
+      const route = useRoute();
+      const path = route.path;
+      const componentName = _.last(route.matched)?.components.default.name;
+      store.commit("onlyAddOrUpdateOpenRouterPaths", { path, componentName });
     });
     onBeforeRouteUpdate((to) => {
-      store.commit("onlyAddOpenRouterPaths", to.path);
+      const path = to.path;
+      const componentName = _.last(to.matched)?.components.default.name;
+      store.commit("onlyAddOrUpdateOpenRouterPaths", { path, componentName });
     });
     onBeforeRouteLeave((to) => {
-      store.commit("onlyAddOpenRouterPaths", to.path);
+      const path = to.path;
+      const componentName = _.last(to.matched)?.components.default.name;
+      store.commit("onlyAddOrUpdateOpenRouterPaths", { path, componentName });
     });
     return {};
   },
@@ -61,8 +68,8 @@ export default defineComponent({
     }
   },
   methods: {
-    changeTab(path: string): void {
-      this.$storeMutations.changeOpendRouterPaths(path);
+    changeTab(index: number): void {
+      this.$storeMutations.changeOpendRouterPaths(index);
     },
     removeTab(index: number) {
       this.$storeMutations.removeOpendRouterPaths(index);

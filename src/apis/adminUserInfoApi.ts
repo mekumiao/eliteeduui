@@ -4,7 +4,6 @@ export interface UserInfoInput {
   FullName: string;
   NickName: string;
   Gender: number;
-  Age: number;
   Portrait: string;
   Birthday?: Date;
   PassWord: string;
@@ -18,7 +17,6 @@ export interface UserInfoUpdInput {
   FullName?: string;
   NickName?: string;
   Gender?: number;
-  Age?: number;
   Portrait?: string;
   Birthday?: Date;
   PassWord?: string;
@@ -53,7 +51,7 @@ class UserInfoApi extends ApiBillBase<
   UserInfoUpdInput,
   UserInfoOutput
 > {
-  public baseUrl = "/api/admin/UserInfo/";
+  public readonly baseUrl = "/api/admin/UserInfo/";
   /**获取当前用户信息 */
   public GetCurrentUserInfo(): Promise<UserInfoOutput> {
     const url = this.mergeUrl("GetCurrentUserInfo");

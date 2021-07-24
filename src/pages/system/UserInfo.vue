@@ -10,24 +10,24 @@
         @edit="update"
         @deleteSave="deleteSave"
       >
-        <el-table-column label="姓名" prop="FullName"></el-table-column>
         <el-table-column label="昵称" prop="NickName"></el-table-column>
+        <el-table-column label="姓名" prop="FullName"></el-table-column>
         <my-gender-table-column></my-gender-table-column>
         <my-portrait-table-column></my-portrait-table-column>
         <el-table-column label="年龄" prop="Age"></el-table-column>
         <my-date-table-column
           label="生日"
           prop="Birthday"
-        ></my-date-table-column>
-        <el-table-column label="电话" prop="Phone"></el-table-column>
-        <el-table-column label="邮箱" prop="Email"></el-table-column>
-        <el-table-column label="身份ID" prop="Identity"></el-table-column>
-        <el-table-column label="账号" prop="Account"></el-table-column>
-        <my-tags-table-column
+        ></my-date-table-column
+        ><my-tags-table-column
           label="角色"
           prop="Roles"
           item-name="AnotherName"
         ></my-tags-table-column>
+        <el-table-column label="电话" prop="Phone"></el-table-column>
+        <el-table-column label="邮箱" prop="Email"></el-table-column>
+        <el-table-column label="身份ID" prop="Identity"></el-table-column>
+        <el-table-column label="账号" prop="Account"></el-table-column>
         <my-page-table-column-base></my-page-table-column-base>
       </my-page-table>
     </el-card>
@@ -36,37 +36,30 @@
       title="新增用户信息"
       v-model="dialogCreate.show"
       @save="createSave"
-      :fullscreen="true"
     >
       <el-form ref="formCreate" :model="dialogCreate.formData" :rules="rules">
         <el-row :gutter="12">
-          <el-col :span="6">
-            <el-form-item label="姓名" prop="FullName">
-              <el-input v-model="dialogCreate.formData.FullName"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
+          <el-col :span="12">
             <el-form-item label="昵称" prop="NickName">
               <el-input v-model="dialogCreate.formData.NickName"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="12">
             <el-form-item label="性别" prop="Gender">
-              <el-select v-model="dialogCreate.formData.Gender">
-                <el-option label="男" :value="0"></el-option>
-                <el-option label="女" :value="1"></el-option>
-                <el-option label="其他" :value="2"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label="年龄" prop="Age">
-              <el-input v-model.number="dialogCreate.formData.Age"></el-input>
+              <el-radio-group v-model="dialogCreate.formData.Gender">
+                <el-radio-button :label="0">男</el-radio-button>
+                <el-radio-button :label="1">女</el-radio-button>
+              </el-radio-group>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="12">
-          <el-col :span="6">
+          <el-col :span="12">
+            <el-form-item label="姓名" prop="FullName">
+              <el-input v-model="dialogCreate.formData.FullName"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
             <el-form-item label="生日" prop="Birthday">
               <el-date-picker
                 v-model="dialogCreate.formData.Birthday"
@@ -76,22 +69,26 @@
               </el-date-picker>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
+        </el-row>
+        <el-row :gutter="12">
+          <el-col :span="12">
             <el-form-item label="手机号" prop="Phone">
               <el-input v-model="dialogCreate.formData.Phone"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
-            <el-form-item label="邮箱" prop="Email">
-              <el-input v-model="dialogCreate.formData.Email"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
+          <el-col :span="12">
             <el-form-item label="密码" prop="PassWord">
               <el-input
                 show-password
                 v-model="dialogCreate.formData.PassWord"
               ></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="邮箱" prop="Email">
+              <el-input v-model="dialogCreate.formData.Email"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -111,37 +108,30 @@
       title="修改用户信息"
       v-model="dialogUpdate.show"
       @save="updateSave"
-      :fullscreen="true"
     >
       <el-form ref="formUpdate" :model="dialogUpdate.formData" :rules="rules">
         <el-row :gutter="12">
-          <el-col :span="6">
-            <el-form-item label="姓名" prop="FullName">
-              <el-input v-model="dialogUpdate.formData.FullName"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
+          <el-col :span="12">
             <el-form-item label="昵称" prop="NickName">
               <el-input v-model="dialogUpdate.formData.NickName"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="12">
             <el-form-item label="性别" prop="Gender">
-              <el-select v-model="dialogUpdate.formData.Gender">
-                <el-option label="男" :value="0"></el-option>
-                <el-option label="女" :value="1"></el-option>
-                <el-option label="其他" :value="2"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label="年龄" prop="Age">
-              <el-input v-model.number="dialogUpdate.formData.Age"></el-input>
+              <el-radio-group v-model="dialogUpdate.formData.Gender">
+                <el-radio-button :label="0">男</el-radio-button>
+                <el-radio-button :label="1">女</el-radio-button>
+              </el-radio-group>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="12">
-          <el-col :span="6">
+          <el-col :span="12">
+            <el-form-item label="姓名" prop="FullName">
+              <el-input v-model="dialogUpdate.formData.FullName"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
             <el-form-item label="生日" prop="Birthday">
               <el-date-picker
                 v-model="dialogUpdate.formData.Birthday"
@@ -151,7 +141,14 @@
               </el-date-picker>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
+        </el-row>
+        <el-row :gutter="12">
+          <el-col :span="12">
+            <el-form-item label="手机号" prop="Phone">
+              <el-input v-model="dialogUpdate.formData.Phone"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
             <el-form-item label="邮箱" prop="Email">
               <el-input v-model="dialogUpdate.formData.Email"></el-input>
             </el-form-item>
@@ -181,25 +178,32 @@ import {
 import MyPortraitTableColumn from "@/components/MyPortraitTableColumn.vue";
 import { ref, reactive, defineComponent } from "vue";
 
-const rules = reactive({
-  FullName: [
-    { required: true, message: "必填", trigger: "blur" }
-  ] as FormRule[],
-  NickName: [
-    { required: true, message: "必填", trigger: "blur" }
-  ] as FormRule[],
-  Gender: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
-  Age: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
-  Portrait: [
-    { required: true, message: "必填", trigger: "blur" }
-  ] as FormRule[],
-  Birthday: [
-    { required: true, message: "必填", trigger: "blur" }
-  ] as FormRule[],
-  Phone: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
-  Email: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
-  PassWord: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[]
-});
+const getRules = function () {
+  return {
+    FullName: [
+      { required: true, message: "必填", trigger: "blur" }
+    ] as FormRule[],
+    NickName: [
+      { required: true, message: "必填", trigger: "blur" }
+    ] as FormRule[],
+    Gender: [
+      { required: true, message: "必填", trigger: "blur" }
+    ] as FormRule[],
+    Portrait: [
+      { required: true, message: "必填", trigger: "blur" }
+    ] as FormRule[],
+    Birthday: [
+      { required: true, message: "必填", trigger: "blur" }
+    ] as FormRule[],
+    Phone: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
+    Email: [{ required: true, message: "必填", trigger: "blur" }] as FormRule[],
+    PassWord: [
+      { required: true, message: "必填", trigger: "blur" }
+    ] as FormRule[]
+  };
+};
+
+const rules = reactive(getRules());
 
 export default defineComponent({
   components: { MyPortraitTableColumn },

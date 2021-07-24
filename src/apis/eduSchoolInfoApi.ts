@@ -1,7 +1,8 @@
 ﻿import { ApiBase } from "./apiBase";
 
+/**学校信息 */
 class EduSchoolInfoApi extends ApiBase {
-  public baseUrl = "/api/edu/SchoolInfo";
+  public readonly baseUrl = "/api/edu/SchoolInfo";
 
   public QueryOption(
     input: OptionFilterInput

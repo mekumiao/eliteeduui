@@ -31,6 +31,7 @@ export interface TabInfo {
 export interface TabItem {
   path: string;
   name: string;
+  componentName: string;
 }
 
 export interface State {
@@ -75,7 +76,8 @@ const createDefaultTab = (): TabInfo => {
     tabs: [
       {
         path: firstMenuItem?.index ?? "",
-        name: firstMenuItem?.title ?? ""
+        name: firstMenuItem?.title ?? "",
+        componentName: "Welcome"
       }
     ]
   };
@@ -124,94 +126,83 @@ const store = createStore<State>({
         state.uploadHost = host;
       }
     },
-    onlyAddOpenRouterPaths(state: State, path: string): void {
-      const route = _.last(getRoutePath(path));
+    onlyAddOrUpdateOpenRouterPaths(
+      state: State,
+      data: { path: string; componentName: string }
+    ): void {
+      const route = _.last(getRoutePath(data.path));
       if (route) {
         const index = _.findIndex(
           state.opendRouter.tabs,
-          (x) => x.path === path
+          (x) => x.path === data.path
         );
         if (index < 0) {
           const nextIndex = state.opendRouter.tabs.length;
-          state.opendRouter.tabs.push({ path, name: route.title });
+          state.opendRouter.tabs.push({
+            path: data.path,
+            name: route.title,
+            componentName: data.componentName
+          });
           state.opendRouter.active = nextIndex;
         } else {
           state.opendRouter.active = index;
         }
       }
     },
-    changeOpendRouterPaths(state: State, path: string): void {
-      const route = _.last(getRoutePath(path));
-      if (route) {
-        const index = _.findIndex(
-          state.opendRouter.tabs,
-          (x) => x.path === path
-        );
-        if (index < 0) {
-          const nextIndex = state.opendRouter.tabs.length;
-          state.opendRouter.tabs.push({ path, name: route.title });
-          state.opendRouter.active = nextIndex;
-        } else {
-          state.opendRouter.active = index;
-        }
-        router.push(path);
+    changeOpendRouterPaths(state: State, index: number): void {
+      if (index >= 0 && index < state.opendRouter.tabs.length) {
+        state.opendRouter.active = index;
+        const tab = state.opendRouter.tabs[index];
+        router.push(tab.path);
       }
     },
     removeOpendRouterPaths(state: State, index: number): void {
       if (index > 0 && index < state.opendRouter.tabs.length) {
         state.opendRouter.tabs.splice(index, 1);
+        //当关闭选择的标签时
         if (index === state.opendRouter.active) {
-          if (index >= state.opendRouter.tabs.length) {
-            state.opendRouter.active = state.opendRouter.tabs.length - 1;
-            const tab = state.opendRouter.tabs[state.opendRouter.active];
-            const route = router.currentRoute.value;
-            if (route.path !== tab.path) {
-              router.push(tab.path);
-            }
+          //当关闭末尾的标签时
+          if (index === state.opendRouter.tabs.length) {
+            state.opendRouter.active--;
           }
-        } else if (index <= state.opendRouter.active) {
+          const tab = state.opendRouter.tabs[state.opendRouter.active];
+          router.push(tab.path);
+        } else if (index < state.opendRouter.active) {
           state.opendRouter.active--;
           const tab = state.opendRouter.tabs[state.opendRouter.active];
-          const route = router.currentRoute.value;
-          if (route.path !== tab.path) {
+          router.push(tab.path);
+        }
+      }
+    },
+    removeOtherOpendRouterPaths(state: State, index: number): void {
+      if (state.opendRouter.tabs.length > 1) {
+        if (index === 0) {
+          Object.assign(state.opendRouter, createDefaultTab());
+          router.push(state.opendRouter.tabs[0].path);
+        } else if (index > 0 && index < state.opendRouter.tabs.length) {
+          const tab = state.opendRouter.tabs[index];
+          Object.assign(state.opendRouter, createDefaultTab());
+          state.opendRouter.active = 1;
+          state.opendRouter.tabs.push(tab);
+          router.push(tab.path);
+        }
+      }
+    },
+    removeRightOpendRouterPaths(state: State, index: number): void {
+      if (state.opendRouter.tabs.length > 1) {
+        if (index >= 0 && index < state.opendRouter.tabs.length - 1) {
+          const tab = state.opendRouter.tabs[index];
+          state.opendRouter.tabs.splice(index + 1);
+          if (index < state.opendRouter.active) {
+            state.opendRouter.active = index;
             router.push(tab.path);
           }
         }
       }
     },
-    removeOtherOpendRouterPaths(state: State, index: number): void {
-      if (index > 0 && index < state.opendRouter.tabs.length) {
-        const tab = state.opendRouter.tabs[index];
-        if (state.opendRouter.tabs.length > 1) {
-          Object.assign(state.opendRouter, createDefaultTab());
-        }
-        state.opendRouter.active = 1;
-        state.opendRouter.tabs.push(tab);
-        router.push(tab.path);
-      } else if (index === 0) {
-        Object.assign(state.opendRouter, createDefaultTab());
-        const tab = state.opendRouter.tabs[state.opendRouter.active];
-        router.push(tab.path);
-      }
-    },
-    removeRightOpendRouterPaths(state: State, index: number): void {
-      if (index > 0 && index < state.opendRouter.tabs.length) {
-        const tab = state.opendRouter.tabs[index];
-        state.opendRouter.tabs.splice(index + 1);
-        if (index < state.opendRouter.active) {
-          state.opendRouter.active = index;
-          router.push(tab.path);
-        }
-      } else if (index === 0) {
-        Object.assign(state.opendRouter, createDefaultTab());
-        const tab = state.opendRouter.tabs[state.opendRouter.active];
-        router.push(tab.path);
-      }
-    },
     resetOpendRouterPaths(state: State): void {
       Object.assign(state.opendRouter, createDefaultTab());
-      const tab = state.opendRouter.tabs[state.opendRouter.active];
-      router.push(tab.path);
+      router.push(state.opendRouter.tabs[state.opendRouter.active].path);
     },
     resetState(state: State) {
       Object.assign(state, createState());
@@ -260,8 +251,12 @@ export interface MyStoreMutations {
   setIsCollapse(value: boolean): void;
   setSourceHost(host: string): void;
   setUploadHost(host: string): void;
-  onlyAddOpenRouterPaths(path: string): void;
-  changeOpendRouterPaths(path: string): void;
+  /**仅添加或修改打开的标签路由 */
+  onlyAddOrUpdateOpenRouterPaths(data: {
+    path: string;
+    componentName: string;
+  }): void;
+  changeOpendRouterPaths(index: number): void;
   removeOtherOpendRouterPaths(index: number): void;
   removeOpendRouterPaths(index: number): void;
   removeRightOpendRouterPaths(index: number): void;
@@ -299,11 +294,14 @@ export default {
       setUploadHost(this: ComponentPublicInstance, host: string) {
         store.commit("setUploadHost", host);
       },
-      onlyAddOpenRouterPaths(this: ComponentPublicInstance, path: string) {
-        store.commit("onlyAddOpenRouterPaths", path);
+      onlyAddOrUpdateOpenRouterPaths(
+        this: ComponentPublicInstance,
+        data: { path: string; componentName: string }
+      ) {
+        store.commit("onlyAddOpenRouterPaths", data);
       },
-      changeOpendRouterPaths(this: ComponentPublicInstance, path: string) {
-        store.commit("changeOpendRouterPaths", path);
+      changeOpendRouterPaths(this: ComponentPublicInstance, index: number) {
+        store.commit("changeOpendRouterPaths", index);
       },
       removeOtherOpendRouterPaths(
         this: ComponentPublicInstance,

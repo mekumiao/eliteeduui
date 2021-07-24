@@ -66,6 +66,7 @@ const rules = reactive<DataRules>({
 });
 
 export default defineComponent({
+  name: "Login",
   setup() {
     const accountRef = ref<HTMLElement | undefined>(undefined);
     const systemName = ref(setting.systemName);
@@ -101,7 +102,7 @@ export default defineComponent({
         const user = decodeAccessToken(token.Token);
         const isSuccess =
           user?.role.filter(
-            (x) => x === "system" || x === "admin" || x === "teacher"
+            (x) => x === "admin" || x === "teacher" || x === "priority"
           ) ?? [];
         if (isSuccess.length > 0) {
           this.$storeMutations.resetState();
@@ -110,7 +111,7 @@ export default defineComponent({
           this.$router.push("/");
           this.$message.closeAll();
         } else {
-          this.$message.showError("您没有权限登录后台系统");
+          this.$message.showInfo("您没有权限登录后台系统");
         }
       } finally {
         this.loginLoading = false;

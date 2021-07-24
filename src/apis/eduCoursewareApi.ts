@@ -37,7 +37,7 @@ class EduCoursewareApi extends ApiBillBase<
   CoursewareUpdInput,
   CoursewareOutput
 > {
-  public baseUrl = "/api/edu/Courseware";
+  public readonly baseUrl = "/api/edu/Courseware";
   /**
    * 查询下拉值选项
    * @param input 查询模型

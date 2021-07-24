@@ -53,7 +53,10 @@
             <el-tag v-else type="warning">否</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="发布时间" prop="LastPublish"></el-table-column>
+        <my-date-table-column
+          label="发布时间"
+          prop="LastPublish"
+        ></my-date-table-column>
         <my-page-table-column-base></my-page-table-column-base>
       </my-page-table>
     </el-card>
@@ -274,7 +277,7 @@ const rules = reactive({
 });
 
 export default defineComponent({
-  name: "AppEliteSong",
+  name: "AppCourseInfo",
   setup() {
     const isLoad = ref(true);
     const classify = reactive(new MyPageOutput<OptionItem>());

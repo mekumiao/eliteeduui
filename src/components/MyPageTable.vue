@@ -2,9 +2,13 @@
   <div class="my-page-table">
     <el-table
       ref="pageTable"
+      size="small"
+      empty-text="没有数据~"
       v-loading="loading"
       :data="pageData.DataList"
       :max-height="maxHeight"
+      highlight-current-row
+      stripe
       @sort-change="sortChange"
       @selection-change="$emit('selectionChange', $event)"
     >
@@ -20,6 +24,7 @@
         v-model="search"
         @search="loadData"
         :width="searchWidth"
+        :fixed="fixedSearch"
       >
         <template #default="scope">
           <slot name="button" v-bind="{ row: scope.row, $index: scope.$index }">
@@ -66,6 +71,7 @@ export default defineComponent({
   emits: ["update:modelValue", "edit", "deleteSave", "selectionChange"],
   props: {
     searchWidth: { type: [String, Number], default: 190 },
+    fixedSearch: { type: Boolean as PropType<boolean>, default: true },
     maxHeight: {
       type: [String, Number],
       default: () => {

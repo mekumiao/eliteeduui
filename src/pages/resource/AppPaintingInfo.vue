@@ -158,7 +158,7 @@ const rules = reactive({
 });
 
 export default defineComponent({
-  name: "AppEliteSong",
+  name: "AppPaintingInfo",
   setup() {
     const isLoad = ref(true);
     const classify = reactive(new MyPageOutput<OptionItem>());

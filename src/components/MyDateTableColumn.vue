@@ -1,10 +1,9 @@
 ﻿<template>
   <el-table-column
+    min-width="100px"
     :label="label"
     :prop="prop"
     :formatter="myFormater"
-    align="center"
-    min-width="135"
   ></el-table-column>
 </template>
 <script lang="ts">

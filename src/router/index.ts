@@ -76,20 +76,19 @@ router.beforeEach((to, form, next): void => {
     return next();
   }
   if (store.state.user) {
+    const roles = store.state.user.role;
     if (
-      store.state.user.role.filter(
-        (x) => x === "admin" || x === "teacher" || x === "priority"
-      ).length > 0
+      roles.filter((x) => x === "admin" || x === "teacher" || x === "priority")
+        .length > 0
     ) {
       return next();
-    } else if (store.state.user.role.filter((x) => x === "vip").length > 0) {
+    } else if (roles.filter((x) => x === "vip").length > 0) {
       if (to.path.startsWith("/vip")) {
         return next();
-      } else {
-        message.showInfo("您不是管理员用户");
-        return redirectLogin(to.path, next);
       }
     }
+    message.showInfo("您没有访问权限");
+    return redirectLogin(to.path, next);
   } else {
     return redirectLogin(to.path, next);
   }

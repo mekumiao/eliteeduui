@@ -109,6 +109,7 @@ interface CreateDialogData extends DialogData<TeacherInfoInput> {
 }
 
 export default defineComponent({
+  name: "TeacherInfo",
   components: { MyGenderTableColumn, MyPortraitTableColumn },
   setup() {
     const isLoad = ref(true);

@@ -14,6 +14,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
+  name: "500",
   methods: {
     goHomePage() {
       this.$router.push("/");

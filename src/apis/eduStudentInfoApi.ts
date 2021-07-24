@@ -30,7 +30,7 @@ class EduStudentInfoApi extends ApiBillBase<
   StudentInfoUpdInput,
   StudentInfoOutput
 > {
-  public baseUrl = "/api/edu/StudentInfo";
+  public readonly baseUrl = "/api/edu/StudentInfo";
 }
 
 export const apiEduStudentInfo = new EduStudentInfoApi();
